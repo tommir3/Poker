@@ -142,8 +142,7 @@ bool PokerLogic::CreatePoker(const int pokerCount, int *cards, const int cardsLe
 				}
 				else
 				{
-					result = false;
-					return;
+					return false;
 				}
 			}
 			result = true;

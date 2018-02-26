@@ -26,10 +26,10 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="unittest1.cpp">
+    <ClCompile Include="PokerLogicTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="PokerLogicTest.cpp">
+    <ClCompile Include="DouDiZhuLogicTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

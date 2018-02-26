@@ -142,10 +142,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DouDiZhuLogic.h" />
     <ClInclude Include="PokerDefine.h" />
     <ClInclude Include="PokerLogic.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DouDiZhuLogic.cpp" />
     <ClCompile Include="PokerLogic.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

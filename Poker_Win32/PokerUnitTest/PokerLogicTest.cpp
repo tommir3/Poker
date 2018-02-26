@@ -10,11 +10,11 @@ namespace PokerUnitTest
 	TEST_CLASS(PokerLogicTest)
 	{
 	private:
-		PokerLogic *_poker;
+		Poker::PokerLogic *_poker;
 	public:
 		TEST_METHOD_INITIALIZE(SetUp)
 		{
-			_poker = new PokerLogic();
+			_poker = new Poker::PokerLogic();
 		}
 
 		TEST_METHOD_CLEANUP(TearDown)
@@ -77,6 +77,103 @@ namespace PokerUnitTest
 			Assert::IsTrue(isOK);
 			isOK = _poker->CreateCardMarkPoker(CardMark::Joker, 2, joker, 2);
 			Assert::IsTrue(isOK);
+		}
+
+		TEST_METHOD(TestCreatePoker)
+		{
+			bool isOK = false;
+			int card[54];
+			isOK = _poker->CreatePoker(card, 54);
+			Assert::IsTrue(isOK);
+			int cards[54];
+			isOK = _poker->CreatePoker(1, cards, 54);
+			Assert::IsTrue(isOK);
+			int cards1[108];
+			isOK = _poker->CreatePoker(2, cards1, 108);
+			Assert::IsTrue(isOK);
+			int cards2[162];
+			isOK = _poker->CreatePoker(3, cards2, 162);
+			Assert::IsTrue(isOK);
+		}
+
+		TEST_METHOD(TestValueToMark)
+		{
+			bool isOK = false;
+			CardMark mark;
+			isOK = _poker->ValueToMark(100, mark);
+			Assert::IsTrue(isOK);
+		}
+
+		TEST_METHOD(TestValueToWeightValue_p4)
+		{
+			bool isOK = false;
+			int cards[54];
+			isOK = _poker->CreatePoker(cards, 54);
+			Assert::IsTrue(isOK);
+			int outCards[54];
+			isOK = _poker->ValueToWeightValue(cards, 54, outCards, 54);
+
+		}
+
+		TEST_METHOD(TestCompareValue)
+		{
+			int cmp, val1, val2;
+			val1 = 13;
+			val2 = 33;
+			cmp = _poker->CompareValue(val1, val2);
+			Assert::AreEqual<int>(0, cmp);
+			val1 = 83;
+			val2 = 10083;
+			cmp = _poker->CompareValue(val1, val2);
+			Assert::AreEqual<int>(0, cmp);
+
+		}
+
+		TEST_METHOD(CompareCardNumber)
+		{
+			int cmp;
+			CardNumber num1, num2;
+			num1 = CardNumber::C_RJ;
+			num2 = CardNumber::C_K;
+			cmp = _poker->CompareValue(num1, num2);
+			Assert::AreEqual<int>(1, cmp);
+			num1 = CardNumber::C_A;
+			num2 = CardNumber::C_K;
+			cmp = _poker->CompareValue(num1, num2);
+			Assert::AreEqual<int>(-1, cmp);
+			num1 = CardNumber::C_2;
+			num2 = CardNumber::C_2;
+			cmp = _poker->CompareValue(num1, num2);
+			Assert::AreEqual<int>(0, cmp);
+
+		}
+
+		TEST_METHOD(TestIsCardValue)
+		{
+			bool isOK = false;
+			int card[54];
+			isOK = _poker->CreatePoker(card, 54);
+			Assert::IsTrue(isOK);
+			isOK = _poker->IsCardValue(card, 54);
+			Assert::IsTrue(isOK);
+			int cards[54];
+			isOK = _poker->CreatePoker(1, cards, 54);
+			Assert::IsTrue(isOK);
+			isOK = _poker->IsCardValue(cards, 54);
+			Assert::IsTrue(isOK);
+			int cards1[108];
+			isOK = _poker->CreatePoker(2, cards1, 108);
+			Assert::IsTrue(isOK);
+			isOK = _poker->IsCardValue(cards1, 108);
+			Assert::IsTrue(isOK);
+			int cards2[162];
+			isOK = _poker->CreatePoker(3, cards2, 162);
+			Assert::IsTrue(isOK);
+			isOK = _poker->IsCardValue(cards2, 162);
+			Assert::IsTrue(isOK);
+			int errCards[] = {1,11,16,18};
+			isOK = _poker->IsCardValue(errCards, 4);
+			Assert::IsFalse(isOK);
 		}
 
 	};

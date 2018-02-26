@@ -21,9 +21,15 @@
     <ClInclude Include="PokerDefine.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DouDiZhuLogic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokerLogic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DouDiZhuLogic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

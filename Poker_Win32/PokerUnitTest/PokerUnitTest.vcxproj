@@ -169,7 +169,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="unittest1.cpp" />
+    <ClCompile Include="DouDiZhuLogicTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Poker_Win32\Poker_Win32.vcxproj">

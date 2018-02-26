@@ -25,7 +25,7 @@ enum CardMark
 	/// 王
 	/// </summary>
 	Joker = 4
-}Card_Mark;
+};
 
 /// <summary>
 /// 扑克牌字面值枚举
@@ -47,4 +47,4 @@ enum CardNumber
 	C_K = 12,   //K
 	C_BJ = 82,  //小王
 	C_RJ = 83   //大王
-}Card_Number;
+};

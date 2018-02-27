@@ -313,12 +313,12 @@ bool Poker::PokerLogic::IsCardValue(const int *values, const int len)
 	return result;
 }
 
-bool Poker::PokerLogic::Shuffle(const int *cards, const int cardsLen, int *outCards, const int outCardsLen)
+bool Poker::PokerLogic::Shuffle(int *cards, const int cardsLen)
 {
 	bool result = false;
 	try
 	{
-		if (NULL != cards && NULL != outCards && cardsLen == outCardsLen)
+		if (NULL != cards && cardsLen > 0)
 		{
 			srand(time(NULL));
 			int *rndArr = new int[cardsLen];
@@ -328,6 +328,7 @@ bool Poker::PokerLogic::Shuffle(const int *cards, const int cardsLen, int *outCa
 				rndArr[i] = rnd;
 			}
 			//Î´Ð´Íê
+			Sort(rndArr, cardsLen, cards, cardsLen);
 			delete[] rndArr;
 			result = true;
 		}
@@ -427,6 +428,37 @@ int Poker::PokerLogic::CardNumberToWeightValue(const CardNumber num)
 			default:
 				result = -1;
 				break;
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool Poker::PokerLogic::Sort(int *cards, const int cardsLen, int *outCards, const int outCardsLen)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && NULL != outCards && cardsLen == outCardsLen)
+		{
+			for (int i = 0; i < cardsLen; ++i)
+			{
+				for (int j = 0; j < cardsLen - 1; ++j)
+				{
+					if (cards[j] < cards[j + 1])
+					{
+						int tmp = cards[j];
+						cards[j] = cards[j + 1];
+						cards[j + 1] = tmp;
+						int tmpCard = outCards[j];
+						outCards[j] = outCards[j + 1];
+						outCards[j + 1] = tmpCard;
+					}
+				}
+			}
 		}
 	}
 	catch (exception err)

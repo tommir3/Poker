@@ -114,7 +114,7 @@ namespace Poker
 		outCardsLen: 乱序扑克牌数组长度
 		return: 成功返回true，失败返回false，异常抛出
 		*/
-		__declspec(dllexport) bool Shuffle(const int *cards, const int cardsLen, int *outCards, const int outCardsLen);
+		__declspec(dllexport) bool Shuffle(int *cards, const int cardsLen);
 
 	private:
 		/*
@@ -134,5 +134,14 @@ namespace Poker
 		bool WeightValueToNumber(const int w_val, CardNumber& cardNum);
 		int ValueToWeightValue(const int value, const CardMark mark);
 		int CardNumberToWeightValue(const CardNumber num);
+		/*
+		根据参考数组进行排序
+		reference: 参考数组
+		referenceLen: 参数数据长度
+		outCards: 实际进行排序的数组
+		couCardsLen: 实际排序数组长度
+		return: 成功返回true，失败返回false，异常抛出
+		*/
+		bool Sort(int *reference, const int referenceLen, int *outCards, const int couCardsLen);
 	};
 }

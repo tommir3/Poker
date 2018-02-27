@@ -178,7 +178,13 @@ namespace PokerUnitTest
 
 		TEST_METHOD(TestShuffle)
 		{
-
+			bool isOK = false;
+			int cards[54];
+			isOK = _poker->CreatePoker(cards, 54);
+			Assert::IsTrue(isOK);
+			int sCards[54];
+			isOK = _poker->Shuffle(cards, 54, sCards, 54);
+			Assert::IsTrue(isOK);
 		}
 
 	};

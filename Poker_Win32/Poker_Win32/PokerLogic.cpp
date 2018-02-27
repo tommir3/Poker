@@ -312,6 +312,33 @@ bool Poker::PokerLogic::IsCardValue(const int *values, const int len)
 	}
 	return result;
 }
+
+bool Poker::PokerLogic::Shuffle(const int *cards, const int cardsLen, int *outCards, const int outCardsLen)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && NULL != outCards && cardsLen == outCardsLen)
+		{
+			srand(time(NULL));
+			int *rndArr = new int[cardsLen];
+			for (int i = 0; i < cardsLen; ++i)
+			{
+				int rnd = rand();
+				rndArr[i] = rnd;
+			}
+			//未写完
+			delete[] rndArr;
+			result = true;
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 /*以下为私有方法*/
 bool Poker::PokerLogic::WeightValueToNumber(const int w_val, CardNumber& outCardNum)
 {

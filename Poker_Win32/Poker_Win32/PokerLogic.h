@@ -1,6 +1,7 @@
 #pragma once
 #include "PokerDefine.h"
-#include <exception> 
+#include <exception>
+#include <ctime>
 
 namespace Poker
 {
@@ -105,6 +106,15 @@ namespace Poker
 		return: 验证合法返回true，验证失败返回false，异常抛出
 		*/
 		__declspec(dllexport) bool IsCardValue(const int *values, const int len);
+		/*
+		洗牌（扑克牌数组乱序）
+		cards: 扑克值数组
+		cardsLen: 扑克牌数组长度
+		outCards: 乱序后扑克值数组
+		outCardsLen: 乱序扑克牌数组长度
+		return: 成功返回true，失败返回false，异常抛出
+		*/
+		__declspec(dllexport) bool Shuffle(const int *cards, const int cardsLen, int *outCards, const int outCardsLen);
 
 	private:
 		/*

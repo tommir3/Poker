@@ -176,5 +176,10 @@ namespace PokerUnitTest
 			Assert::IsFalse(isOK);
 		}
 
+		TEST_METHOD(TestShuffle)
+		{
+
+		}
+
 	};
 }

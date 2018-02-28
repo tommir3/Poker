@@ -83,7 +83,7 @@ namespace Poker
 		对比两个扑克牌值
 		value1: 扑克牌值1
 		value1: 扑克牌值2
-		return: 如果card1大于card2，返回1，小于返回-1，返回0表示相等,异常抛出
+		return: 如果value1大于value2，返回1，小于返回-1，返回0表示相等,异常抛出
 		*/
 		__declspec(dllexport) int CompareValue(const int value1, const int value2);
 		/*
@@ -115,6 +115,14 @@ namespace Poker
 		return: 成功返回true，失败返回false，异常抛出
 		*/
 		__declspec(dllexport) bool Shuffle(int *cards, const int cardsLen);
+		/*
+		排序
+		cards: 排序的数组
+		cardsLen: 排序数组长度
+		isAscend: 是否升序 true:从小到大排序; false:从大到小排序
+		return: 成功排序返回true, 失败返回false, 异常抛出
+		*/
+		_declspec(dllexport) void Sort(int *cards, const int cardsLen, const bool isAscend);
 
 	private:
 		/*
@@ -142,6 +150,6 @@ namespace Poker
 		couCardsLen: 实际排序数组长度
 		return: 成功返回true，失败返回false，异常抛出
 		*/
-		bool Sort(int *reference, const int referenceLen, int *outCards, const int couCardsLen);
+		bool SortByArray(int *reference, const int referenceLen, int *outCards, const int couCardsLen);
 	};
 }

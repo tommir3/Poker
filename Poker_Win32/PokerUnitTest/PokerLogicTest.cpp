@@ -179,12 +179,105 @@ namespace PokerUnitTest
 		TEST_METHOD(TestShuffle)
 		{
 			bool isOK = false;
-			int cards[54];
-			isOK = _poker->CreatePoker(cards, 54);
+			int len;
+			len = 54;
+			int *cards = new int[len];
+			isOK = _poker->CreatePoker(cards, len);
 			Assert::IsTrue(isOK);
-			int sCards[54];
-			isOK = _poker->Shuffle(cards, 54, sCards, 54);
+			isOK = _poker->Shuffle(cards, len);
 			Assert::IsTrue(isOK);
+			isOK = _poker->IsCardValue(cards, len);
+			Assert::IsTrue(isOK);
+			isOK = IsSameCard(cards, len);
+			Assert::IsTrue(isOK);
+			delete[] cards;
+
+			int cards1[108];
+			isOK = _poker->CreatePoker(2, cards1, 108);
+			Assert::IsTrue(isOK);
+			isOK = _poker->Shuffle(cards1, 108);
+			Assert::IsTrue(isOK);
+			isOK = _poker->IsCardValue(cards1, 108);
+			Assert::IsTrue(isOK);
+			isOK = IsSameCard(cards1, 108);
+			Assert::IsTrue(isOK);
+		}
+
+		TEST_METHOD(TestSort)
+		{
+			bool isOK = false;
+			int cards1[108];
+			isOK = _poker->CreatePoker(2, cards1, 108);
+			Assert::IsTrue(isOK);
+			isOK = _poker->Shuffle(cards1, 108);
+			Assert::IsTrue(isOK);
+			isOK = _poker->IsCardValue(cards1, 108);
+			Assert::IsTrue(isOK);
+			isOK = IsSameCard(cards1, 108);
+			Assert::IsTrue(isOK);
+			_poker->Sort(cards1, 108, true);
+			isOK = IsSortRight(cards1, 108, true);
+			Assert::IsTrue(isOK);
+			_poker->Sort(cards1, 108, false);
+			isOK = IsSortRight(cards1, 108, false);
+			Assert::IsTrue(isOK);
+		}
+
+		/*是否有重复的牌*/
+		bool IsSameCard(const int *cards, const int len)
+		{
+			bool result = false;
+			try
+			{
+				if (NULL != cards && len > 0)
+				{
+					for (int i = 1; i < len; ++i)
+					{
+						int cmpVal = cards[i];
+						for (int j = 0; j < len; ++j)
+						{
+							if (cmpVal == cards[j] && i != j)
+							{
+								return false;
+							}
+						}
+					}
+					result = true;
+				}
+			}
+			catch (char* err)
+			{
+				result = false;
+			}
+			return result;
+		}
+		/*判断排序是否正确*/
+		bool IsSortRight(const int *cards, const int len, bool isAscend)
+		{
+			bool result = false;
+			try
+			{
+				if (NULL != cards && len > 0)
+				{
+					for (int i = 0; i < len - 1; ++i)
+					{
+						if (isAscend && cards[i] > cards[i + 1])
+						{
+							return false;
+						}
+						else if(!isAscend && cards[i] < cards[i + 1])
+						{
+							return false;
+						}
+					}
+					result = true;
+				}
+			}
+			catch (char* err)
+			{
+				result = false;
+			}
+			return result;
 		}
 
 	};

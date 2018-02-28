@@ -327,8 +327,7 @@ bool Poker::PokerLogic::Shuffle(int *cards, const int cardsLen)
 				int rnd = rand();
 				rndArr[i] = rnd;
 			}
-			//未写完
-			Sort(rndArr, cardsLen, cards, cardsLen);
+			SortByArray(rndArr, cardsLen, cards, cardsLen);
 			delete[] rndArr;
 			result = true;
 		}
@@ -338,6 +337,43 @@ bool Poker::PokerLogic::Shuffle(int *cards, const int cardsLen)
 		throw(err);
 	}
 	return result;
+}
+
+void Poker::PokerLogic::Sort(int *cards, const int cardsLen, const bool isAscend)
+{
+	try
+	{
+		if (NULL != cards && cardsLen > 0)
+		{
+			for (int i = 0; i < cardsLen; ++i)
+			{
+				for (int j = 0; j < cardsLen - 1; ++j)
+				{
+					if (isAscend)
+					{
+						if (cards[j] <= cards[j + 1])
+						{
+							continue;
+						}
+					}
+					else
+					{
+						if (cards[j] >= cards[j + 1])
+						{
+							continue;
+						}
+					}
+					int tmp = cards[j];
+					cards[j] = cards[j + 1];
+					cards[j + 1] = tmp;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
 }
 
 /*以下为私有方法*/
@@ -437,7 +473,7 @@ int Poker::PokerLogic::CardNumberToWeightValue(const CardNumber num)
 	return result;
 }
 
-bool Poker::PokerLogic::Sort(int *cards, const int cardsLen, int *outCards, const int outCardsLen)
+bool Poker::PokerLogic::SortByArray(int *cards, const int cardsLen, int *outCards, const int outCardsLen)
 {
 	bool result = false;
 	try

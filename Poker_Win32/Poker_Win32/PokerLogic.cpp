@@ -241,6 +241,45 @@ bool Poker::PokerLogic::ValueToWeightValue(const int values[], const int valuesL
 	return result;
 }
 
+bool Poker::PokerLogic::ValueToCardNumber(const int value, CardNumber &cardNum)
+{
+	bool result = false;
+	try
+	{
+		CardMark mark;
+		result = ValueToCard(value, mark, cardNum);
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool Poker::PokerLogic::ValueToCardNumber(const int values[], const int valuesLen, CardNumber *cardNums, const int cardNumsLen)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != values && valuesLen > 0 && NULL != cardNums && valuesLen == cardNumsLen)
+		{
+			for (int i = 0; i < valuesLen; ++i)
+			{
+				result = ValueToCardNumber(values[i], cardNums[i]);
+				if (!result)
+				{
+					break;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 int Poker::PokerLogic::CompareValue(const int value1, const int value2)
 {
 	int result = 0;
@@ -374,6 +413,77 @@ void Poker::PokerLogic::Sort(int *cards, const int cardsLen, const bool isAscend
 	{
 		throw(err);
 	}
+}
+
+bool Poker::PokerLogic::IsFindValue(const int *cards, const int len, const int val)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && len > 0)
+		{
+			for (int i = 0; i < len; ++i)
+			{
+				if (cards[i] == val)
+				{
+					result = true;
+					break;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool Poker::PokerLogic::IsFindValue(const CardNumber *cards, const int len, const CardNumber val)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && len > 0)
+		{
+			for (int i = 0; i < len; ++i)
+			{
+				if (cards[i] == val)
+				{
+					result = true;
+					break;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+int Poker::PokerLogic::FindCount(const CardNumber *cards, const int len, const CardNumber val)
+{
+	int result = 0;
+	try
+	{
+		if (NULL != cards && len > 0)
+		{
+			for (int i = 0; i < len; ++i)
+			{
+				if (cards[i] == val)
+				{
+					result++;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
 }
 
 /*以下为私有方法*/

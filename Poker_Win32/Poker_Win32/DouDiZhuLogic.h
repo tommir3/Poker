@@ -29,6 +29,26 @@ namespace DouDiZhu
 
 		__declspec(dllexport) bool IsThreePair(const int *cards, const int len);
 
+		__declspec(dllexport) bool IsFourSingle(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsFourPair(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsPlane(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsPlaneSingle(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsPlanePair(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsThreePlane(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsThreePlaneSingle(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsThreePlanePair(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsFourPlane(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsFourPlaneSingle(const int *cards, const int len);
+
 	private:
 		/*
 		判断是否全部相同
@@ -45,6 +65,16 @@ namespace DouDiZhu
 		return: 有指定相同牌返回true, 没有返回false, 异常抛出
 		*/
 		bool IsSame(const int *cards, const int len, const int sameCount, CardNumber &sameNumber);
-
+		/*
+		找出相同牌的数量
+		cards: 牌值数组
+		cardsLen: 数组长度
+		numArr: 牌面值数组
+		sumArr: 每个牌面值数量数组
+		arrLen: 牌面值数组和牌面数量数组长度
+		return: 成功找出返回true, 失败返回false, 异常抛出
+		*/
+		bool FindNumberCount(const int *cards, const int cardsLen, CardNumber *numArr, int *sumArr, const int arrLen);
+		//bool GetSame(const int *cards, const int cardsLen, const int sameCount, CardNumber *sameNumber, int &sameLen);
 	};
 }

@@ -80,6 +80,22 @@ namespace Poker
 		*/
 		__declspec(dllexport) bool ValueToWeightValue(const int values[], const int valuesLen, int *cards, const int cardsLen);
 		/*
+		扑克值转牌面值
+		value: 扑克代码值
+		cardNum: 转换后的扑克牌面值
+		return: 成功返回true,失败返回false,异常抛出
+		*/
+		__declspec(dllexport) bool ValueToCardNumber(const int value,  CardNumber &cardNum);
+		/*
+		扑克值数组转牌面值数组
+		values: 扑克代码值数组
+		valuesLen: 扑克代码值数组长度
+		cardNums: 转换后的扑克牌面值数据
+		cardNumsLen: 转换后的扑克牌面值数据长度
+		return: 成功返回true,失败返回false,异常抛出
+		*/
+		__declspec(dllexport) bool ValueToCardNumber(const int values[], const int valuesLen, CardNumber *cardNums, const int cardNumsLen);
+		/*
 		对比两个扑克牌值
 		value1: 扑克牌值1
 		value1: 扑克牌值2
@@ -122,7 +138,31 @@ namespace Poker
 		isAscend: 是否升序 true:从小到大排序; false:从大到小排序
 		return: 成功排序返回true, 失败返回false, 异常抛出
 		*/
-		_declspec(dllexport) void Sort(int *cards, const int cardsLen, const bool isAscend);
+		__declspec(dllexport) void Sort(int *cards, const int cardsLen, const bool isAscend);
+		/*
+		是否有相同的值
+		cards: 牌数组
+		len: 数组长度
+		val: 比对的值
+		return: 找到返回true, 没有返回false, 异常抛出
+		*/
+		__declspec(dllexport) bool IsFindValue(const int *cards, const int len, const int val);
+		/*
+		是否有相同的值
+		cards: 牌数组
+		len: 数组长度
+		val: 比对的值
+		return: 找到返回true, 没有返回false, 异常抛出
+		*/
+		__declspec(dllexport) bool IsFindValue(const CardNumber *cards, const int len, const CardNumber val);
+		/*
+		找出牌在数组中出现的次数
+		cards: 牌数组
+		len: 数组长度
+		val: 比对的值
+		return: 找到返回匹配数量, 没有返回0, 异常抛出
+		*/
+		__declspec(dllexport) int FindCount(const CardNumber *cards, const int len, const CardNumber val);
 
 	private:
 		/*

@@ -119,5 +119,101 @@ namespace PokerUnitTest1
 			delete[] cards;
 		}
 
+		TEST_METHOD(TestIsThreePair)
+		{
+			bool isOK = false;
+			const int len = 5;
+			int card1, card2, card3, card4, card5;
+			int *cards = NULL;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			cards = new int[len] { card1, card2, card3, card4, card5 };
+			isOK = _ddz->IsThreePair(cards, len);
+			Assert::IsTrue(isOK);
+			delete[] cards;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_Q);
+			cards = new int[len] { card1, card2, card3, card4, card5 };
+			isOK = _ddz->IsThreePair(cards, len);
+			Assert::IsFalse(isOK);
+			delete[] cards;
+		}
+
+		TEST_METHOD(TestIsFourSingle)
+		{
+			bool isOK = false;
+			const int len = 6;
+			int card1, card2, card3, card4, card5, card6, card7, card8;
+			int *cards = NULL;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
+			isOK = _ddz->IsFourSingle(cards, len);
+			Assert::IsTrue(isOK);
+			delete[] cards;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
+			isOK = _ddz->IsFourSingle(cards, len);
+			Assert::IsTrue(isOK);
+			delete[] cards;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
+			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
+			isOK = _ddz->IsFourSingle(cards, len);
+			Assert::IsFalse(isOK);
+			delete[] cards;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_8);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
+			cards = new int[8] { card1, card2, card3, card4, card5, card6, card7, card8 };
+			isOK = _ddz->IsFourSingle(cards, 8);
+			Assert::IsFalse(isOK);
+			delete[] cards;
+		}
+
+		TEST_METHOD(TestIsFourPair)
+		{
+			bool isOK = false;
+			const int len = 8;
+			int card1, card2, card3, card4, card5, card6, card7, card8;
+			int *cards = NULL;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
+			cards = new int[len]{ card1, card2, card3, card4, card5, card6, card7, card8 };
+			isOK = _ddz->IsFourPair(cards, len);
+			Assert::IsTrue(isOK);
+			delete[] cards;
+		}
+
 	};
 }

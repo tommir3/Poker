@@ -49,6 +49,12 @@ namespace DouDiZhu
 
 		__declspec(dllexport) bool IsFourPlaneSingle(const int *cards, const int len);
 
+		__declspec(dllexport) bool IsStraightSingle(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsStraightPair(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsKingBomb(const int *cards, const int len);
+
 	private:
 		/*
 		判断是否全部相同
@@ -65,6 +71,8 @@ namespace DouDiZhu
 		return: 有指定相同牌返回true, 没有返回false, 异常抛出
 		*/
 		bool IsSame(const int *cards, const int len, const int sameCount, CardNumber &sameNumber);
+		
+		bool FindNumberCount(const int *cards, const int cardsLen, CardNumberSum *sumArr, const int arrLen);
 		/*
 		找出相同牌的数量
 		cards: 牌值数组
@@ -75,6 +83,16 @@ namespace DouDiZhu
 		return: 成功找出返回true, 失败返回false, 异常抛出
 		*/
 		bool FindNumberCount(const int *cards, const int cardsLen, CardNumber *numArr, int *sumArr, const int arrLen);
+		/*
+		是否是X数量的飞机
+		cardNums: 牌面值数组(cardNums必须从小到大排序，否则无法准确查找)
+		cardNumsLen: 牌面值数组长度
+		x: 指定数量
+		return: 成功找出返回true, 失败返回false, 异常抛出
+		*/
+		bool IsXPlane(const CardNumberSum *cardNums, const int cardNumsLen, const int index, const int planeCount);
+
+		void SortCardNumberSum(CardNumberSum *cnsArr, const int cnsArrLen);
 		//bool GetSame(const int *cards, const int cardsLen, const int sameCount, CardNumber *sameNumber, int &sameLen);
 	};
 }

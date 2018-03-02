@@ -215,5 +215,55 @@ namespace PokerUnitTest1
 			delete[] cards;
 		}
 
+		TEST_METHOD(TestIsPlane)
+		{
+			bool isOK = false;
+			const int len = 6;
+			int card1, card2, card3, card4, card5, card6, card7, card8;
+			int *cards = NULL;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
+			isOK = _ddz->IsPlane(cards, len);
+			Assert::IsTrue(isOK);
+			delete[] cards;
+		}
+
+		TEST_METHOD(TestIsPlaneSingle)//测试没有通过
+		{
+			bool isOK = false;
+			const int len = 8;
+			int card1, card2, card3, card4, card5, card6, card7, card8;
+			int *cards = NULL;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
+			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8 };
+			isOK = _ddz->IsPlaneSingle(cards, len);
+			Assert::IsFalse(isOK);
+			delete[] cards;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
+			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8 };
+			isOK = _ddz->IsPlaneSingle(cards, len);
+			Assert::IsTrue(isOK);
+			delete[] cards;
+		}
+
 	};
 }

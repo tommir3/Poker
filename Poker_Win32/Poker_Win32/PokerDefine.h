@@ -48,3 +48,9 @@ enum CardNumber
 	C_BJ = 82,  //小王
 	C_RJ = 83   //大王
 };
+
+struct CardNumberSum
+{
+	CardNumber num;
+	int count;
+};

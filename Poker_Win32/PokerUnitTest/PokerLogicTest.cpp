@@ -261,11 +261,18 @@ namespace PokerUnitTest
 				{
 					for (int i = 0; i < len - 1; ++i)
 					{
-						if (isAscend && cards[i] > cards[i + 1])
+						CardNumber num1,num2;
+						bool isOK1 = _poker->ValueToCardNumber(cards[i], num1);
+						bool isOK2 = _poker->ValueToCardNumber(cards[i + 1], num2);
+						if (!isOK1 || !isOK2)
 						{
 							return false;
 						}
-						else if(!isAscend && cards[i] < cards[i + 1])
+						if (isAscend && num1 > num2)
+						{
+							return false;
+						}
+						else if(!isAscend && num1 < num2)
 						{
 							return false;
 						}

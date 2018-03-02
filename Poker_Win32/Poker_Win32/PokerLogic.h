@@ -148,14 +148,6 @@ namespace Poker
 		*/
 		__declspec(dllexport) bool IsFindValue(const int *cards, const int len, const int val);
 		/*
-		是否有相同的值
-		cards: 牌数组
-		len: 数组长度
-		val: 比对的值
-		return: 找到返回true, 没有返回false, 异常抛出
-		*/
-		__declspec(dllexport) bool IsFindValue(const CardNumber *cards, const int len, const CardNumber val);
-		/*
 		找出牌在数组中出现的次数
 		cards: 牌数组
 		len: 数组长度
@@ -188,8 +180,9 @@ namespace Poker
 		referenceLen: 参数数据长度
 		outCards: 实际进行排序的数组
 		couCardsLen: 实际排序数组长度
+		isAscend: 是否是升序 true:升序 false:降序
 		return: 成功返回true，失败返回false，异常抛出
 		*/
-		bool SortByArray(int *reference, const int referenceLen, int *outCards, const int couCardsLen);
+		bool SortByArray(int *reference, const int referenceLen, int *outCards, const int couCardsLen, const bool isAscend);
 	};
 }

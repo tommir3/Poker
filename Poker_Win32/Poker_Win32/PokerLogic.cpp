@@ -366,7 +366,7 @@ bool Poker::PokerLogic::Shuffle(int *cards, const int cardsLen)
 				int rnd = rand();
 				rndArr[i] = rnd;
 			}
-			SortByArray(rndArr, cardsLen, cards, cardsLen);
+			SortByArray(rndArr, cardsLen, cards, cardsLen, true);
 			delete[] rndArr;
 			result = true;
 		}
@@ -380,66 +380,34 @@ bool Poker::PokerLogic::Shuffle(int *cards, const int cardsLen)
 
 void Poker::PokerLogic::Sort(int *cards, const int cardsLen, const bool isAscend)
 {
+	CardNumber *cardNums = NULL;
 	try
 	{
 		if (NULL != cards && cardsLen > 0)
 		{
-			for (int i = 0; i < cardsLen; ++i)
+			CardNumber *cardNums = new CardNumber[cardsLen];
+			bool isOK = PokerLogic::ValueToCardNumber(cards, cardsLen, cardNums, cardsLen);
+			if (isOK)
 			{
-				for (int j = 0; j < cardsLen - 1; ++j)
-				{
-					if (isAscend)
-					{
-						if (cards[j] <= cards[j + 1])
-						{
-							continue;
-						}
-					}
-					else
-					{
-						if (cards[j] >= cards[j + 1])
-						{
-							continue;
-						}
-					}
-					int tmp = cards[j];
-					cards[j] = cards[j + 1];
-					cards[j + 1] = tmp;
-				}
+				SortByArray((int*)cardNums, cardsLen, cards, cardsLen, isAscend);
 			}
+		}
+		if (NULL != cardNums)
+		{
+			delete[] cardNums;
 		}
 	}
 	catch (exception err)
 	{
+		if (NULL != cardNums)
+		{
+			delete[] cardNums;
+		}
 		throw(err);
 	}
 }
 
 bool Poker::PokerLogic::IsFindValue(const int *cards, const int len, const int val)
-{
-	bool result = false;
-	try
-	{
-		if (NULL != cards && len > 0)
-		{
-			for (int i = 0; i < len; ++i)
-			{
-				if (cards[i] == val)
-				{
-					result = true;
-					break;
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool Poker::PokerLogic::IsFindValue(const CardNumber *cards, const int len, const CardNumber val)
 {
 	bool result = false;
 	try
@@ -583,7 +551,7 @@ int Poker::PokerLogic::CardNumberToWeightValue(const CardNumber num)
 	return result;
 }
 
-bool Poker::PokerLogic::SortByArray(int *cards, const int cardsLen, int *outCards, const int outCardsLen)
+bool Poker::PokerLogic::SortByArray(int *cards, const int cardsLen, int *outCards, const int outCardsLen, const bool isAscend)
 {
 	bool result = false;
 	try
@@ -594,15 +562,26 @@ bool Poker::PokerLogic::SortByArray(int *cards, const int cardsLen, int *outCard
 			{
 				for (int j = 0; j < cardsLen - 1; ++j)
 				{
-					if (cards[j] < cards[j + 1])
+					if (isAscend)
 					{
-						int tmp = cards[j];
-						cards[j] = cards[j + 1];
-						cards[j + 1] = tmp;
-						int tmpCard = outCards[j];
-						outCards[j] = outCards[j + 1];
-						outCards[j + 1] = tmpCard;
+						if (cards[j] <= cards[j + 1])
+						{
+							continue;
+						}
 					}
+					else
+					{
+						if (cards[j] >= cards[j + 1])
+						{
+							continue;
+						}
+					}
+					int tmp = cards[j];
+					cards[j] = cards[j + 1];
+					cards[j + 1] = tmp;
+					int tmpCard = outCards[j];
+					outCards[j] = outCards[j + 1];
+					outCards[j + 1] = tmpCard;
 				}
 			}
 		}

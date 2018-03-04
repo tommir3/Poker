@@ -49,6 +49,12 @@ namespace DouDiZhu
 
 		__declspec(dllexport) bool IsFourPlaneSingle(const int *cards, const int len);
 
+		__declspec(dllexport) bool IsFourPlanePair(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsFivePlane(const int *cards, const int len);
+
+		__declspec(dllexport) bool IsFivePlaneSingle(const int *cards, const int len);
+
 		__declspec(dllexport) bool IsStraightSingle(const int *cards, const int len);
 
 		__declspec(dllexport) bool IsStraightPair(const int *cards, const int len);
@@ -56,6 +62,12 @@ namespace DouDiZhu
 		__declspec(dllexport) bool IsKingBomb(const int *cards, const int len);
 
 	private:
+		class CardNumberSum
+		{
+		public:
+			CardNumber num;
+			int count;
+		};
 		/*
 		判断是否全部相同
 		cards: 牌数组
@@ -64,25 +76,22 @@ namespace DouDiZhu
 		*/
 		bool IsAllSame(const int *cards, const int len);
 		/*
-		判断是否有指定数量的相同牌
-		cards: 待验证的牌数组
-		len: 数组长度
-		sameCount: 指定相同牌的数量
-		return: 有指定相同牌返回true, 没有返回false, 异常抛出
-		*/
-		bool IsSame(const int *cards, const int len, const int sameCount, CardNumber &sameNumber);
-		
-		bool FindNumberCount(const int *cards, const int cardsLen, CardNumberSum *sumArr, const int arrLen);
-		/*
 		找出相同牌的数量
 		cards: 牌值数组
 		cardsLen: 数组长度
-		numArr: 牌面值数组
-		sumArr: 每个牌面值数量数组
-		arrLen: 牌面值数组和牌面数量数组长度
+		cnsArr: 牌面值与数量类数组
+		arrLen: 牌面值与数量类数组长度
 		return: 成功找出返回true, 失败返回false, 异常抛出
 		*/
-		bool FindNumberCount(const int *cards, const int cardsLen, CardNumber *numArr, int *sumArr, const int arrLen);
+		bool FindCardNumberCount(const int *cards, const int cardsLen, CardNumberSum *cnsArr, const int arrLen);
+		/*
+		是否存在制定牌面值
+		cnsArr: 牌面值与长度结构数组
+		cnsArrLen: 牌面值与长度结构数组长度
+		cardNum: 制定牌面值
+		return: 成功找出返回true, 失败返回false, 异常抛出
+		*/
+		bool IsExistCardNumber(const CardNumberSum *cnsArr, const int cnsArrLen, const CardNumber cardNum);
 		/*
 		是否是X数量的飞机
 		cardNums: 牌面值数组(cardNums必须从小到大排序，否则无法准确查找)
@@ -91,8 +100,27 @@ namespace DouDiZhu
 		return: 成功找出返回true, 失败返回false, 异常抛出
 		*/
 		bool IsXPlane(const CardNumberSum *cardNums, const int cardNumsLen, const int index, const int planeCount);
-
+		/*
+		排序牌面值与长度结构数组（小到大排序）
+		cnsArr: 牌面值与长度类数组
+		cnsArrLen: 牌面值与长度类数组长度
+		异常抛出
+		*/
 		void SortCardNumberSum(CardNumberSum *cnsArr, const int cnsArrLen);
-		//bool GetSame(const int *cards, const int cardsLen, const int sameCount, CardNumber *sameNumber, int &sameLen);
+		/*
+		设置bool数组正确值(设置true)
+		arr: bool数组
+		arrLen: bool数组长度
+		count: 设置true数量
+		return: 成功设置返回true, 失败返回false, 异常抛出
+		*/
+		bool SetArrayTrue(bool *arr, const int arrLen, const int count);
+		/*
+		判断bool数组是否全部正确（判断是否全为true）
+		arr: bool数组
+		arrLen: bool数组长度
+		return: 全部为true返回true, 否则返回false, 异常抛出
+		*/
+		bool IsArrayTrue(const bool *arr, const int arrLen);
 	};
 }

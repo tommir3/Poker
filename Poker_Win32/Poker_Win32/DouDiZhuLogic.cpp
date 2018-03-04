@@ -1,5 +1,4 @@
 #include "DouDiZhuLogic.h"
-#include <vector>
 
 DouDiZhu::DouDiZhuLogic::DouDiZhuLogic() : PokerLogic(14,15,3,4,5,6,7,8,9,10,11,12,13,82,83)
 {
@@ -67,13 +66,17 @@ bool DouDiZhu::DouDiZhuLogic::IsThreeSingle(const int *cards, const int len)
 	bool result = false;
 	try
 	{
-		if (len == 4)
+		if (NULL != cards && len == 4)
 		{
-			bool isSameFour = IsFour(cards, len);
-			if (!isSameFour)
+			const int arrLen = 2;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
 			{
-				CardNumber num;
-				result = IsSame(cards, len, 3, num);
+				if (cnsArr[0].count == 3 || cnsArr[1].count == 3)
+				{
+					result = true;
+				}
 			}
 		}
 	}
@@ -92,14 +95,13 @@ bool DouDiZhu::DouDiZhuLogic::IsThreePair(const int *cards, const int len)
 		if (NULL != cards && len == 5)
 		{
 			const int arrLen = 2;
-			CardNumber numArr[arrLen];
-			int sumArr[arrLen];
-			bool isOK = FindNumberCount(cards, len, numArr, sumArr, arrLen);
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
 			if (isOK)
 			{
-				if (sumArr[0] + sumArr[1] == 5
+				if (cnsArr[0].count + cnsArr[1].count == 5
 					&& 
-					((sumArr[0] == 3 || sumArr[2] == 2) || (sumArr[0] == 2 || sumArr[2] == 3)))
+					((cnsArr[0].count == 3 || cnsArr[2].count == 2) || (cnsArr[0].count == 2 || cnsArr[2].count == 3)))
 				{
 					result = true;
 				}
@@ -120,8 +122,20 @@ bool DouDiZhu::DouDiZhuLogic::IsFourSingle(const int *cards, const int len)
 	{
 		if (NULL != cards && len == 6)
 		{
-			CardNumber num;
-			result = IsSame(cards, len, 4, num);
+			const int arrLen = 3;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				for (int i = 0; i < arrLen; ++i)
+				{
+					if (cnsArr[i].count == 4)
+					{
+						result = true;
+						break;
+					}
+				}
+			}
 		}
 	}
 	catch (exception err)
@@ -139,9 +153,8 @@ bool DouDiZhu::DouDiZhuLogic::IsFourPair(const int *cards, const int len)
 		if (NULL != cards && len == 8)
 		{
 			const int arrLen = 3;
-			CardNumber numArr[arrLen];
-			int sumArr[arrLen];
-			bool isOK = FindNumberCount(cards, len, numArr, sumArr, arrLen);
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
 			if (isOK)
 			{
 				bool isFour = false;
@@ -149,7 +162,12 @@ bool DouDiZhu::DouDiZhuLogic::IsFourPair(const int *cards, const int len)
 				bool isPair2 = false;
 				for (int i = 0; i < arrLen; ++i)
 				{
-					if (sumArr[i] == 4)
+					if (cnsArr[i].count == 1)
+					{
+						isFour = false;
+						break;
+					}
+					else if (cnsArr[i].count == 4)
 					{
 						if (isFour)
 						{
@@ -159,7 +177,7 @@ bool DouDiZhu::DouDiZhuLogic::IsFourPair(const int *cards, const int len)
 						}
 						isFour = true;
 					}
-					else if (sumArr[i] == 2)
+					else if (cnsArr[i].count == 2)
 					{
 						if (isPair1)
 						{
@@ -190,19 +208,21 @@ bool DouDiZhu::DouDiZhuLogic::IsPlane(const int *cards, const int len)
 	bool result = false;
 	try
 	{
-		const int arrLen = 2;
-		CardNumberSum cnsArr[arrLen];
-		bool isOK = FindNumberCount(cards, len, cnsArr, arrLen);
-		if (isOK)
+		if (NULL != cards && len == 6)
 		{
-			//sort cnsArr
-			SortCardNumberSum(cnsArr, arrLen);
-			for (int i = 0; i < arrLen; ++i)
+			const int arrLen = 2;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
 			{
-				isOK = IsXPlane(cnsArr, arrLen, 0, 2);
-				if (isOK)
+				SortCardNumberSum(cnsArr, arrLen);
+				for (int i = 0; i < arrLen; ++i)
 				{
-					result = true;
+					isOK = IsXPlane(cnsArr, arrLen, 0, 2);
+					if (isOK)
+					{
+						result = true;
+					}
 				}
 			}
 		}
@@ -219,61 +239,23 @@ bool DouDiZhu::DouDiZhuLogic::IsPlaneSingle(const int *cards, const int len)
 	bool result = false;
 	try
 	{
-		const int arrLen = 4;
-		CardNumberSum cnsArr[arrLen];
-		bool isOK = FindNumberCount(cards, len, cnsArr, arrLen);
-		if (isOK)
+		if (NULL != cards && len == 8)
 		{
-			//sort cnsArr
-			SortCardNumberSum(cnsArr, arrLen);
-			bool isPlane = false;
-			bool isSingle1 = false;
-			bool isSingle2 = false;
-			for (int i = 0; i < arrLen; ++i)
+			const int arrLen = 4;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
 			{
-				isOK = IsXPlane(cnsArr, arrLen, i, 2);
-				if (isOK)
+				SortCardNumberSum(cnsArr, arrLen);
+				for (int i = 0; i < arrLen; ++i)
 				{
-					result = true;
-				}
-				else
-				{
-					if (cnsArr[i].count == 1)
+					isOK = IsXPlane(cnsArr, arrLen, i, 2);
+					if (isOK)
 					{
-						if (isSingle2)//已出现2个单，再出现单直接退出不是飞机带2单
-						{
-							isPlane = false;
-							break;
-						}
-						if (isSingle1)
-						{
-							isSingle2 = true;
-						}
-						else
-						{
-							isSingle1 = true;
-						}
-					}
-					else if (cnsArr[i].count == 2)
-					{
-						if (isSingle2)//已出现2个单，再出现双直接退出不是飞机带2单
-						{
-							isPlane = false;
-							break;
-						}
-						isSingle1 = true;
-						isSingle2 = true;
-					}
-					else if (arrLen - (i + 1) < 2)
-					{
-						isPlane = false;
+						result = true;
 						break;
 					}
 				}
-			}
-			if (isPlane && isSingle1 && isSingle2)
-			{
-				result = true;
 			}
 		}
 	}
@@ -289,7 +271,54 @@ bool DouDiZhu::DouDiZhuLogic::IsPlanePair(const int *cards, const int len)
 	bool result = false;
 	try
 	{
-
+		if (NULL != cards && len == 10)
+		{
+			const int arrLen = 4;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				bool isPlane = false;
+				bool arrIsPair[2] = { false,false };
+				for (int i = 0; i < arrLen; )
+				{
+					isOK = IsXPlane(cnsArr, arrLen, i, 2);
+					if (isOK)
+					{
+						isPlane = true;
+						i += 2;
+					}
+					else
+					{
+						if (cnsArr[i].count == 1)
+						{
+							isPlane = false;
+							break;
+						}
+						else if (cnsArr[i].count == 2 || cnsArr[i].count == 4)
+						{
+							int tmpCount = cnsArr[i].count / 2;
+							isOK = SetArrayTrue(arrIsPair, 2, tmpCount);
+							if (!isOK)
+							{
+								isPlane = false;
+								break;
+							}
+						}
+						++i;
+					}
+				}
+				if (isPlane)
+				{
+					bool isPairOk = IsArrayTrue(arrIsPair, 2);
+					if (isPairOk)
+					{
+						result = true;
+					}
+				}
+			}
+		}
 	}
 	catch (exception err)
 	{
@@ -303,7 +332,17 @@ bool DouDiZhu::DouDiZhuLogic::IsThreePlane(const int *cards, const int len)
 	bool result = false;
 	try
 	{
-
+		if (NULL != cards && len == 9)
+		{
+			const int arrLen = 3;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				result = IsXPlane(cnsArr, arrLen, 0, 3);
+			}
+		}
 	}
 	catch (exception err)
 	{
@@ -317,7 +356,25 @@ bool DouDiZhu::DouDiZhuLogic::IsThreePlaneSingle(const int *cards, const int len
 	bool result = false;
 	try
 	{
-
+		if (NULL != cards && len == 12)
+		{
+			const int arrLen = 6;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				for (int i = 0; i < arrLen; ++i)
+				{
+					isOK = IsXPlane(cnsArr, arrLen, i, 3);
+					if (isOK)
+					{
+						result = true;
+						break;
+					}
+				}
+			}
+		}
 	}
 	catch (exception err)
 	{
@@ -331,7 +388,54 @@ bool DouDiZhu::DouDiZhuLogic::IsThreePlanePair(const int *cards, const int len)
 	bool result = false;
 	try
 	{
-
+		if (NULL != cards && len == 15)
+		{
+			const int arrLen = 6;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				bool isPlane = false;
+				bool arrIsPair[3] = { false,false,false };
+				for (int i = 0; i < arrLen; )
+				{
+					isOK = IsXPlane(cnsArr, arrLen, i, 3);
+					if (isOK)
+					{
+						isPlane = true;
+						i += 3;
+					}
+					else
+					{
+						if (cnsArr[i].count == 1)
+						{
+							isPlane = false;
+							break;
+						}
+						else if (cnsArr[i].count == 2 || cnsArr[i].count == 4)
+						{
+							int tmpCount = cnsArr[i].count / 2;
+							isOK = SetArrayTrue(arrIsPair, 3, tmpCount);
+							if (!isOK)
+							{
+								isPlane = false;
+								break;
+							}
+						}
+						++i;
+					}
+				}
+				if (isPlane)
+				{
+					bool isPairOk = IsArrayTrue(arrIsPair, 3);
+					if (isPairOk)
+					{
+						result = true;
+					}
+				}
+			}
+		}
 	}
 	catch (exception err)
 	{
@@ -345,7 +449,17 @@ bool DouDiZhu::DouDiZhuLogic::IsFourPlane(const int *cards, const int len)
 	bool result = false;
 	try
 	{
-
+		if (NULL != cards && len == 12)
+		{
+			const int arrLen = 4;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				result = IsXPlane(cnsArr, arrLen, 0, 4);
+			}
+		}
 	}
 	catch (exception err)
 	{
@@ -359,7 +473,142 @@ bool DouDiZhu::DouDiZhuLogic::IsFourPlaneSingle(const int *cards, const int len)
 	bool result = false;
 	try
 	{
+		if (NULL != cards && len == 16)
+		{
+			const int arrLen = 8;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				for (int i = 0; i < arrLen; ++i)
+				{
+					isOK = IsXPlane(cnsArr, arrLen, i, 4);
+					if (isOK)
+					{
+						result = true;
+						break;
+					}
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
 
+bool DouDiZhu::DouDiZhuLogic::IsFourPlanePair(const int *cards, const int len)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && len == 20)
+		{
+			const int arrLen = 8;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				bool isPlane = false;
+				bool arrIsPair[4] = { false,false,false,false };
+				for (int i = 0; i < arrLen; )
+				{
+					isOK = IsXPlane(cnsArr, arrLen, i, 4);
+					if (isOK)
+					{
+						isPlane = true;
+						i += 4;
+					}
+					else
+					{
+						if (cnsArr[i].count == 1)
+						{
+							isPlane = false;
+							break;
+						}
+						else if (cnsArr[i].count == 2 || cnsArr[i].count == 4)
+						{
+							int tmpCount = cnsArr[i].count / 2;
+							isOK = SetArrayTrue(arrIsPair, 4, tmpCount);
+							if (!isOK)
+							{
+								isPlane = false;
+								break;
+							}
+						}
+						++i;
+					}
+				}
+				if (isPlane)
+				{
+					bool isPairOk = IsArrayTrue(arrIsPair, 4);
+					if (isPairOk)
+					{
+						result = true;
+					}
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuLogic::IsFivePlane(const int *cards, const int len)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && len == 15)
+		{
+			const int arrLen = 5;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				result = IsXPlane(cnsArr, arrLen, 0, 5);
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuLogic::IsFivePlaneSingle(const int *cards, const int len)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && len == 20)
+		{
+			const int arrLen = 10;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				for (int i = 0; i < arrLen; ++i)
+				{
+					isOK = IsXPlane(cnsArr, arrLen, i, 5);
+					if (isOK)
+					{
+						result = true;
+						break;
+					}
+				}
+			}
+		}
 	}
 	catch (exception err)
 	{
@@ -371,12 +620,42 @@ bool DouDiZhu::DouDiZhuLogic::IsFourPlaneSingle(const int *cards, const int len)
 bool DouDiZhu::DouDiZhuLogic::IsStraightSingle(const int *cards, const int len)
 {
 	bool result = false;
+	CardNumberSum *cnsArr = NULL;
 	try
 	{
-
+		if (NULL != cards && len >= 5)
+		{
+			cnsArr = new CardNumberSum[len];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, len);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, len);
+				bool isStraight = true;
+				for (int i = 0; i < len - 1; ++i)
+				{
+					if (cnsArr[i].count != 1 || cnsArr[i].num == CardNumber::C_2 
+						|| cnsArr[i].num == CardNumber::C_BJ 
+						|| cnsArr[i].num == CardNumber::C_RJ
+						|| cnsArr[i].num + 1 != cnsArr[i + 1].num)
+					{
+						isStraight = false;
+						break;
+					}
+				}
+				result = isStraight;
+			}
+			if (NULL != cnsArr)
+			{
+				delete[] cnsArr;
+			}
+		}
 	}
 	catch (exception err)
 	{
+		if (NULL != cnsArr)
+		{
+			delete[] cnsArr;
+		}
 		throw(err);
 	}
 	return result;
@@ -385,12 +664,43 @@ bool DouDiZhu::DouDiZhuLogic::IsStraightSingle(const int *cards, const int len)
 bool DouDiZhu::DouDiZhuLogic::IsStraightPair(const int *cards, const int len)
 {
 	bool result = false;
+	CardNumberSum *cnsArr = NULL;
 	try
 	{
-
+		if (NULL != cards && len >= 6 && len % 2 == 0)
+		{
+			int cnsArrLen = len / 2;
+			cnsArr = new CardNumberSum[cnsArrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, cnsArrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, cnsArrLen);
+				bool isStraight = true;
+				for (int i = 0; i < cnsArrLen - 1; ++i)
+				{
+					if (cnsArr[i].count != 2 || cnsArr[i].num == CardNumber::C_2
+						|| cnsArr[i].num == CardNumber::C_BJ
+						|| cnsArr[i].num == CardNumber::C_RJ
+						|| cnsArr[i].num + 1 != cnsArr[i + 1].num)
+					{
+						isStraight = false;
+						break;
+					}
+				}
+				result = isStraight;
+			}
+			if (NULL != cnsArr)
+			{
+				delete[] cnsArr;
+			}
+		}
 	}
 	catch (exception err)
 	{
+		if (NULL != cnsArr)
+		{
+			delete[] cnsArr;
+		}
 		throw(err);
 	}
 	return result;
@@ -401,7 +711,20 @@ bool DouDiZhu::DouDiZhuLogic::IsKingBomb(const int *cards, const int len)
 	bool result = false;
 	try
 	{
-
+		if (NULL != cards && len == 2)
+		{
+			CardNumber kingArr[2];
+			bool isOK = PokerLogic::ValueToCardNumber(cards, len, kingArr, 2);
+			if (isOK)
+			{
+				if ((kingArr[0] == CardNumber::C_BJ && kingArr[1] == CardNumber::C_RJ)
+					||
+					(kingArr[1] == CardNumber::C_BJ && kingArr[0] == CardNumber::C_RJ))
+				{
+					result = true;
+				}
+			}
+		}
 	}
 	catch (exception err)
 	{
@@ -411,12 +734,7 @@ bool DouDiZhu::DouDiZhuLogic::IsKingBomb(const int *cards, const int len)
 }
 
 
-
-
-
-
-
-/*以下为私有方法*/
+/*=======================以下为私有方法=======================*/
 
 bool DouDiZhu::DouDiZhuLogic::IsAllSame(const int *cards, const int len)
 {
@@ -443,71 +761,7 @@ bool DouDiZhu::DouDiZhuLogic::IsAllSame(const int *cards, const int len)
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuLogic::IsSame(const int *cards, const int len, const int sameCount, CardNumber &sameNumber)
-{
-	bool result = false;
-	CardNumber *cardNums = NULL;
-	try
-	{
-		if (NULL != cards && len >= sameCount && sameCount > 1)
-		{
-			cardNums = new CardNumber[len];
-			bool isOK = PokerLogic::ValueToCardNumber(cards, len, cardNums, len);
-			if (isOK)
-			{
-				for (int i = 0; i < len; ++i)
-				{
-					int count = PokerLogic::FindCount(cardNums, len, cardNums[i]);
-					if (count == sameCount)
-					{
-						result = true;
-						sameNumber = cardNums[i];
-						break;
-					}
-				}
-			}
-			if (NULL != cardNums)
-			{
-				delete[] cardNums;
-			}
-		}
-	}
-	catch (exception err)
-	{
-		if (NULL != cardNums)
-		{
-			delete[] cardNums;
-		}
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::FindNumberCount(const int *cards, const int cardsLen, CardNumberSum *cnsArr, const int arrLen)
-{
-	bool result = false;
-	try
-	{
-		CardNumber *numArr = new CardNumber[arrLen];
-		int *sumArr = new int[arrLen];
-		result = FindNumberCount(cards, cardsLen, numArr, sumArr, arrLen);
-		if (result)
-		{
-			for (int i = 0; i < arrLen; ++i)
-			{
-				cnsArr[i].num = numArr[i];
-				cnsArr[i].count = sumArr[i];
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::FindNumberCount(const int *cards, const int cardsLen, CardNumber *numArr, int *sumArr, const int arrLen)
+bool DouDiZhu::DouDiZhuLogic::FindCardNumberCount(const int *cards, const int cardsLen, CardNumberSum *cnsArr, const int arrLen)
 {
 	bool result = false;
 	CardNumber *cardNums = NULL;
@@ -523,7 +777,7 @@ bool DouDiZhu::DouDiZhuLogic::FindNumberCount(const int *cards, const int cardsL
 				result = true;
 				for (int i = 0; i < cardsLen; ++i)
 				{
-					bool isFind = PokerLogic::IsFindValue((int*)numArr, idx, (int)cardNums[i]);
+					bool isFind = IsExistCardNumber(cnsArr, idx, cardNums[i]);
 					if (!isFind)
 					{
 						if (idx >= arrLen)
@@ -531,8 +785,8 @@ bool DouDiZhu::DouDiZhuLogic::FindNumberCount(const int *cards, const int cardsL
 							result = false;
 							break;
 						}
-						numArr[idx] = cardNums[i];
-						sumArr[idx] = PokerLogic::FindCount(cardNums, cardsLen, cardNums[i]);
+						cnsArr[idx].num = cardNums[i];
+						cnsArr[idx].count = PokerLogic::FindCount(cardNums, cardsLen, cardNums[i]);
 						idx++;
 					}
 				}
@@ -554,6 +808,30 @@ bool DouDiZhu::DouDiZhuLogic::FindNumberCount(const int *cards, const int cardsL
 	return result;
 }
 
+bool DouDiZhu::DouDiZhuLogic::IsExistCardNumber(const CardNumberSum *cnsArr, const int cnsArrLen, const CardNumber cardNum)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cnsArr && cnsArrLen > 0)
+		{
+			for (int i = 0; i < cnsArrLen; ++i)
+			{
+				if (cnsArr[i].num == cardNum)
+				{
+					result = true;
+					break;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 bool DouDiZhu::DouDiZhuLogic::IsXPlane(const CardNumberSum *cardNums, const int cardNumsLen, const int index, const int planeCount)
 {
 	bool result = false;
@@ -564,11 +842,11 @@ bool DouDiZhu::DouDiZhuLogic::IsXPlane(const CardNumberSum *cardNums, const int 
 		{
 			if (index + 1 < cardNumsLen && cardNums[index].count >= 3)
 			{
-				int count = planeCount;
+				int count = planeCount - 1;
 				int cmpCard = cardNums[index].num;
 				for (int i = index + 1; i < cardNumsLen; ++i)
 				{
-					if (cmpCard + 1 == cardNums[i].num && cardNums[i].count == 3 && cardNums[i].num != CardNumber::C_2)
+					if (cmpCard + 1 == cardNums[i].num && cardNums[i].count >= 3 && cardNums[i].num != CardNumber::C_2)
 					{
 						cmpCard = cardNums[i].num;
 						count--;
@@ -617,4 +895,63 @@ void DouDiZhu::DouDiZhuLogic::SortCardNumberSum(CardNumberSum *cnsArr, const int
 	{
 		throw(err);
 	}
+}
+
+bool DouDiZhu::DouDiZhuLogic::SetArrayTrue(bool *arr, const int arrLen, const int count)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != arr && arrLen > 0)
+		{
+			int setCount = count;
+			for (int i = 0; i < count; ++i)
+			{
+				for (int j = 0; j < arrLen; ++j)
+				{
+					if (!arr[j])
+					{
+						arr[j] = true;
+						setCount--;
+						break;
+					}
+				}
+			}
+			if (setCount == 0)
+			{
+				result = true;
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuLogic::IsArrayTrue(const bool *arr, const int arrLen)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != arr && arrLen > 0)
+		{
+			bool isOK = true;
+			for (int i = 0; i < arrLen; ++i)
+			{
+				if (!arr[i])
+				{
+					isOK = false;
+					break;
+				}
+			}
+			result = isOK;
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
 }

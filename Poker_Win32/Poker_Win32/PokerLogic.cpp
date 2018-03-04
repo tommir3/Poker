@@ -407,30 +407,6 @@ void Poker::PokerLogic::Sort(int *cards, const int cardsLen, const bool isAscend
 	}
 }
 
-bool Poker::PokerLogic::IsFindValue(const int *cards, const int len, const int val)
-{
-	bool result = false;
-	try
-	{
-		if (NULL != cards && len > 0)
-		{
-			for (int i = 0; i < len; ++i)
-			{
-				if (cards[i] == val)
-				{
-					result = true;
-					break;
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
 int Poker::PokerLogic::FindCount(const CardNumber *cards, const int len, const CardNumber val)
 {
 	int result = 0;

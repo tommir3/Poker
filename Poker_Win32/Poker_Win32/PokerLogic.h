@@ -140,14 +140,6 @@ namespace Poker
 		*/
 		__declspec(dllexport) void Sort(int *cards, const int cardsLen, const bool isAscend);
 		/*
-		是否有相同的值
-		cards: 牌数组
-		len: 数组长度
-		val: 比对的值
-		return: 找到返回true, 没有返回false, 异常抛出
-		*/
-		__declspec(dllexport) bool IsFindValue(const int *cards, const int len, const int val);
-		/*
 		找出牌在数组中出现的次数
 		cards: 牌数组
 		len: 数组长度

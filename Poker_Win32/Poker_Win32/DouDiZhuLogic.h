@@ -45,8 +45,8 @@ namespace DouDiZhu
 		__declspec(dllexport) int ComparePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		__declspec(dllexport) int CompareThree(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		__declspec(dllexport) int CompareFour(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
-		//__declspec(dllexport) int CompareThreeSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
-		//__declspec(dllexport) int CompareThreePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		__declspec(dllexport) int CompareThreeSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		__declspec(dllexport) int CompareThreePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		//__declspec(dllexport) int CompareFourSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		//__declspec(dllexport) int CompareFourPair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		//__declspec(dllexport) int ComparePlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
@@ -125,5 +125,9 @@ namespace DouDiZhu
 		return: 全部为true返回true, 否则返回false, 异常抛出
 		*/
 		bool IsArrayTrue(const bool *arr, const int arrLen);
+
+
+
+		bool FindCardNumberByCardNumberSum(const CardNumberSum *cnsArr, const int cnsArrLen, const int findCount, CardNumber *outCardNum);
 	};
 }

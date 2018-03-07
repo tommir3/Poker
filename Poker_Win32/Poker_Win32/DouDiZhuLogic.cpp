@@ -804,6 +804,60 @@ int DouDiZhu::DouDiZhuLogic::CompareFour(const int *cards1, const int cards1Len,
 	int result = -1;
 	try
 	{
+		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 4)
+		{
+			bool isOK = IsAllSame(cards1, 4);
+			if (isOK)
+			{
+				isOK = IsAllSame(cards2, 4);
+				if (isOK)
+				{
+					result = PokerLogic::CompareValue(cards1[0], cards2[0]);
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+int DouDiZhu::DouDiZhuLogic::CompareThreeSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+{
+	int result = -1;
+	try
+	{
+		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 4)
+		{
+			const int arrLen = 2;
+			CardNumberSum cnsArr1[arrLen],cnsArr2[arrLen];
+			bool isOK = FindCardNumberCount(cards1, cards1Len, cnsArr1, arrLen);
+			if (isOK)
+			{
+				isOK = FindCardNumberCount(cards1, cards1Len, cnsArr2, arrLen);
+				if (isOK)
+				{
+
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+
+
+int DouDiZhu::DouDiZhuLogic::CompareThreePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+{
+	int result = -1;
+	try
+	{
 
 	}
 	catch (exception err)
@@ -1040,4 +1094,9 @@ bool DouDiZhu::DouDiZhuLogic::IsArrayTrue(const bool *arr, const int arrLen)
 		throw(err);
 	}
 	return result;
+}
+
+bool DouDiZhu::DouDiZhuLogic::FindCardNumberByCardNumberSum(const CardNumberSum *cnsArr, const int cnsArrLen, const int findCount, CardNumber *outCardNum)
+{
+
 }

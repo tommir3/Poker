@@ -611,5 +611,85 @@ namespace PokerUnitTest1
 			delete[] cards;
 		}
 
+		TEST_METHOD(TestComparePair)
+		{
+			int cmp = -2;
+			const int len = 2;
+			int card1, card2, card3, card4;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_K);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			cards1 = new int[len]{ card1, card2 };
+			cards2 = new int[len] { card3, card4 };
+			cmp = _ddz->ComparePair(cards1, len, cards2, len);
+			Assert::AreEqual<int>(-1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_3);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
+			cards1 = new int[len] { card1, card2 };
+			cards2 = new int[len] { card3, card4 };
+			cmp = _ddz->ComparePair(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			cards1 = new int[len] { card1, card2 };
+			cards2 = new int[len] { card3, card4 };
+			cmp = _ddz->ComparePair(cards1, len, cards2, len);
+			Assert::AreEqual<int>(0, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareThree)
+		{
+			int cmp = -2;
+			const int len = 3;
+			int card1, card2, card3, card4,card5,card6;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_K);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			cards1 = new int[len] { card1, card2, card3 };
+			cards2 = new int[len] { card4, card5, card6 };
+			cmp = _ddz->CompareThree(cards1, len, cards2, len);
+			Assert::AreEqual<int>(-1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareFour)
+		{
+			int cmp = -2;
+			const int len = 4;
+			int card1, card2, card3, card4, card5, card6, card7,card8;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_K);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			cards1 = new int[len] { card1, card2, card3, card4 };
+			cards2 = new int[len] { card5, card6, card7, card8 };
+			cmp = _ddz->CompareFour(cards1, len, cards2, len);
+			Assert::AreEqual<int>(-1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
 	};
 }

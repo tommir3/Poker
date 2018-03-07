@@ -20,46 +20,49 @@ namespace DouDiZhu
 		return: 是对返回true, 不是返回false, 异常抛出
 		*/
 		__declspec(dllexport) bool IsPair(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsThree(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsFour(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsThreeSingle(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsThreePair(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsFourSingle(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsFourPair(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsPlane(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsPlaneSingle(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsPlanePair(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsThreePlane(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsThreePlaneSingle(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsThreePlanePair(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsFourPlane(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsFourPlaneSingle(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsFourPlanePair(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsFivePlane(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsFivePlaneSingle(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsStraightSingle(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsStraightPair(const int *cards, const int len);
-
 		__declspec(dllexport) bool IsKingBomb(const int *cards, const int len);
+
+		__declspec(dllexport) int CompareSingle(const int card1, const int card2);
+		__declspec(dllexport) int ComparePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		__declspec(dllexport) int CompareThree(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		__declspec(dllexport) int CompareFour(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareThreeSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareThreePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareFourSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareFourPair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int ComparePlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int ComparePlaneSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int ComparePlanePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareThreePlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareThreePlaneSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareThreePlanePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareFourPlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareFourPlaneSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareFourPlanePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareFivePlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareFivePlaneSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareStraightSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		//__declspec(dllexport) int CompareStraightPair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+
 
 	private:
 		class CardNumberSum

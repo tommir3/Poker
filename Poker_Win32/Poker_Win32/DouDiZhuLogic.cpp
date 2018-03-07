@@ -10,6 +10,7 @@ DouDiZhu::DouDiZhuLogic::~DouDiZhuLogic()
 
 }
 
+/*============================ 判断牌型 begin ================================*/
 bool DouDiZhu::DouDiZhuLogic::IsPair(const int *cards, const int len)
 {
 	bool result = false;
@@ -732,6 +733,91 @@ bool DouDiZhu::DouDiZhuLogic::IsKingBomb(const int *cards, const int len)
 	}
 	return result;
 }
+/*============================ 判断牌型 end ================================*/
+
+
+
+/*============================ 比较牌型 begin ================================*/
+int DouDiZhu::DouDiZhuLogic::CompareSingle(const int card1, const int card2)
+{
+	int result = -1;
+	try
+	{
+		result = PokerLogic::CompareValue(card1, card2);
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+int DouDiZhu::DouDiZhuLogic::ComparePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+{
+	int result = -1;
+	try
+	{
+		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 2)
+		{
+			int cmpVal1 = PokerLogic::CompareValue(cards1[0], cards1[1]);
+			int cmpVal2 = PokerLogic::CompareValue(cards2[0], cards2[1]);
+			if (cmpVal1 == cmpVal2 && cmpVal1 == 0)
+			{
+				result = PokerLogic::CompareValue(cards1[0], cards2[0]);
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+int DouDiZhu::DouDiZhuLogic::CompareThree(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+{
+	int result = -1;
+	try
+	{
+		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 3)
+		{
+			bool isOK = IsAllSame(cards1, 3);
+			if (isOK)
+			{
+				isOK = IsAllSame(cards2, 3);
+				if (isOK)
+				{
+					result = PokerLogic::CompareValue(cards1[0], cards2[0]);
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+int DouDiZhu::DouDiZhuLogic::CompareFour(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+{
+	int result = -1;
+	try
+	{
+
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+/*============================ 比较牌型 end ================================*/
+
+
+
+
 
 
 /*=======================以下为私有方法=======================*/

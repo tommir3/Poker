@@ -280,6 +280,46 @@ bool Poker::PokerLogic::ValueToCardNumber(const int values[], const int valuesLe
 	return result;
 }
 
+int Poker::PokerLogic::CardNumberToWeightValue(const CardNumber num)
+{
+	int result = -1;
+	try
+	{
+		switch (num)
+		{
+		case CardNumber::C_A:
+		case CardNumber::C_2:
+		case CardNumber::C_3:
+		case CardNumber::C_4:
+		case CardNumber::C_5:
+		case CardNumber::C_6:
+		case CardNumber::C_7:
+		case CardNumber::C_8:
+		case CardNumber::C_9:
+		case CardNumber::C_10:
+		case CardNumber::C_J:
+		case CardNumber::C_Q:
+		case CardNumber::C_K:
+			result = Card_Suits_Weight[num];
+			break;
+		case CardNumber::C_BJ:
+			result = Card_Joker_Weight[0];
+			break;
+		case CardNumber::C_RJ:
+			result = Card_Joker_Weight[1];
+			break;
+		default:
+			result = -1;
+			break;
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 int Poker::PokerLogic::CompareValue(const int value1, const int value2)
 {
 	int result = 0;
@@ -478,46 +518,6 @@ int Poker::PokerLogic::ValueToWeightValue(const int value, const CardMark mark)
 		else
 		{
 			result = value % 100 % 20;
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-int Poker::PokerLogic::CardNumberToWeightValue(const CardNumber num)
-{
-	int result = -1;
-	try
-	{
-		switch (num)
-		{
-			case CardNumber::C_A:
-			case CardNumber::C_2:
-			case CardNumber::C_3:
-			case CardNumber::C_4:
-			case CardNumber::C_5:
-			case CardNumber::C_6:
-			case CardNumber::C_7:
-			case CardNumber::C_8:
-			case CardNumber::C_9:
-			case CardNumber::C_10:
-			case CardNumber::C_J:
-			case CardNumber::C_Q:
-			case CardNumber::C_K:
-				result = Card_Suits_Weight[num];
-				break;
-			case CardNumber::C_BJ:
-				result = Card_Joker_Weight[0];
-				break;
-			case CardNumber::C_RJ:
-				result = Card_Joker_Weight[1];
-				break;
-			default:
-				result = -1;
-				break;
 		}
 	}
 	catch (exception err)

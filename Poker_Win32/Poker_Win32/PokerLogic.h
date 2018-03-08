@@ -95,6 +95,8 @@ namespace Poker
 		return: 成功返回true,失败返回false,异常抛出
 		*/
 		__declspec(dllexport) bool ValueToCardNumber(const int values[], const int valuesLen, CardNumber *cardNums, const int cardNumsLen);
+		
+		__declspec(dllexport) int CardNumberToWeightValue(const CardNumber num);
 		/*
 		对比两个扑克牌值
 		value1: 扑克牌值1
@@ -165,7 +167,7 @@ namespace Poker
 		*/
 		bool WeightValueToNumber(const int w_val, CardNumber& cardNum);
 		int ValueToWeightValue(const int value, const CardMark mark);
-		int CardNumberToWeightValue(const CardNumber num);
+		
 		/*
 		根据参考数组进行排序
 		reference: 参考数组

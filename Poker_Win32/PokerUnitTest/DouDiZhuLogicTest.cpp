@@ -919,5 +919,392 @@ namespace PokerUnitTest1
 			delete[] cards2;
 		}
 
+		TEST_METHOD(TestCompareThreePlaneSingle)
+		{
+			int cmp = -2;
+			const int len = 12;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17, card18,card19,card20,
+				card21,card22,card23,card24;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_6);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card18 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
+			card19 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card20 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card21 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card22 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_BJ);
+			card23 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card24 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_2);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12 };
+			cards2 = new int[len] { card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24 };
+			cmp = _ddz->CompareThreePlaneSingle(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareThreePlanePair)
+		{
+			int cmp = -2;
+			const int len = 15;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17, card18, card19, card20,
+				card21, card22, card23, card24, card25, card26, card27, card28, card29, card30;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_9);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_2);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_9);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_BJ);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_RJ);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_2);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_6);
+			card18 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card19 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card20 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card21 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
+			card22 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card23 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card24 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card25 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
+			card26 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card27 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_9);
+			card28 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
+			card29 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_9);
+			card30 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15 };
+			cards2 = new int[len] { card16, card17, card18, card19, card20, card21, card22, card23, card24, card25, card26, card27, card28, card29, card30 };
+			cmp = _ddz->CompareThreePlanePair(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareFourPlane)
+		{
+			int cmp = -2;
+			const int len = 12;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17, card18, card19, card20,
+				card21, card22, card23, card24;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_6);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card18 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
+			card19 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card20 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card21 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card22 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			card23 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card24 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12 };
+			cards2 = new int[len] { card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24 };
+			cmp = _ddz->CompareFourPlane(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareFourPlaneSingle)
+		{
+			int cmp = -2;
+			const int len = 16;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17, card18, card19, card20,
+				card21, card22, card23, card24, card25, card26, card27, card28, card29, card30,
+				card31, card32;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_9);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card18 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_6);
+			card19 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card20 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card21 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card22 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
+			card23 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card24 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card25 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card26 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			card27 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card28 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card29 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card30 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card31 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_9);
+			card32 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16 };
+			cards2 = new int[len] { card17, card18, card19, card20, card21, card22, card23, card24, card25, card26, card27, card28, card29, card30, card31, card32 };
+			cmp = _ddz->CompareFourPlaneSingle(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareFourPlanePair)
+		{
+			int cmp = -2;
+			const int len = 20;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17, card18, card19, card20,
+				card21, card22, card23, card24, card25, card26, card27, card28, card29, card30,
+				card31, card32, card33, card34, card35, card36, card37, card38, card39, card40;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card18 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
+			card19 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card20 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card21 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card22 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_6);
+			card23 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card24 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card25 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card26 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
+			card27 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card28 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card29 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card30 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			card31 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card32 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card33 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
+			card34 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_2);
+			card35 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_9);
+			card36 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_8);
+			card37 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card38 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_2);
+			card39 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_9);
+			card40 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_8);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20 };
+			cards2 = new int[len] { card21, card22, card23, card24, card25, card26, card27, card28, card29, card30, card31, card32, card33, card34, card35, card36, card37, card38, card39, card40 };
+			cmp = _ddz->CompareFourPlanePair(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareFivePlane)
+		{
+			int cmp = -2;
+			const int len = 15;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17, card18, card19, card20,
+				card21, card22, card23, card24, card25, card26, card27, card28, card29, card30;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_10);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_6);
+			card18 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card19 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card20 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card21 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
+			card22 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card23 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card24 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card25 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card26 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card27 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
+			card28 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_3);
+			card29 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card30 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15 };
+			cards2 = new int[len] { card16, card17, card18, card19, card20, card21, card22, card23, card24, card25, card26, card27, card28, card29, card30 };
+			cmp = _ddz->CompareFivePlane(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareFivePlaneSingle)
+		{
+			int cmp = -2;
+			const int len = 20;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17, card18, card19, card20,
+				card21, card22, card23, card24, card25, card26, card27, card28, card29, card30,
+				card31, card32, card33, card34, card35, card36, card37, card38, card39, card40;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_2);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_9);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_8);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_8);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_BJ);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card18 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card19 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_10);
+			card20 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
+			card21 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card22 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_6);
+			card23 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card24 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card25 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card26 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
+			card27 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			card28 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card29 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card30 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card31 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
+			card32 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
+			card33 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_3);
+			card34 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card35 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card36 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_2);
+			card37 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_9);
+			card38 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_9);
+			card39 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_RJ);
+			card40 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_2);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20 };
+			cards2 = new int[len] { card21, card22, card23, card24, card25, card26, card27, card28, card29, card30, card31, card32, card33, card34, card35, card36, card37, card38, card39, card40 };
+			cmp = _ddz->CompareFivePlaneSingle(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareStraightSingle)
+		{
+			int cmp = -2;
+			const int len = 6;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_8);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_9);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_10);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_8);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6 };
+			cards2 = new int[len] { card7, card8, card9, card10, card11, card12};
+			cmp = _ddz->CompareStraightSingle(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
+		TEST_METHOD(TestCompareStraightPair)
+		{
+			int cmp = -2;
+			const int len = 6;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12;
+			int *cards1, *cards2;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_K);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);	
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
+			cards1 = new int[len] { card1, card2, card3, card4, card5, card6 };
+			cards2 = new int[len] { card7, card8, card9, card10, card11, card12};
+			cmp = _ddz->CompareStraightPair(cards1, len, cards2, len);
+			Assert::AreEqual<int>(1, cmp);
+			delete[] cards1;
+			delete[] cards2;
+		}
+
 	};
 }

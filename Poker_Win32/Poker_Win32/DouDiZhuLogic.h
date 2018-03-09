@@ -143,7 +143,9 @@ namespace DouDiZhu
 
 		bool GetCardNumberByCardNumberSum(const CardNumberSum *cnsArr, const int cnsArrLen, const int findCount, CardNumber *outCardNum);
 
-		int CompareXPlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len, const int cnsLen, const int planeCount);
-		bool GetCardNumberByXPlane(const CardNumberSum *cnsArr, const int cnsArrLen, const int planeCount, CardNumber *outCardNum);
+		
+		int CompareAdjacentPoker(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len, const int cnsLen, const int adjacentCount, const int sameCount);
+		bool GetMaxCompareNumberByAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int adjacentCount, const int sameCount, CardNumber *outCardNum);
+		bool IsAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int index, const int adjacentCount, const int sameCount);
 	};
 }

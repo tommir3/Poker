@@ -456,7 +456,12 @@ int Poker::PokerLogic::FindCount(const CardNumber *cards, const int len, const C
 		{
 			for (int i = 0; i < len; ++i)
 			{
-				if (cards[i] == val)
+				//如果找的是王，则双王表示2个，不单独返回；单王正常返回，返回一个
+				if ((cards[i] == CardNumber::C_BJ || cards[i] == CardNumber::C_RJ) && (val == CardNumber::C_BJ || val == CardNumber::C_RJ))
+				{
+					result++;
+				}
+				else if (cards[i] == val)
 				{
 					result++;
 				}

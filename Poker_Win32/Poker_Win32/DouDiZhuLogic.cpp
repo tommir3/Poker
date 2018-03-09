@@ -899,7 +899,14 @@ int DouDiZhu::DouDiZhuLogic::ComparePlane(const int *cards1, const int cards1Len
 	int result = -1;
 	try
 	{
-		result = CompareXPlane(cards1, cards1Len, cards2, cards2Len, 2, 2);
+		if (cards1Len == 6 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 2, 2, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -913,7 +920,14 @@ int DouDiZhu::DouDiZhuLogic::ComparePlaneSingle(const int *cards1, const int car
 	int result = -1;
 	try
 	{
-		result = CompareXPlane(cards1, cards1Len, cards2, cards2Len, 4, 2);
+		if (cards1Len == 8 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 2, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -927,7 +941,14 @@ int DouDiZhu::DouDiZhuLogic::ComparePlanePair(const int *cards1, const int cards
 	int result = -1;
 	try
 	{
-		result = CompareXPlane(cards1, cards1Len, cards2, cards2Len, 4, 2);
+		if (cards1Len == 10 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 2, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -941,7 +962,14 @@ int DouDiZhu::DouDiZhuLogic::CompareThreePlane(const int *cards1, const int card
 	int result = -1;
 	try
 	{
-		result = CompareXPlane(cards1, cards1Len, cards2, cards2Len, 3, 3);
+		if (cards1Len == 9 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 3, 3, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -955,7 +983,14 @@ int DouDiZhu::DouDiZhuLogic::CompareThreePlaneSingle(const int *cards1, const in
 	int result = -1;
 	try
 	{
-
+		if (cards1Len == 12 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 3, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -969,7 +1004,14 @@ int DouDiZhu::DouDiZhuLogic::CompareThreePlanePair(const int *cards1, const int 
 	int result = -1;
 	try
 	{
-
+		if (cards1Len == 15 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 3, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -983,7 +1025,14 @@ int DouDiZhu::DouDiZhuLogic::CompareFourPlane(const int *cards1, const int cards
 	int result = -1;
 	try
 	{
-
+		if (cards1Len == 12 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 4, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -997,7 +1046,14 @@ int DouDiZhu::DouDiZhuLogic::CompareFourPlaneSingle(const int *cards1, const int
 	int result = -1;
 	try
 	{
-
+		if (cards1Len == 16 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 8, 4, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -1011,7 +1067,14 @@ int DouDiZhu::DouDiZhuLogic::CompareFourPlanePair(const int *cards1, const int c
 	int result = -1;
 	try
 	{
-
+		if (cards1Len == 20 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 8, 4, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -1025,7 +1088,14 @@ int DouDiZhu::DouDiZhuLogic::CompareFivePlane(const int *cards1, const int cards
 	int result = -1;
 	try
 	{
-
+		if (cards1Len == 15 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 5, 5, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -1039,7 +1109,14 @@ int DouDiZhu::DouDiZhuLogic::CompareFivePlaneSingle(const int *cards1, const int
 	int result = -1;
 	try
 	{
-
+		if (cards1Len == 20 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 10, 5, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -1053,7 +1130,14 @@ int DouDiZhu::DouDiZhuLogic::CompareStraightSingle(const int *cards1, const int 
 	int result = -1;
 	try
 	{
-
+		if (cards1Len >= 5 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, cards1Len, cards1Len, 1);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -1067,7 +1151,15 @@ int DouDiZhu::DouDiZhuLogic::CompareStraightPair(const int *cards1, const int ca
 	int result = -1;
 	try
 	{
-
+		if (cards1Len >= 6 && cards1Len == cards2Len)
+		{
+			int adjacentCount = cards1Len / 2;
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, adjacentCount, adjacentCount, 2);
+		}
+		else
+		{
+			throw("length is error");
+		}
 	}
 	catch (exception err)
 	{
@@ -1166,11 +1258,23 @@ bool DouDiZhu::DouDiZhuLogic::IsExistCardNumber(const CardNumberSum *cnsArr, con
 		{
 			for (int i = 0; i < cnsArrLen; ++i)
 			{
-				if (cnsArr[i].num == cardNum)
+				//如果双王，找的也是王，找到任何一个王则返回表示存在
+				if (
+					((cnsArr[i].num == CardNumber::C_BJ || cnsArr[i].num == CardNumber::C_RJ)
+					&& 
+					(cardNum == CardNumber::C_BJ || cardNum == CardNumber::C_RJ) 
+					&& cnsArr[i].count == 2)
+					||
+					(cnsArr[i].num == cardNum))
 				{
 					result = true;
 					break;
 				}
+				//if (cnsArr[i].num == cardNum)
+				//{
+				//	result = true;
+				//	break;
+				//}
 			}
 		}
 	}
@@ -1404,14 +1508,14 @@ bool DouDiZhu::DouDiZhuLogic::GetCardNumberByCardNumberSum(const CardNumberSum *
 	return result;
 }
 
-int DouDiZhu::DouDiZhuLogic::CompareXPlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len, const int cnsLen, const int planeCount)
+int DouDiZhu::DouDiZhuLogic::CompareAdjacentPoker(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len, const int cnsLen, const int adjacentCount, const int sameCount)
 {
 	int result = -1;
 	CardNumberSum *cnsArr1 = NULL;
 	CardNumberSum *cnsArr2 = NULL;
 	try
 	{
-		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len >= planeCount * 3)
+		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len >= adjacentCount * sameCount)
 		{
 			CardNumber cmp1, cmp2;
 			cnsArr1 = new CardNumberSum[cnsLen];
@@ -1419,13 +1523,13 @@ int DouDiZhu::DouDiZhuLogic::CompareXPlane(const int *cards1, const int cards1Le
 			if (isOK)
 			{
 				SortCardNumberSum(cnsArr1, cnsLen);
-				bool isFind = GetCardNumberByXPlane(cnsArr1, cnsLen, planeCount, &cmp1);
+				bool isFind = GetMaxCompareNumberByAdjacent(cnsArr1, cnsLen, adjacentCount, sameCount, &cmp1);
 				cnsArr2 = new CardNumberSum[cnsLen];
 				isOK = FindCardNumberCount(cards2, cards2Len, cnsArr2, cnsLen);
 				if (isOK && isFind)
 				{
 					SortCardNumberSum(cnsArr2, cnsLen);
-					isFind = GetCardNumberByXPlane(cnsArr2, cnsLen, planeCount, &cmp2);
+					isFind = GetMaxCompareNumberByAdjacent(cnsArr2, cnsLen, adjacentCount, sameCount, &cmp2);
 					if (isFind)
 					{
 						result = PokerLogic::CompareCardNumber(cmp1, cmp2);
@@ -1457,17 +1561,17 @@ int DouDiZhu::DouDiZhuLogic::CompareXPlane(const int *cards1, const int cards1Le
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuLogic::GetCardNumberByXPlane(const CardNumberSum *cnsArr, const int cnsArrLen, const int planeCount, CardNumber *outCardNum)
+bool DouDiZhu::DouDiZhuLogic::GetMaxCompareNumberByAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int adjacentCount, const int sameCount, CardNumber *outCardNum)
 {
 	bool result = false;
 	try
 	{
-		if (NULL != cnsArr && cnsArrLen >= planeCount)
+		if (NULL != cnsArr && cnsArrLen > 0 && cnsArrLen >= adjacentCount)
 		{
 			int maxNum = -1;
 			for (int i = 0; i < cnsArrLen; ++i)
 			{
-				if (IsXPlane(cnsArr, cnsArrLen,i,planeCount))
+				if (IsAdjacent(cnsArr, cnsArrLen, i, adjacentCount, sameCount))
 				{
 					if (maxNum != -1)
 					{
@@ -1487,6 +1591,49 @@ bool DouDiZhu::DouDiZhuLogic::GetCardNumberByXPlane(const CardNumberSum *cnsArr,
 			if (result)
 			{
 				*outCardNum = (CardNumber)maxNum;
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuLogic::IsAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int index, const int adjacentCount, const int sameCount)
+{
+	bool result = false;
+	try
+	{
+		//cardNums必须从小到大排序，否则无法准确查找
+		if (NULL != cnsArr && cnsArrLen > 0 && cnsArrLen >= adjacentCount)
+		{
+			if (index + 1 < cnsArrLen && cnsArr[index].count >= sameCount)
+			{
+				int count = adjacentCount - 1;
+				int cmpCard = PokerLogic::CardNumberToWeightValue(cnsArr[index].num);
+				for (int i = index + 1; i < cnsArrLen; ++i)
+				{
+					int curWeight = PokerLogic::CardNumberToWeightValue(cnsArr[i].num);
+					if (cmpCard + 1 == curWeight && cnsArr[i].count >= sameCount 
+						&& cnsArr[i].num != CardNumber::C_2 
+						&& cnsArr[i].num != CardNumber::C_BJ
+						&& cnsArr[i].num != CardNumber::C_RJ)
+					{
+						cmpCard = curWeight;
+						count--;
+						if (count == 0)
+						{
+							result = true;
+							break;
+						}
+					}
+					else
+					{
+						break;
+					}
+				}
 			}
 		}
 	}

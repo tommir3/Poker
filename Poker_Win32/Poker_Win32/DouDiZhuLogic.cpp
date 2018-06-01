@@ -10,6 +10,135 @@ DouDiZhu::DouDiZhuLogic::~DouDiZhuLogic()
 
 }
 
+CardType DouDiZhu::DouDiZhuLogic::GetCardType(const int *cards, const int len)
+{
+	CardType result = CardType::Normal;
+	try
+	{
+		if (len == 1)
+		{
+			result = CardType::Single;
+		}
+		else if (len == 2)
+		{
+			if (IsKingBomb(cards, len))//如果是双王，判定王炸优先
+			{
+				result = CardType::KingBomb;
+			}
+			else if (IsPair(cards, len))
+			{
+				result = CardType::Pair;
+			}
+		}
+		else if (len == 3 && IsThree(cards, len))
+		{
+			result = CardType::Three;
+		}
+		else if (len == 4)
+		{
+			if (IsFour(cards, len))//如果是炸弹，可以判定炸弹类型优先
+			{
+				result = CardType::Four;
+			}
+			else if (IsThreeSingle(cards, len))
+			{
+				result = CardType::ThreeSingle;
+			}
+		}
+		else if (len == 5 && IsThreePair(cards, len))
+		{
+			result = CardType::ThreePair;
+		}
+		else if (len == 6)
+		{
+			if (IsFourSingle(cards, len))
+			{
+				result = CardType::FourSingle;
+			}
+			else if (IsPlane(cards, len))
+			{
+				result = CardType::Plane;
+			}
+		}
+		else if (len == 8)//两种情况都有可能 33334444
+		{
+			if (IsPlaneSingle(cards, len))//飞机带2单判定优先
+			{
+				result = CardType::PlaneSingle;
+			}
+			else if (IsFourPair(cards, len))
+			{
+				result = CardType::FourPair;
+			}
+		}
+		else if (len == 9 && IsThreePlane(cards, len))
+		{
+			result = CardType::ThreePlane;
+		}
+		else if (len == 10 && IsPlanePair(cards, len))
+		{
+			result = CardType::PlanePair;
+		}
+		else if (len == 12)//两种情况都有可能 333444555666
+		{
+			if (IsFourPlane(cards, len))//4个飞机判定优先
+			{
+				result = CardType::FourPlane;
+			}
+			else if (IsThreePlaneSingle(cards, len))
+			{
+				result = CardType::ThreePlaneSingle;
+			}
+		}
+		else if (len == 15)
+		{
+			if (IsThreePlanePair(cards, len))
+			{
+				result = CardType::ThreePlanePair;
+			}
+			else if (IsFivePlane(cards, len))
+			{
+				result = CardType::FivePlane;
+			}
+		}
+		else if (len == 16 && IsFourPlaneSingle(cards, len))
+		{
+			result = CardType::FourPlaneSingle;
+		}
+		else if (len == 18)
+		{
+			//6个飞机的情况
+		}
+		else if (len == 20)//两种情况都有可能 33344455566677778888
+		{
+			if (IsFivePlaneSingle(cards, len))
+			{
+				result = CardType::FivePlaneSingle;
+			}
+			else if (IsFourPlanePair(cards, len))
+			{
+				result = CardType::FourPlanePair;
+			}
+		}
+		if(result == CardType::Normal && len >= 5)
+		{
+			if (IsStraightSingle(cards, len))
+			{
+				result = CardType::StraightSingle;
+			}
+			else if (IsStraightPair(cards, len))
+			{
+				result = CardType::StraightPair;
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 /*============================ 判断牌型 begin ================================*/
 bool DouDiZhu::DouDiZhuLogic::IsPair(const int *cards, const int len)
 {

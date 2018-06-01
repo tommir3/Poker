@@ -13,6 +13,8 @@ namespace DouDiZhu
 		__declspec(dllexport) DouDiZhuLogic();
 		__declspec(dllexport) ~DouDiZhuLogic();
 
+		__declspec(dllexport) CardType GetCardType(const int *cards, const int len);
+
 		/*
 		是否是一对相同牌(大小王不算一对)
 		cards: 判断的牌数组

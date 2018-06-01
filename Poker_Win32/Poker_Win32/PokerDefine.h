@@ -48,3 +48,33 @@ enum CardNumber
 	C_BJ = 82,  //小王
 	C_RJ = 83   //大王
 };
+
+/// <summary>
+/// 扑克牌出牌类型
+/// </summary>
+enum CardType
+{
+	Normal = 0,					//无类型
+	Single = 1,					//单
+	Pair = 2,					//对
+	Three = 3,					//三个
+	ThreeSingle = 4,			//三带一
+	ThreePair = 5,				//三带对
+	Four = 6,					//四个（炸弹）
+	FourSingle = 7,				//四带二单
+	FourPair = 8,				//四带二对
+	Plane = 9,					//双飞机
+	PlaneSingle = 10,			//双飞机带二单
+	PlanePair = 11,				//双飞机带二对
+	ThreePlane = 12,			//三飞机
+	ThreePlaneSingle = 13,		//三飞机带三单
+	ThreePlanePair = 14,		//三飞机带三对
+	FourPlane = 15,				//四飞机
+	FourPlaneSingle = 16,		//四飞机带四单
+	FourPlanePair = 17,			//四飞机带四对
+	FivePlane = 18,				//五飞机
+	FivePlaneSingle = 19,		//五飞机带五单
+	StraightSingle = 20,		//单顺子
+	StraightPair = 21,			//双顺子
+	KingBomb = 22				//王炸
+};

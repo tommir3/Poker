@@ -62,13 +62,13 @@ CardType DouDiZhu::DouDiZhuLogic::GetCardType(const int *cards, const int len)
 		}
 		else if (len == 8)//两种情况都有可能 33334444
 		{
-			if (IsPlaneSingle(cards, len))//飞机带2单判定优先
-			{
-				result = CardType::PlaneSingle;
-			}
-			else if (IsFourPair(cards, len))
+			if (IsFourPair(cards, len))//优先 四带两对
 			{
 				result = CardType::FourPair;
+			}
+			else if (IsPlaneSingle(cards, len))
+			{
+				result = CardType::PlaneSingle;
 			}
 		}
 		else if (len == 9 && IsThreePlane(cards, len))
@@ -105,13 +105,13 @@ CardType DouDiZhu::DouDiZhuLogic::GetCardType(const int *cards, const int len)
 		{
 			result = CardType::FourPlaneSingle;
 		}
-		else if (len == 18)
+		else if (len == 18 && IsSixPlane(cards, len))
 		{
-			//6个飞机的情况
+			result = CardType::SixPlane;
 		}
-		else if (len == 20)//两种情况都有可能 33344455566677778888
+		else if (len == 20)//两种情况都有可能 33344455566677778888 (此牌只有地主，任一类型即可)
 		{
-			if (IsFivePlaneSingle(cards, len))
+			if (IsFivePlaneSingle(cards, len))//优先判断5飞机带5单
 			{
 				result = CardType::FivePlaneSingle;
 			}
@@ -129,6 +129,137 @@ CardType DouDiZhu::DouDiZhuLogic::GetCardType(const int *cards, const int len)
 			else if (IsStraightPair(cards, len))
 			{
 				result = CardType::StraightPair;
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+int DouDiZhu::DouDiZhuLogic::CompareCards(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+{
+	int result = -1;
+	try
+	{
+		CardType card1Type = GetCardType(cards1, cards1Len);
+		CardType card2Type = GetCardType(cards2, cards2Len);
+		result = CompareCards(cards1, cards1Len, card1Type, cards2, cards2Len, card2Type);
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+int DouDiZhu::DouDiZhuLogic::CompareCards(const int *cards1, const int cards1Len, const CardType card1Type, const int *cards2, const int cards2Len, const CardType card2Type)
+{
+	int result = -1;
+	try
+	{
+		if (card1Type != CardType::Normal && card2Type != CardType::Normal)
+		{
+			if (card1Type != card2Type)
+			{
+				if (card1Type == CardType::KingBomb)
+				{
+					result = 1;
+				}
+				else if (card2Type == CardType::KingBomb)
+				{
+					result = -1;
+				}
+				else if (card1Type == CardType::Four)
+				{
+					result = 1;
+				}
+				else if (card2Type == CardType::Four)
+				{
+					result = -1;
+				}
+			}
+			else
+			{
+				switch (card1Type)
+				{
+				case CardType::Normal:
+					break;
+				case CardType::Single:
+					result = CompareSingle(cards1[0], cards2[0]);
+					break;
+				case CardType::Pair:
+					result = ComparePair(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::Three:
+					result = CompareThree(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::ThreeSingle:
+					result = CompareThreeSingle(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::ThreePair:
+					result = CompareThreePair(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::Four:
+					result = CompareFour(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::FourSingle:
+					result = CompareFourSingle(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::FourPair:
+					result = CompareFourPair(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::Plane:
+					result = ComparePlane(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::PlaneSingle:
+					result = ComparePlaneSingle(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::PlanePair:
+					result = ComparePlanePair(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::ThreePlane:
+					result = CompareThreePlane(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::ThreePlaneSingle:
+					result = CompareThreePlaneSingle(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::ThreePlanePair:
+					result = CompareThreePlanePair(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::FourPlane:
+					result = CompareFourPlane(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::FourPlaneSingle:
+					result = CompareFourPlaneSingle(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::FourPlanePair:
+					result = CompareFourPlanePair(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::FivePlane:
+					result = CompareFivePlane(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::FivePlaneSingle:
+					result = CompareFivePlaneSingle(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::SixPlane:
+					result = CompareSixPlane(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::StraightSingle:
+					result = CompareStraightSingle(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::StraightPair:
+					result = CompareStraightPair(cards1, cards1Len, cards2, cards2Len);
+					break;
+				case CardType::KingBomb:
+					result = -1;
+					break;
+				default:
+					result = -1;
+					break;
+				}
 			}
 		}
 	}
@@ -747,6 +878,30 @@ bool DouDiZhu::DouDiZhuLogic::IsFivePlaneSingle(const int *cards, const int len)
 	return result;
 }
 
+bool DouDiZhu::DouDiZhuLogic::IsSixPlane(const int *cards, const int len)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && len == 18)
+		{
+			const int arrLen = 6;
+			CardNumberSum cnsArr[arrLen];
+			bool isOK = FindCardNumberCount(cards, len, cnsArr, arrLen);
+			if (isOK)
+			{
+				SortCardNumberSum(cnsArr, arrLen);
+				result = IsXPlane(cnsArr, arrLen, 0, 6);
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 bool DouDiZhu::DouDiZhuLogic::IsStraightSingle(const int *cards, const int len)
 {
 	bool result = false;
@@ -1254,6 +1409,27 @@ int DouDiZhu::DouDiZhuLogic::CompareFivePlaneSingle(const int *cards1, const int
 	return result;
 }
 
+int DouDiZhu::DouDiZhuLogic::CompareSixPlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+{
+	int result = -1;
+	try
+	{
+		if (cards1Len == 18 && cards1Len == cards2Len)
+		{
+			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 6, 3);
+		}
+		else
+		{
+			throw("length is error");
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 int DouDiZhu::DouDiZhuLogic::CompareStraightSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
 {
 	int result = -1;
@@ -1637,6 +1813,17 @@ bool DouDiZhu::DouDiZhuLogic::GetCardNumberByCardNumberSum(const CardNumberSum *
 	return result;
 }
 
+/*
+比较相邻的扑克牌大小
+cards1:第一组扑克牌
+cards1Len:第一组扑克牌长度
+cards2:第二组扑克牌
+cards2Len:第二组扑克牌长度
+cnsLen:不同牌数组长度
+adjacentCount:相邻扑克的数量
+sameCount:相同牌的数量
+return:第一组 > 第二组，返回1；第一组 < 第二组，返回-1；第一组 = 第二组，返回0
+*/
 int DouDiZhu::DouDiZhuLogic::CompareAdjacentPoker(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len, const int cnsLen, const int adjacentCount, const int sameCount)
 {
 	int result = -1;

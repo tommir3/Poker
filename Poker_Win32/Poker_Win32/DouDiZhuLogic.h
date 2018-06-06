@@ -14,6 +14,8 @@ namespace DouDiZhu
 		__declspec(dllexport) ~DouDiZhuLogic();
 
 		__declspec(dllexport) CardType GetCardType(const int *cards, const int len);
+		__declspec(dllexport) int CompareCards(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		__declspec(dllexport) int CompareCards(const int *cards1, const int cards1Len, const CardType card1Type, const int *cards2, const int cards2Len, const CardType card2Type);
 
 		/*
 		是否是一对相同牌(大小王不算一对)
@@ -39,6 +41,7 @@ namespace DouDiZhu
 		__declspec(dllexport) bool IsFourPlanePair(const int *cards, const int len);
 		__declspec(dllexport) bool IsFivePlane(const int *cards, const int len);
 		__declspec(dllexport) bool IsFivePlaneSingle(const int *cards, const int len);
+		__declspec(dllexport) bool IsSixPlane(const int *cards, const int len);
 		__declspec(dllexport) bool IsStraightSingle(const int *cards, const int len);
 		__declspec(dllexport) bool IsStraightPair(const int *cards, const int len);
 		__declspec(dllexport) bool IsKingBomb(const int *cards, const int len);
@@ -62,6 +65,7 @@ namespace DouDiZhu
 		__declspec(dllexport) int CompareFourPlanePair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		__declspec(dllexport) int CompareFivePlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		__declspec(dllexport) int CompareFivePlaneSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
+		__declspec(dllexport) int CompareSixPlane(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		__declspec(dllexport) int CompareStraightSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		__declspec(dllexport) int CompareStraightPair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 

@@ -74,7 +74,8 @@ enum CardType
 	FourPlanePair = 17,			//四飞机带四对
 	FivePlane = 18,				//五飞机
 	FivePlaneSingle = 19,		//五飞机带五单
-	StraightSingle = 20,		//单顺子
-	StraightPair = 21,			//双顺子
-	KingBomb = 22				//王炸
+	SixPlane = 20,				//六飞机
+	StraightSingle = 21,		//单顺子
+	StraightPair = 22,			//双顺子
+	KingBomb = 23				//王炸
 };

@@ -70,13 +70,8 @@ namespace DouDiZhu
 		__declspec(dllexport) int CompareStraightPair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 
 
+
 	private:
-		class CardNumberSum
-		{
-		public:
-			CardNumber num;
-			int count;
-		};
 		/*
 		判断是否全部相同
 		cards: 牌数组
@@ -131,8 +126,6 @@ namespace DouDiZhu
 		return: 全部为true返回true, 否则返回false, 异常抛出
 		*/
 		bool IsArrayTrue(const bool *arr, const int arrLen);
-
-
 		/*
 		比较两个相同数组大小（三张，三带一，三带对，四张，四带二，四带对）
 		cards1: 第一个牌值数组
@@ -146,12 +139,46 @@ namespace DouDiZhu
 		int CompareSameArray(const int *cards1, const int cards1Len,
 							const int *cards2, const int cards2Len,
 							const int cnsLen, const int sameCount);
-
+		/*
+		从扑克牌信息数组中找出相同数量的牌
+		cnsArr:牌面值与长度类数组
+		cnsArrLen:牌面值与长度类数组长度
+		findCount:找牌的数量
+		outCardNum:找出的扑克牌字面值
+		return:成功找出返回true，失败返回false。异常抛出
+		*/
 		bool GetCardNumberByCardNumberSum(const CardNumberSum *cnsArr, const int cnsArrLen, const int findCount, CardNumber *outCardNum);
-
-		
+		/*
+		比较相邻的扑克牌
+		cards1:第一组牌
+		cards1Len:第一组牌数量
+		cards2:第二组牌
+		cards2Len:第二组牌数量
+		cnsLen:牌型中种类个数（例如四带二，种类为：4 1 1，个数为3个）
+		adjacentCount:相邻牌的个数
+		sameCount:相同牌的数量
+		return:比较值0，1，-1。1：cards1大于cards2；0：cards1等于cards2；-1：cards1小于cards2。异常抛出
+		*/
 		int CompareAdjacentPoker(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len, const int cnsLen, const int adjacentCount, const int sameCount);
+		/*
+		从相邻牌信息中获取牌值最大的牌
+		cnsArr:牌面值与长度类数组
+		cnsArrLen:牌面值与长度类数组长度
+		adjacentCount:相邻牌的个数
+		sameCount:相同牌的数量
+		outCardNum:找出的最大牌值
+		return:成功返回true，失败返回false。异常抛出
+		*/
 		bool GetMaxCompareNumberByAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int adjacentCount, const int sameCount, CardNumber *outCardNum);
+		/*
+		是否是相邻的牌
+		cnsArr:牌面值与长度类数组
+		cnsArrLen:牌面值与长度类数组长度
+		index:遍历索引 即从此索引位置开始找相邻的牌
+		adjacentCount:相邻牌的个数
+		sameCount:相同牌的数量
+		return:成功返回true，失败返回false。异常抛出
+		*/
 		bool IsAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int index, const int adjacentCount, const int sameCount);
 	};
 }

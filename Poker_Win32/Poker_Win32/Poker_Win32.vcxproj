@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DouDiZhuLogic.h" />
+    <ClInclude Include="DouDiZhuPlayCardLogic.h" />
     <ClInclude Include="PokerDefine.h" />
     <ClInclude Include="PokerLogic.h" />
   </ItemGroup>

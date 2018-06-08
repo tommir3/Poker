@@ -35,5 +35,8 @@
     <ClCompile Include="DouDiZhuLogic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DouDiZhuPlayCardLogic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

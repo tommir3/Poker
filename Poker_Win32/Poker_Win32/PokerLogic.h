@@ -95,7 +95,11 @@ namespace Poker
 		return: 成功返回true,失败返回false,异常抛出
 		*/
 		__declspec(dllexport) bool ValueToCardNumber(const int values[], const int valuesLen, CardNumber *cardNums, const int cardNumsLen);
-		
+		/*
+		扑克牌面值转权重值
+		num:扑克牌面值
+		return:扑克牌权重值
+		*/
 		__declspec(dllexport) int CardNumberToWeightValue(const CardNumber num);
 		/*
 		对比两个扑克牌值

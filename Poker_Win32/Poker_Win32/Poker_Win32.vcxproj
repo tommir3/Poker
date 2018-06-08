@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DouDiZhuLogic.cpp" />
+    <ClCompile Include="DouDiZhuPlayCardLogic.cpp" />
     <ClCompile Include="PokerLogic.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

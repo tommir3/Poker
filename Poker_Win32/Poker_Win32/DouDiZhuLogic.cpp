@@ -1475,6 +1475,10 @@ int DouDiZhu::DouDiZhuLogic::CompareStraightPair(const int *cards1, const int ca
 
 /*============================ ±»Ωœ≈∆–Õ end ================================*/
 
+bool DouDiZhu::DouDiZhuLogic::CardsToCardNumberSum(const int *cards, const int cardsLen, CardNumberSum *cnsArr, const int arrLen)
+{
+	return FindCardNumberCount(cards, cardsLen, cnsArr, arrLen);
+}
 
 
 

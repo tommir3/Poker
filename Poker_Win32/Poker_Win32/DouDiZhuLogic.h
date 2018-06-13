@@ -69,8 +69,6 @@ namespace DouDiZhu
 		__declspec(dllexport) int CompareStraightSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		__declspec(dllexport) int CompareStraightPair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 
-
-		__declspec(dllexport) bool CardsToCardNumberSum(const int *cards, const int cardsLen, CardNumberSum *cnsArr, const int arrLen);
 	private:
 		/*
 		判断是否全部相同

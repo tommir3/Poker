@@ -33,8 +33,8 @@ namespace DouDiZhu
 		return:成功返回true，失败返回false。异常抛出
 		*/
 		__declspec(dllexport) bool FindPair(const int *cards, const int len, vector<vector<int>> &outCards);
-		__declspec(dllexport) bool FindThree(const int *cards, const int len, vector<vector<CardNumber>> &outCards);
-		__declspec(dllexport) bool FindThreeSingle(const int *cards, const int len, vector<vector<CardNumber>> &outCards);
+		__declspec(dllexport) bool FindThree(const int *cards, const int len, vector<vector<int>> &outCards);
+		__declspec(dllexport) bool FindThreeSingle(const int *cards, const int len, vector<vector<int>> &outCards);
 		__declspec(dllexport) bool FindThreePair(const int *cards, const int len, vector<vector<CardNumber>> &outCards);
 		__declspec(dllexport) bool FindFour(const int *cards, const int len, vector<vector<CardNumber>> &outCards);
 		__declspec(dllexport) bool FindFourSingle(const int *cards, const int len, vector<vector<CardNumber>> &outCards);
@@ -56,6 +56,14 @@ namespace DouDiZhu
 		__declspec(dllexport) bool FindKingBomb(const int *cards, const int len, vector<vector<CardNumber>> &outCards);
 
 	private:
+		bool DouDiZhu::DouDiZhuPlayCardLogic::CardsToWeightArray(const int *cards, const int cardsLen, int outCards[]);
+
+
+
+
+
+		/*以下方法放弃使用*/
+		bool CardValueToArray(const int *cards, const int cardsLen, int outCards[]);
 		/*
 		扑克牌值转扑克信息类集合
 		cards:扑克牌值数组
@@ -63,7 +71,7 @@ namespace DouDiZhu
 		cnsArr:扑克信息类集合（已排序,从小到大）
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		bool CardsToCardNumberSum(const int *cards, const int cardsLen, std::vector<CardNumberSum> &cnsArr);
+		bool CardArrayToCardNumberSum(const int cardArray[], std::vector<CardNumberSum> &cnsArr);
 		/*
 		想到相同数量的牌
 		cnsVec:牌面值与长度类集合
@@ -74,8 +82,22 @@ namespace DouDiZhu
 		return:成功返回true，失败返回false。异常抛出
 		*/
 		bool FindCardNumber(const std::vector<CardNumberSum> cnsVec, const int adjacentCount, const int sameCount, const bool isSplit, std::vector<std::vector<CardNumber>> &outCardNumVec);
+		
 
-		bool FineCardValue(const int *cards, const int len, const vector<vector<CardNumber>> const findCards, const int count, vector<vector<int>> &outCards);
-
+		bool FineCardValue(const int *cards, const int len, const vector<vector<CardNumber>> const findCards, const int findCardCount, vector<vector<int>> &outCards);
+		bool FineCardValue(const int *cards, const int len, const vector<CardNumber> const findCards, const int findCardCount, vector<int> &outCards);
+		bool FindCardValue(const int *cards, const int len, const vector<vector<CardNumber>> const findCards, const int findCardCount,
+							const vector<vector<CardNumber>> const subsidiaryCards, const int subsidiaryCardCount,
+							vector<vector<int>> &outCards);
+		bool FindCardValue(const int *cards,
+							const int len,
+							const vector<CardNumber> const findCards,
+							const int findCardCount,
+							const vector<vector<CardNumber>> const subsidiaryCards,
+							const int subsidiaryCardCount,
+							vector<vector<int>> &outCards);
+		bool IsSubsidiaryCard(const int cardArr[], const vector<CardNumber> const findCards,
+							const int findCardCount, const vector<CardNumber> const subsidiaryCards,
+							const int subsidiaryCardCount);
 	};
 }

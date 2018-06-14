@@ -20,16 +20,23 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindSingle(const int *cards, const int len
 	bool result = false;
 	try
 	{
-		vector<CardNumberSum> cnsArr;
-		bool isOK = CardsToCardNumberSum(cards, len, cnsArr);
+		bool isOK = false;
+		const int pokerLen = 14;
+		int cardArray[pokerLen] = { 0 };
+		isOK = CardValueToArray(cards, len, cardArray);
 		if (isOK)
 		{
-			vector<vector<CardNumber>> findVec;
-			bool isSame = FindCardNumber(cnsArr, 0, 1, false, findVec);
-			bool isSplit = FindCardNumber(cnsArr, 0, 1, true, findVec);
-			if (isSame || isSplit)
+			vector<CardNumberSum> cnsArr;
+			isOK = CardArrayToCardNumberSum(cardArray, cnsArr);
+			if (isOK)
 			{
-				result = FineCardValue(cards, len, findVec, 1, outCards);
+				vector<vector<CardNumber>> findVec;
+				bool isSame = FindCardNumber(cnsArr, 0, 1, false, findVec);
+				bool isSplit = FindCardNumber(cnsArr, 0, 1, true, findVec);
+				if (isSame || isSplit)
+				{
+					result = FineCardValue(cards, len, findVec, 1, outCards);
+				}
 			}
 		}
 	}
@@ -45,18 +52,73 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindPair(const int *cards, const int len, 
 	bool result = false;
 	try
 	{
-		vector<CardNumberSum> cnsArr;
-		bool isOK = CardsToCardNumberSum(cards, len, cnsArr);
+		bool isOK = false;
+		const int pokerLen = 14;
+		int cardArray[pokerLen] = { 0 };
+		isOK = CardValueToArray(cards, len, cardArray);
 		if (isOK)
 		{
-			vector<vector<CardNumber>> findVec;
-			bool isSame = FindCardNumber(cnsArr, 0, 2, false, findVec);
-			bool isSplit = FindCardNumber(cnsArr, 0, 2, true, findVec);
-			if (isSame || isSplit)
+			vector<CardNumberSum> cnsArr;
+			isOK = CardArrayToCardNumberSum(cardArray, cnsArr);
+			if (isOK)
 			{
-				result = FineCardValue(cards, len, findVec, 2, outCards);
+				vector<vector<CardNumber>> findVec;
+				bool isSame = FindCardNumber(cnsArr, 0, 2, false, findVec);
+				bool isSplit = FindCardNumber(cnsArr, 0, 2, true, findVec);
+				if (isSame || isSplit)
+				{
+					result = FineCardValue(cards, len, findVec, 2, outCards);
+				}
 			}
 		}
+
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindThree(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		bool isOK = false;
+		const int pokerLen = 14;
+		int cardArray[pokerLen] = { 0 };
+		isOK = CardValueToArray(cards, len, cardArray);
+		if (isOK)
+		{
+			vector<CardNumberSum> cnsArr;
+			isOK = CardArrayToCardNumberSum(cardArray, cnsArr);
+			if (isOK)
+			{
+				vector<vector<CardNumber>> findVec;
+				bool isSame = FindCardNumber(cnsArr, 0, 3, false, findVec);
+				bool isSplit = FindCardNumber(cnsArr, 0, 3, true, findVec);
+				if (isSame || isSplit)
+				{
+					result = FineCardValue(cards, len, findVec, 3, outCards);
+				}
+			}
+		}
+
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindThreeSingle(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+
 	}
 	catch (exception err)
 	{
@@ -67,68 +129,128 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindPair(const int *cards, const int len, 
 
 /*============================ 找牌 end ================================*/
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::CardsToCardNumberSum(const int *cards, const int cardsLen, std::vector<CardNumberSum> &cnsArr)
+
+/*============================ 私有方法 ================================*/
+bool DouDiZhu::DouDiZhuPlayCardLogic::CardsToWeightArray(const int *cards, const int cardsLen, int outCards[])
 {
 	bool result = false;
 	try
 	{
 		if (NULL != cards && cardsLen > 0)
 		{
-			const int pokerLen = 14;
-			int cardNums[pokerLen] = {0};
 			CardNumber cardNum;
-			bool isOK = false;
+			int idxCard;
 			for (int i = 0; i < cardsLen; ++i)
 			{
-				isOK = PokerLogic::ValueToCardNumber(cards[i], cardNum);
-				if (isOK)
+				result = PokerLogic::ValueToCardNumber(cards[i], cardNum);
+				if (result)
 				{
-					int idxCard = (int)cardNum;
+					idxCard = (int)cardNum;
 					if (idxCard < 13)
 					{
-						cardNums[idxCard]++;
+						outCards[idxCard]++;
 					}
-					else if(idxCard == CardNumber::C_BJ || idxCard == CardNumber::C_RJ)
+					else if (idxCard == CardNumber::C_BJ || idxCard == CardNumber::C_RJ)
 					{
-						cardNums[13]++;
+						outCards[13]++;
 					}
 				}
+				else
+				{
+					break;
+				}
 			}
-			int idx = 0;
-			isOK = false;
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+
+
+
+
+/*以下方法放弃使用*/
+bool DouDiZhu::DouDiZhuPlayCardLogic::CardValueToArray(const int *cards, const int cardsLen, int outCards[])
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cards && cardsLen > 0)
+		{
+			CardNumber cardNum;
+			int idxCard;
+			for (int i = 0; i < cardsLen; ++i)
+			{
+				result = PokerLogic::ValueToCardNumber(cards[i], cardNum);
+				if (result)
+				{
+					idxCard = (int)cardNum;
+					if (idxCard < 13)
+					{
+						outCards[idxCard]++;
+					}
+					else if (idxCard == CardNumber::C_BJ || idxCard == CardNumber::C_RJ)
+					{
+						outCards[13]++;
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::CardArrayToCardNumberSum(const int cardArray[], std::vector<CardNumberSum> &cnsArr)
+{
+	bool result = false;
+	try
+	{
+		if (NULL != cardArray)
+		{
 			CardNumberSum cns;
 			for (int i = 2; i < 13; ++i)
 			{
-				if (cardNums[i] > 0)
+				if (cardArray[i] > 0)
 				{
 					cns.num = (CardNumber)i;
-					cns.count = cardNums[i];
+					cns.count = cardArray[i];
 					cnsArr.push_back(cns);
-					isOK = true;
+					result = true;
 				}
 			}
-			if (cardNums[0] > 0)
+			if (cardArray[0] > 0)
 			{
 				cns.num = CardNumber::C_A;
-				cns.count = cardNums[0];
+				cns.count = cardArray[0];
 				cnsArr.push_back(cns);
-				isOK = true;
+				result = true;
 			}
-			if (cardNums[1] > 0)
+			if (cardArray[1] > 0)
 			{
 				cns.num = CardNumber::C_2;
-				cns.count = cardNums[1];
+				cns.count = cardArray[1];
 				cnsArr.push_back(cns);
-				isOK = true;
+				result = true;
 			}
-			if (cardNums[13] > 0)
+			if (cardArray[13] > 0)
 			{
 				cns.num = CardNumber::C_RJ;
-				cns.count = cardNums[13];
+				cns.count = cardArray[13];
 				cnsArr.push_back(cns);
-				isOK = true;
+				result = true;
 			}
-			result = isOK;
 		}
 	}
 	catch (exception err)
@@ -195,39 +317,20 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindCardNumber(const std::vector<CardNumbe
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::FineCardValue(const int *cards, const int len, const vector<vector<CardNumber>> const findCards, const int count, vector<vector<int>> &outCards)
+bool DouDiZhu::DouDiZhuPlayCardLogic::FineCardValue(const int *cards, const int len, const vector<vector<CardNumber>> const findCards, const int findCardCount, vector<vector<int>> &outCards)
 {
 	bool result = false;
 	try
 	{
-		if (!findCards.empty())
+		if (!findCards.empty() && len > 0)
 		{
 			vector<int> arr;
-			int findCount;
-			CardNumber cardNum, curNum;
-			bool isOK;
+			bool isOK = false;
 			for (int i = 0; i < findCards.size(); ++i)
 			{
 				arr.clear();
-				findCount = 0;
-				for (int j = 0; j < findCards[i].size(); ++j)
-				{
-					curNum = findCards[i][j];
-					for (int m = 0; m < len; ++m)
-					{
-						isOK = PokerLogic::ValueToCardNumber(cards[m], cardNum);
-						if (isOK && cardNum == curNum)
-						{
-							arr.push_back(cards[m]);
-							findCount++;
-							if (findCount == count)
-							{
-								break;
-							}
-						}
-					}
-				}
-				if (!arr.empty())
+				isOK = FineCardValue(cards, len, findCards[i], findCardCount, arr);
+				if (isOK)
 				{
 					outCards.push_back(arr);
 				}
@@ -241,3 +344,134 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FineCardValue(const int *cards, const int 
 	}
 	return result;
 }
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FineCardValue(const int *cards, const int len, const vector<CardNumber> const findCards, const int findCardCount, vector<int> &outCards)
+{
+	bool result = false;
+	try
+	{
+		CardNumber cardNum, curNum;
+		bool isOK = false;
+		int findCount = 0;
+		for (int i = 0; i < findCards.size(); ++i)
+		{
+			curNum = findCards[i];
+			for (int j = 0; j < len; ++j)
+			{
+				isOK = PokerLogic::ValueToCardNumber(cards[j], cardNum);
+				if (isOK && cardNum == curNum)
+				{
+					outCards.push_back(cards[j]);
+					findCount++;
+					if (findCount == findCardCount)
+					{
+						result = true;
+						break;
+					}
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindCardValue(const int *cards, 
+													const int len, 
+													const vector<vector<CardNumber>> const findCards, 
+													const int findCardCount,
+													const vector<vector<CardNumber>> const subsidiaryCards,
+													const int subsidiaryCardCount,
+													vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		if (!findCards.empty() && !subsidiaryCards.empty() && len > 0)
+		{
+			for (int i = 0; i < findCards.size(); ++i)
+			{
+				FindCardValue(cards, len, findCards[i], findCardCount, subsidiaryCards, subsidiaryCardCount, outCards);
+			}
+			result = !outCards.empty();
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindCardValue(const int *cards,
+													const int len,
+													const vector<CardNumber> const findCards,
+													const int findCardCount,
+													const vector<vector<CardNumber>> const subsidiaryCards,
+													const int subsidiaryCardCount,
+													vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		if (!findCards.empty() && !subsidiaryCards.empty() && len > 0)
+		{
+			bool isOK = false;
+			for (int i = 0; i < subsidiaryCards.size(); ++i)
+			{
+				for (int j = 0; j < subsidiaryCards[i].size(); ++j)
+				{
+					CardNumber rootCard = subsidiaryCards[i][j];
+					for (int m = 0; m < findCards.size(); ++m)
+					{
+
+					}
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+//cardArr:长度14的数组，索引为牌枚举值，值为牌的数量
+bool DouDiZhu::DouDiZhuPlayCardLogic::IsSubsidiaryCard(const int cardArr[], const vector<CardNumber> const findCards,
+														const int findCardCount, const vector<CardNumber> const subsidiaryCards, 
+														const int subsidiaryCardCount)
+{
+	bool result = false;
+	try
+	{
+		if (!findCards.empty() && !subsidiaryCards.empty())
+		{
+			for (int i = 0; i < subsidiaryCards.size(); ++i)
+			{
+				CardNumber subsidiaryCard = subsidiaryCards[i];
+				for (int j = 0; j < findCards.size(); ++j)
+				{
+					if (subsidiaryCard == findCards[j])
+					{
+						if (findCardCount + subsidiaryCardCount > 4)
+						{
+							result = false;
+							return false;
+						}
+					}
+				}
+			}
+			result = true;
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+

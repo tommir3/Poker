@@ -320,6 +320,41 @@ int Poker::PokerLogic::CardNumberToWeightValue(const CardNumber num)
 	return result;
 }
 
+bool Poker::PokerLogic::WeightValueToCardNumber(const int weightValue, CardNumber &num)
+{
+	bool result = false;
+	try
+	{
+		if (weightValue == Card_Joker_Weight[0])
+		{
+			num = CardNumber::C_BJ;
+			result = true;
+		}
+		else if (weightValue == Card_Joker_Weight[1])
+		{
+			num = CardNumber::C_RJ;
+			result = true;
+		}
+		else
+		{
+			for (int i = 0; i < SuitsCount; ++i)
+			{
+				if (Card_Suits_Weight[i] == weightValue)
+				{
+					num = (CardNumber)i;
+					result = true;
+					break;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 int Poker::PokerLogic::CompareValue(const int value1, const int value2)
 {
 	int result = 0;

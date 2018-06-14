@@ -112,7 +112,40 @@ namespace PokerUnitTest
 			Assert::IsTrue(isOK);
 			int outCards[54];
 			isOK = _poker->ValueToWeightValue(cards, 54, outCards, 54);
+			Assert::IsTrue(isOK);
+		}
 
+		TEST_METHOD(TestCardNumberToWeightValue)
+		{
+			bool isOK = false;
+			int card, weightValue;
+			CardNumber num,outNum;
+			card = _poker->CardToValue(CardMark::Club, CardNumber::C_4);
+			Assert::AreEqual(card, 64);
+			isOK = _poker->ValueToCardNumber(card, num);
+			Assert::IsTrue(isOK);
+			Assert::IsTrue(num == CardNumber::C_4);
+			weightValue = _poker->CardNumberToWeightValue(num);
+			Assert::IsTrue(weightValue == 4);
+			isOK = _poker->WeightValueToCardNumber(weightValue, outNum);
+			Assert::IsTrue(isOK);
+			Assert::IsTrue(outNum == CardNumber::C_4);
+			isOK = _poker->WeightValueToCardNumber(82, outNum);
+			Assert::IsTrue(isOK);
+			Assert::IsTrue(outNum == CardNumber::C_BJ);
+			isOK = _poker->WeightValueToCardNumber(83, outNum);
+			Assert::IsTrue(isOK);
+			Assert::IsTrue(outNum == CardNumber::C_RJ);
+			isOK = _poker->WeightValueToCardNumber(13, outNum);
+			Assert::IsTrue(isOK);
+			isOK = _poker->WeightValueToCardNumber(1, outNum);
+			Assert::IsTrue(isOK);
+			Assert::IsTrue(outNum == CardNumber::C_A);
+			isOK = _poker->WeightValueToCardNumber(2, outNum);
+			Assert::IsTrue(isOK);
+			Assert::IsTrue(outNum == CardNumber::C_2);
+			isOK = _poker->WeightValueToCardNumber(14, outNum);
+			Assert::IsFalse(isOK);
 		}
 
 		TEST_METHOD(TestCompareValue)

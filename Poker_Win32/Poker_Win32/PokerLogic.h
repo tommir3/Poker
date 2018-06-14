@@ -102,6 +102,13 @@ namespace Poker
 		*/
 		__declspec(dllexport) int CardNumberToWeightValue(const CardNumber num);
 		/*
+		权重值转扑克牌面值
+		weightValue:权重值
+		num:扑克牌面值
+		return:成功返回true,失败返回false,异常抛出
+		*/
+		__declspec(dllexport) bool WeightValueToCardNumber(const int weightValue, CardNumber &num);
+		/*
 		对比两个扑克牌值
 		value1: 扑克牌值1
 		value1: 扑克牌值2

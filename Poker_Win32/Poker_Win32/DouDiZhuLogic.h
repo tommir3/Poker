@@ -7,11 +7,14 @@ namespace DouDiZhu
 {
 	using namespace std;
 	using namespace Poker;
+	/*斗地主牌类型的权重值数组 依次为：A 2 3 4 5 6 7 8 9 10 J Q K 小王 大王*/
+	static const int Poker_Weight[PokerLogic::SuitsCount + PokerLogic::JokerCount] = { 14, 15, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 82, 83 };
 	class DouDiZhuLogic : public PokerLogic
 	{
 	public:
 		__declspec(dllexport) DouDiZhuLogic();
 		__declspec(dllexport) ~DouDiZhuLogic();
+
 
 		__declspec(dllexport) CardType GetCardType(const int *cards, const int len);
 		__declspec(dllexport) int CompareCards(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);

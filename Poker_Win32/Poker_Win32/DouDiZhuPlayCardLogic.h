@@ -17,25 +17,30 @@ namespace DouDiZhu
 		__declspec(dllexport) ~DouDiZhuPlayCardLogic();
 
 		/*
-		找到相同的牌
+		找到相同类型的牌
 		cards:牌数组
+		len:牌数组长度
 		cardType:牌类型
 		outCards:找出符合的所有牌数组集合
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		__declspec(dllexport) bool FindTargetCards(const int *cards, const CardType cardType, vector<vector<int>> &outCards);
+		__declspec(dllexport) bool FindTargetCards(const int *cards, const int len, const CardType cardType, vector<vector<int>> &outCards);
+
+		__declspec(dllexport) bool FindTargetCards(const int *cards, const int len, const int *cmpCards, const int cmpLen, const CardType cardType, vector<vector<int>> &outCards);
 
 		__declspec(dllexport) bool FindSingle(const int *cards, const int len, vector<vector<int>> &outCards);
 		/*
 		找出牌数组中的所有对
 		cards:牌数组
 		len:牌数组的长度
+		cmpCards:比较牌（找比此牌大的牌）
+		cmpLen:比较牌的长度
 		outCards:找出符合的所有牌数组集合
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		__declspec(dllexport) bool FindPair(const int *cards, const int len, vector<vector<int>> &outCards);
+		__declspec(dllexport) bool FindPair(const int *cards, const int len, const int *cmpCards, const int cmpLen, vector<vector<int>> &outCards);
 		__declspec(dllexport) bool FindThree(const int *cards, const int len, vector<vector<int>> &outCards);
-		__declspec(dllexport) bool FindThreeSingle(const int *cards, const int len, const bool isSplit, vector<vector<int>> &outCards);
+		__declspec(dllexport) bool FindThreeSingle(const int *cards, const int len, vector<vector<int>> &outCards);
 		__declspec(dllexport) bool FindThreePair(const int *cards, const int len, vector<vector<int>> &outCards);
 		__declspec(dllexport) bool FindFour(const int *cards, const int len, vector<vector<int>> &outCards);
 		__declspec(dllexport) bool FindFourSingle(const int *cards, const int len, vector<vector<int>> &outCards);

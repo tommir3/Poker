@@ -16,6 +16,138 @@ DouDiZhu::DouDiZhuPlayCardLogic::~DouDiZhuPlayCardLogic()
 
 /*============================ 找牌 begin ================================*/
 
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindTargetCards(const int *cards, const int len, const CardType cardType, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		//主牌型连续牌数量,主牌型数量,附属牌型个数,附属牌型数量
+		int AdjacentCount = 0, MainCardSum = 0, SubsidiaryCount = 0, SubsidiarySum = 0;	
+		switch (cardType)
+		{
+		case CardType::Normal:
+			MainCardSum = 1;		//主牌型数量
+			break;
+		case CardType::Single:
+			MainCardSum = 1;		//主牌型数量
+			break;
+		case CardType::Pair:
+			MainCardSum = 2;		//主牌型数量
+			break;
+		case CardType::Three:
+			MainCardSum = 3;		//主牌型数量
+			break;
+		case CardType::ThreeSingle:
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 1;	//附属牌型个数
+			SubsidiarySum = 1;		//附属牌型数量
+			break;
+		case CardType::ThreePair:
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 1;	//附属牌型个数
+			SubsidiarySum = 2;		//附属牌型数量
+			break;
+		case CardType::Four:
+			MainCardSum = 4;		//主牌型数量
+			break;
+		case CardType::FourSingle:
+			MainCardSum = 4;		//主牌型数量
+			SubsidiaryCount = 2;	//附属牌型个数
+			SubsidiarySum = 1;		//附属牌型数量
+			break;
+		case CardType::FourPair:
+			MainCardSum = 4;		//主牌型数量
+			SubsidiaryCount = 2;	//附属牌型个数
+			SubsidiarySum = 2;		//附属牌型数量
+			break;
+		case CardType::Plane:
+			AdjacentCount = 2;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			break;
+		case CardType::PlaneSingle:
+			AdjacentCount = 2;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 2;	//附属牌型个数
+			SubsidiarySum = 1;		//附属牌型数量
+			break;
+		case CardType::PlanePair:
+			AdjacentCount = 2;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 2;	//附属牌型个数
+			SubsidiarySum = 2;		//附属牌型数量
+			break;
+		case CardType::ThreePlane:
+			AdjacentCount = 3;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			break;
+		case CardType::ThreePlaneSingle:
+			AdjacentCount = 3;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 3;	//附属牌型个数
+			SubsidiarySum = 1;		//附属牌型数量
+			break;
+		case CardType::ThreePlanePair:
+			AdjacentCount = 3;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 3;	//附属牌型个数
+			SubsidiarySum = 2;		//附属牌型数量
+			break;
+		case CardType::FourPlane:
+			AdjacentCount = 4;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			break;
+		case CardType::FourPlaneSingle:
+			AdjacentCount = 4;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 4;	//附属牌型个数
+			SubsidiarySum = 1;		//附属牌型数量
+			break;
+		case CardType::FourPlanePair:
+			AdjacentCount = 4;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 4;	//附属牌型个数
+			SubsidiarySum = 2;		//附属牌型数量
+			break;
+		case CardType::FivePlane:
+			AdjacentCount = 5;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			break;
+		case CardType::FivePlaneSingle:
+			AdjacentCount = 5;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			SubsidiaryCount = 5;	//附属牌型个数
+			SubsidiarySum = 1;		//附属牌型数量
+			break;
+		case CardType::SixPlane:
+			AdjacentCount = 6;		//主牌型连续牌数量
+			MainCardSum = 3;		//主牌型数量
+			break;
+		case CardType::StraightSingle:
+			result = FindStraightSingle(cards, len, outCards);
+			return result;
+		case CardType::StraightPair:
+			result = FindStraightPair(cards, len, outCards);
+			return result;
+		case CardType::KingBomb:
+			result = FindKingBomb(cards, len, outCards);
+			return result;
+		default:
+			MainCardSum = 1;		//主牌型数量
+			break;
+		}
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 bool DouDiZhu::DouDiZhuPlayCardLogic::FindSingle(const int *cards, const int len, std::vector<std::vector<int>> &outCards)
 {
 	bool result = false;
@@ -38,7 +170,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindSingle(const int *cards, const int len
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::FindPair(const int *cards, const int len, vector<vector<int>> &outCards)
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindPair(const int *cards, const int len, const int *cmpCards, const int cmpLen, vector<vector<int>> &outCards)
 {
 	bool result = false;
 	try
@@ -82,7 +214,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindThree(const int *cards, const int len,
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::FindThreeSingle(const int *cards, const int len, const bool isSplit, vector<vector<int>> &outCards)
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindThreeSingle(const int *cards, const int len, vector<vector<int>> &outCards)
 {
 	bool result = false;
 	try
@@ -90,6 +222,138 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindThreeSingle(const int *cards, const in
 		int AdjacentCount = 0;	//主牌型连续牌数量
 		int MainCardSum = 3;	//主牌型数量
 		int SubsidiaryCount = 1;	//附属牌型个数
+		int SubsidiarySum = 1;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindThreePair(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 0;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 1;	//附属牌型个数
+		int SubsidiarySum = 2;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindFour(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 0;	//主牌型连续牌数量
+		int MainCardSum = 4;	//主牌型数量
+		int SubsidiaryCount = 0;	//附属牌型个数
+		int SubsidiarySum = 0;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindFourSingle(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 0;	//主牌型连续牌数量
+		int MainCardSum = 4;	//主牌型数量
+		int SubsidiaryCount = 2;	//附属牌型个数
+		int SubsidiarySum = 1;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindFourPair(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 0;	//主牌型连续牌数量
+		int MainCardSum = 4;	//主牌型数量
+		int SubsidiaryCount = 2;	//附属牌型个数
+		int SubsidiarySum = 2;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindPlane(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 2;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 0;	//附属牌型个数
+		int SubsidiarySum = 0;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindPlaneSingle(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 2;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 2;	//附属牌型个数
 		int SubsidiarySum = 1;		//附属牌型数量
 		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
 		if (!result)
@@ -117,6 +381,239 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindPlanePair(const int *cards, const int 
 		if (!result)
 		{
 			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindThreePlane(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 3;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 0;	//附属牌型个数
+		int SubsidiarySum = 0;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindThreePlaneSingle(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 3;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 3;	//附属牌型个数
+		int SubsidiarySum = 1;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindThreePlanePair(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 3;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 3;	//附属牌型个数
+		int SubsidiarySum = 2;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindFourPlane(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 4;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 0;	//附属牌型个数
+		int SubsidiarySum = 0;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindFourPlaneSingle(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 4;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 4;	//附属牌型个数
+		int SubsidiarySum = 1;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindFivePlane(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		int AdjacentCount = 5;	//主牌型连续牌数量
+		int MainCardSum = 3;	//主牌型数量
+		int SubsidiaryCount = 0;	//附属牌型个数
+		int SubsidiarySum = 0;		//附属牌型数量
+		result = FindCards(cards, len, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		if (!result)
+		{
+			result = FindCards(cards, len, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindStraightSingle(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		//int AdjacentCount = 5;	//主牌型连续牌数量
+		int MainCardSum = 1;	//主牌型数量
+		int SubsidiaryCount = 0;	//附属牌型个数
+		int SubsidiarySum = 0;		//附属牌型数量
+		bool isOK = false;
+		for (int i = 5; i < 13; ++i)
+		{
+			isOK = FindCards(cards, len, false, i, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+			if (isOK)
+			{
+				result = isOK;
+			}
+			else
+			{
+				isOK = FindCards(cards, len, true, i, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+				if (isOK)
+				{
+					result = isOK;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindStraightPair(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		//int AdjacentCount = 5;	//主牌型连续牌数量
+		int MainCardSum = 2;	//主牌型数量
+		int SubsidiaryCount = 0;	//附属牌型个数
+		int SubsidiarySum = 0;		//附属牌型数量
+		bool isOK = false;
+		for (int i = 3; i <= 8; ++i)
+		{
+			isOK = FindCards(cards, len, false, i, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+			if (isOK)
+			{
+				result = isOK;
+			}
+			else
+			{
+				isOK = FindCards(cards, len, true, i, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+				if (isOK)
+				{
+					result = isOK;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindKingBomb(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		if (len > 0)
+		{
+			CardMark mark;
+			bool isOK;
+			vector<int> kingVec;
+			for (int i = 0; i < len; ++i)
+			{
+				isOK = PokerLogic::ValueToMark(cards[i], mark);
+				if (isOK && mark == CardMark::Joker)
+				{
+					kingVec.push_back(cards[i]);
+					if (kingVec.size() == 2 && kingVec[0] != kingVec[1])
+					{
+						outCards.push_back(kingVec);
+						result = true;
+						break;
+					}
+				}
+			}
 		}
 	}
 	catch (exception err)
@@ -354,9 +851,10 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const 
 	{
 		outSortArrVec.clear();
 		bool isAccord = false,isFindAdjacent = false;//isAccord 是否是符合的牌 拆牌
-		vector<int> tmpSortArr(CardSortCount);
+		
 		for (int i = 0; i < sortArrLen; ++i)
 		{
+			vector<int> tmpSortArr(CardSortCount);
 			isAccord = (isSplit) ? sortArray[i] > sameCount : sortArray[i] == sameCount;
 			if (isAccord && i + adjacentCount < sortArrLen)
 			{

@@ -148,6 +148,143 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindTargetCards(const int *cards, const in
 	return result;
 }
 
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindTargetCards(const int *cards, const int len, const int *cmpCards, const int cmpLen, const CardType cardType, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		//主牌型连续牌数量,主牌型数量,附属牌型个数,附属牌型数量
+		int AdjacentCount = 0, MainCardSum = 0, SubsidiaryCount = 0, SubsidiarySum = 0;
+		CardNumber minCard;
+		bool isOK = GetCompareCardNumber(cmpCards, cmpLen, cardType, minCard);
+		if (isOK)
+		{
+			switch (cardType)
+			{
+			case CardType::Normal:
+				MainCardSum = 1;		//主牌型数量
+				break;
+			case CardType::Single:
+				MainCardSum = 1;		//主牌型数量
+				break;
+			case CardType::Pair:
+				MainCardSum = 2;		//主牌型数量
+				break;
+			case CardType::Three:
+				MainCardSum = 3;		//主牌型数量
+				break;
+			case CardType::ThreeSingle:
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 1;	//附属牌型个数
+				SubsidiarySum = 1;		//附属牌型数量
+				break;
+			case CardType::ThreePair:
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 1;	//附属牌型个数
+				SubsidiarySum = 2;		//附属牌型数量
+				break;
+			case CardType::Four:
+				MainCardSum = 4;		//主牌型数量
+				break;
+			case CardType::FourSingle:
+				MainCardSum = 4;		//主牌型数量
+				SubsidiaryCount = 2;	//附属牌型个数
+				SubsidiarySum = 1;		//附属牌型数量
+				break;
+			case CardType::FourPair:
+				MainCardSum = 4;		//主牌型数量
+				SubsidiaryCount = 2;	//附属牌型个数
+				SubsidiarySum = 2;		//附属牌型数量
+				break;
+			case CardType::Plane:
+				AdjacentCount = 2;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				break;
+			case CardType::PlaneSingle:
+				AdjacentCount = 2;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 2;	//附属牌型个数
+				SubsidiarySum = 1;		//附属牌型数量
+				break;
+			case CardType::PlanePair:
+				AdjacentCount = 2;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 2;	//附属牌型个数
+				SubsidiarySum = 2;		//附属牌型数量
+				break;
+			case CardType::ThreePlane:
+				AdjacentCount = 3;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				break;
+			case CardType::ThreePlaneSingle:
+				AdjacentCount = 3;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 3;	//附属牌型个数
+				SubsidiarySum = 1;		//附属牌型数量
+				break;
+			case CardType::ThreePlanePair:
+				AdjacentCount = 3;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 3;	//附属牌型个数
+				SubsidiarySum = 2;		//附属牌型数量
+				break;
+			case CardType::FourPlane:
+				AdjacentCount = 4;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				break;
+			case CardType::FourPlaneSingle:
+				AdjacentCount = 4;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 4;	//附属牌型个数
+				SubsidiarySum = 1;		//附属牌型数量
+				break;
+			case CardType::FourPlanePair:
+				AdjacentCount = 4;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 4;	//附属牌型个数
+				SubsidiarySum = 2;		//附属牌型数量
+				break;
+			case CardType::FivePlane:
+				AdjacentCount = 5;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				break;
+			case CardType::FivePlaneSingle:
+				AdjacentCount = 5;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				SubsidiaryCount = 5;	//附属牌型个数
+				SubsidiarySum = 1;		//附属牌型数量
+				break;
+			case CardType::SixPlane:
+				AdjacentCount = 6;		//主牌型连续牌数量
+				MainCardSum = 3;		//主牌型数量
+				break;
+			case CardType::StraightSingle:
+				result = FindStraightSingle(cards, len, outCards);
+				return result;
+			case CardType::StraightPair:
+				result = FindStraightPair(cards, len, outCards);
+				return result;
+			case CardType::KingBomb:
+				result = FindKingBomb(cards, len, outCards);
+				return result;
+			default:
+				MainCardSum = 1;		//主牌型数量
+				break;
+			}
+			result = FindCards(cards, len, minCard, false, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+			if (!result)
+			{
+				result = FindCards(cards, len, minCard, true, AdjacentCount, MainCardSum, SubsidiaryCount, SubsidiarySum, outCards);
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 bool DouDiZhu::DouDiZhuPlayCardLogic::FindSingle(const int *cards, const int len, std::vector<std::vector<int>> &outCards)
 {
 	bool result = false;
@@ -701,17 +838,99 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindCards(const int *cards, const int len,
 	}
 	return result;
 }
-
-int DouDiZhu::DouDiZhuPlayCardLogic::SortStyleValueToCardNumber(const int value)
+//new
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindCards(const int *cards, const int len, const CardNumber minCard, const bool isMainSplit, const int adjacentCount, const int mainCardSum, const int subsidiaryCount, const int subsidiarySum, vector<vector<int>> &outCards)
 {
-	int result = -1;
+	bool result = false;
+	try
+	{
+		bool isOK = false;
+		int sortArr[CardSortCount] = { 0 };
+		isOK = CardsToSortArray(cards, len, sortArr, CardSortCount);
+		if (isOK)
+		{
+			if (adjacentCount > 0)//主牌型为连续牌
+			{
+				vector<vector<int>> mainCardsList;
+				isOK = FindMainCards(sortArr, CardSortCount, minCard, adjacentCount, mainCardSum, isMainSplit, mainCardsList);
+				if (isOK)
+				{
+					for (int i = 0; i < mainCardsList.size(); ++i)
+					{
+						vector<int> mainCards = mainCardsList[i];
+						vector<vector<int>> cardsList;
+						isOK = FindAdjacentIndexCards(sortArr, CardSortCount, mainCards, subsidiaryCount, subsidiarySum, false, cardsList);
+						if (isOK)//不拆牌的找附属牌
+						{
+							result = SortArrayCardsToCards(cardsList, cards, len, outCards);
+						}
+						else//拆牌的找附属牌
+						{
+							isOK = FindAdjacentIndexCards(sortArr, CardSortCount, mainCards, subsidiaryCount, subsidiarySum, true, cardsList);
+							if (isOK)
+							{
+								result = SortArrayCardsToCards(cardsList, cards, len, outCards);
+							}
+						}
+					}
+				}
+			}
+			else//主牌型为相同的牌
+			{
+				int mainCards[CardSortCount] = { 0 };
+				isOK = FindMainCards(sortArr, CardSortCount, minCard, mainCardSum, isMainSplit, mainCards);
+				if (isOK)
+				{
+					vector<vector<int>> cardsList;
+					for (int i = 0; i < CardSortCount; ++i)
+					{
+						if (mainCards[i] == mainCardSum)
+						{
+							cardsList.clear();
+							isOK = FindSameIndexCards(sortArr, CardSortCount, i, mainCardSum, subsidiaryCount, subsidiarySum, false, cardsList);
+							if (isOK)//不拆牌的找附属牌
+							{
+								result = SortArrayCardsToCards(cardsList, cards, len, outCards);
+							}
+							else//拆牌的找附属牌
+							{
+								isOK = FindSameIndexCards(sortArr, CardSortCount, i, mainCardSum, subsidiaryCount, subsidiarySum, true, cardsList);
+								if (isOK)
+								{
+									result = SortArrayCardsToCards(cardsList, cards, len, outCards);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::SortStyleValueToCardNumber(const int value, CardNumber & cardNum)
+{
+	bool result = false;
 	try
 	{
 		for (int i = 0; i < CardSortCount; ++i)
 		{
 			if (SortStyle[i] == value)
 			{
-				result = i;
+				if (i == 13)
+				{
+					cardNum = CardNumber::C_RJ;
+				}
+				else
+				{
+					cardNum = (CardNumber)i;
+				}
+				result = true;;
 				break;
 			}
 		}
@@ -737,14 +956,10 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::CardsToSortArray(const int *cards, const i
 				result = PokerLogic::ValueToCardNumber(cards[i], cardNum);
 				if (result)
 				{
-					idxCard = (int)cardNum;
-					if (idxCard < 13)
+					idxCard = CardNumberToSortArrayValue(cardNum);
+					if (idxCard >= 0)
 					{
-						sortArray[SortStyle[idxCard]]++;
-					}
-					else if (idxCard == CardNumber::C_BJ || idxCard == CardNumber::C_RJ)
-					{
-						sortArray[SortStyle[13]]++;
+						sortArray[idxCard]++;
 					}
 				}
 				else
@@ -752,6 +967,28 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::CardsToSortArray(const int *cards, const i
 					break;
 				}
 			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+int DouDiZhu::DouDiZhuPlayCardLogic::CardNumberToSortArrayValue(const CardNumber cardNum)
+{
+	int result = -1;
+	try
+	{
+		int idxCard = (int)cardNum;
+		if (idxCard < 13)
+		{
+			result = SortStyle[idxCard];
+		}
+		else if (idxCard == CardNumber::C_BJ || idxCard == CardNumber::C_RJ)
+		{
+			result = SortStyle[13];
 		}
 	}
 	catch (exception err)
@@ -796,13 +1033,11 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::SortArrayCardsToCards(vector<int> sortCard
 			int num;
 			for (int i = 0; i < sortCards.size(); ++i)
 			{
-				num = SortStyleValueToCardNumber(sortCards[i]);
-				if (num >= 0)
+				isOK = SortStyleValueToCardNumber(sortCards[i], cmpCard);
+				if (isOK)
 				{
-					cmpCard = (CardNumber)num;
 					for (int j = 0; j < len; ++j)
 					{
-						curCard;
 						isOK = PokerLogic::ValueToCardNumber(cards[j], curCard);
 						if (isOK)
 						{
@@ -851,18 +1086,17 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const 
 	{
 		outSortArrVec.clear();
 		bool isAccord = false,isFindAdjacent = false;//isAccord 是否是符合的牌 拆牌
-		
 		for (int i = 0; i < sortArrLen; ++i)
 		{
 			vector<int> tmpSortArr(CardSortCount);
-			isAccord = (isSplit) ? sortArray[i] > sameCount : sortArray[i] == sameCount;
+			isAccord = (isSplit) ? sortArray[i] >= sameCount : sortArray[i] == sameCount;
 			if (isAccord && i + adjacentCount < sortArrLen)
 			{
 				tmpSortArr[i] = sameCount;
 				isFindAdjacent = true;
 				for (int j = i + 1; j < i + adjacentCount; ++j)
 				{
-					isAccord = (isSplit) ? sortArray[j] > sameCount : sortArray[j] == sameCount;
+					isAccord = (isSplit) ? sortArray[j] >= sameCount : sortArray[j] == sameCount;
 					if (isAccord && (CardNumber)j != CardNumber::C_2)
 					{
 						tmpSortArr[j] = sameCount;
@@ -889,7 +1123,56 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const 
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const int sameCount, const bool isSplit, int* outSortArrVec)
+//new
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec)
+{
+	bool result = false;
+	try
+	{
+		outSortArrVec.clear();
+		bool isAccord = false, isFindAdjacent = false;//isAccord 是否是符合的牌 拆牌
+		int minIndex = CardNumberToSortArrayValue(minCard);
+		if (minIndex >= 0 && minIndex + 1 < sortArrLen)
+		{
+			for (int i = minIndex + 1; i < sortArrLen; ++i)
+			{
+				vector<int> tmpSortArr(CardSortCount);
+				isAccord = (isSplit) ? sortArray[i] >= sameCount : sortArray[i] == sameCount;
+				if (isAccord && i + adjacentCount < sortArrLen)
+				{
+					tmpSortArr[i] = sameCount;
+					isFindAdjacent = true;
+					for (int j = i + 1; j < i + adjacentCount; ++j)
+					{
+						isAccord = (isSplit) ? sortArray[j] >= sameCount : sortArray[j] == sameCount;
+						if (isAccord && (CardNumber)j != CardNumber::C_2)
+						{
+							tmpSortArr[j] = sameCount;
+						}
+						else
+						{
+							isFindAdjacent = false;
+							break;
+						}
+					}
+					if (isFindAdjacent)
+					{
+						//找到
+						outSortArrVec.push_back(tmpSortArr);
+					}
+				}
+			}
+			result = !outSortArrVec.empty();
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const int sameCount, const bool isSplit, int* outSortArr)
 {
 	bool result = false;
 	try
@@ -897,11 +1180,38 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const 
 		bool isAccord = false;//是否是符合的牌 用于拆牌
 		for (int i = 0; i < sortArrLen; ++i)
 		{
-			isAccord = (isSplit) ? sortArray[i] > sameCount : sortArray[i] == sameCount;
+			isAccord = (isSplit) ? sortArray[i] >= sameCount : sortArray[i] == sameCount;
 			if (isAccord)
 			{
-				outSortArrVec[i] = sameCount;
+				outSortArr[i] = sameCount;
 				result = true;
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const CardNumber minCard, const int sameCount, const bool isSplit, int* outSortArr)
+{
+	bool result = false;
+	try
+	{
+		bool isAccord = false;//是否是符合的牌 用于拆牌
+		int minIndex = CardNumberToSortArrayValue(minCard);
+		if (minIndex >= 0 && minIndex + 1 < sortArrLen)
+		{
+			for (int i = minIndex + 1; i < sortArrLen; ++i)
+			{
+				isAccord = (isSplit) ? sortArray[i] >= sameCount : sortArray[i] == sameCount;
+				if (isAccord)
+				{
+					outSortArr[i] = sameCount;
+					result = true;
+				}
 			}
 		}
 	}
@@ -923,7 +1233,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindSubsidiaryCards(const int *sortNoMainA
 			int subsidiaryIdx = 0;
 			for (int i = sortArrIndex; i < sortArrLen; ++i)
 			{
-				isAccord = (isSplit) ? sortNoMainArray[i] > subsidiarySameCount : sortNoMainArray[i] == subsidiarySameCount;
+				isAccord = (isSplit) ? sortNoMainArray[i] >= subsidiarySameCount : sortNoMainArray[i] == subsidiarySameCount;
 				if (isAccord)
 				{
 					outSubsidiaryVec.push_back(i);
@@ -1130,6 +1440,216 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::IsSmae(const vector<vector<int>> const has
 				if (result)
 				{
 					break;
+				}
+			}
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::GetCompareCardNumber(const int *cards, const int len, const CardType cardType, CardNumber &cardNum)
+{
+	bool result = false;
+	try
+	{
+		int sortArr[CardSortCount] = { 0 };
+		bool isOK = CardsToSortArray(cards, len, sortArr, CardSortCount);
+		if (isOK)
+		{
+			int AdjacentCount = 0, MainCardSum = 0;
+			switch (cardType)
+			{
+			case CardType::Normal:
+				return result;
+			case CardType::Single:
+				if (len == 1)
+				{
+					result = PokerLogic::ValueToCardNumber(cards[0], cardNum);
+				}
+				return result;
+			case CardType::Pair:
+				if (len == 2)
+				{
+					MainCardSum = 2;
+				}
+				break;
+			case CardType::Three:
+				if (len == 3)
+				{
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::ThreeSingle:
+				if (len == 4)
+				{
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::ThreePair:
+				if (len == 5)
+				{
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::Four:
+				if (len == 4)
+				{
+					MainCardSum = 4;
+				}
+				break;
+			case CardType::FourSingle:
+				if (len == 6)
+				{
+					MainCardSum = 4;
+				}
+				break;
+			case CardType::FourPair:
+				if (len == 8)
+				{
+					MainCardSum = 4;
+				}
+				break;
+			case CardType::Plane:
+				if (len == 6)
+				{
+					AdjacentCount = 2;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::PlaneSingle:
+				if (len == 8)
+				{
+					AdjacentCount = 2;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::PlanePair:
+				if (len == 10)
+				{
+					AdjacentCount = 2;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::ThreePlane:
+				if (len == 9)
+				{
+					AdjacentCount = 3;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::ThreePlaneSingle:
+				if (len == 12)
+				{
+					AdjacentCount = 3;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::ThreePlanePair:
+				if (len == 15)
+				{
+					AdjacentCount = 3;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::FourPlane:
+				if (len == 12)
+				{
+					AdjacentCount = 4;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::FourPlaneSingle:
+				if (len == 16)
+				{
+					AdjacentCount = 4;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::FourPlanePair:
+				if (len == 20)
+				{
+					AdjacentCount = 4;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::FivePlane:
+				if (len == 15)
+				{
+					AdjacentCount = 5;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::FivePlaneSingle:
+				if (len == 20)
+				{
+					AdjacentCount = 5;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::SixPlane:
+				if (len == 18)
+				{
+					AdjacentCount = 6;
+					MainCardSum = 3;
+				}
+				break;
+			case CardType::StraightSingle:
+				if (len >= 5)
+				{
+					AdjacentCount = 5;
+					MainCardSum = 1;
+				}
+				break;
+			case CardType::StraightPair:
+				if (len >= 6)
+				{
+					AdjacentCount = 3;
+					MainCardSum = 2;
+				}
+				break;
+			case CardType::KingBomb:
+				if (len == 2)
+				{
+					cardNum = CardNumber::C_RJ;
+					result = true;
+				}
+				return result;
+			default:
+				return result;
+			}
+			for (int i = 0; i < CardSortCount; ++i)
+			{
+				if (AdjacentCount > 0)//找连续的牌
+				{
+					if (i + AdjacentCount < CardSortCount)
+					{
+						bool isAdjacent = true;
+						for (int j = i; j < i + AdjacentCount; ++j)
+						{
+							if (sortArr[j] != MainCardSum)
+							{
+								isAdjacent = false;
+								break;
+							}
+						}
+						if (isAdjacent)
+						{
+							result = SortStyleValueToCardNumber(i, cardNum);
+							break;
+						}
+					}
+				}
+				else//直接找牌
+				{
+					if (sortArr[i] == MainCardSum)
+					{
+						result = SortStyleValueToCardNumber(i, cardNum);
+						break;
+					}
 				}
 			}
 		}

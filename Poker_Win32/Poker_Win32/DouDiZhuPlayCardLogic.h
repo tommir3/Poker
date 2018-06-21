@@ -67,8 +67,9 @@ namespace DouDiZhu
 		int SortStyle[CardSortCount] = { 11, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13 };
 
 		bool FindCards(const int *cards, const int len, const bool isMainSplit,const int adjacentCount, const int mainCardSum, const int subsidiaryCount,const int subsidiarySum, vector<vector<int>> &outCards);
+		bool FindCards(const int *cards, const int len, const CardNumber minCard, const bool isMainSplit, const int adjacentCount, const int mainCardSum, const int subsidiaryCount, const int subsidiarySum, vector<vector<int>> &outCards);
 
-		int SortStyleValueToCardNumber(const int value);
+		bool SortStyleValueToCardNumber(const int value, CardNumber & cardNum);
 		
 		/*
 		扑克牌值转扑克权重排序数组
@@ -79,6 +80,7 @@ namespace DouDiZhu
 		return:成功返回true，失败返回false。异常抛出
 		*/
 		bool CardsToSortArray(const int *cards, const int cardsLen, int *sortArray, const int sortArrLen);
+		int CardNumberToSortArrayValue(const CardNumber cardNum);
 		bool SortArrayCardsToCards(const vector<vector<int>> const sortCardsList, const int *cards, const int len, vector<vector<int>> &outCardsList);
 		bool SortArrayCardsToCards(vector<int> sortCards, const int *cards, const int len, vector<int> &outCards);
 		/*
@@ -92,6 +94,7 @@ namespace DouDiZhu
 		return:成功返回true，失败返回false。异常抛出
 		*/
 		bool FindMainCards(const int *sortArray, const int sortArrLen, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec);
+		bool FindMainCards(const int *sortArray, const int sortArrLen, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec);
 		/*
 		查找相同牌的主牌型  例如3带1，3即为主牌型
 		sortArray:扑克权重排序数组
@@ -102,6 +105,7 @@ namespace DouDiZhu
 		return:成功返回true，失败返回false。异常抛出
 		*/
 		bool FindMainCards(const int *sortArray, const int sortArrLen, const int sameCount, const bool isSplit, int* outSortArr);
+		bool FindMainCards(const int *sortArray, const int sortArrLen, const CardNumber minCard, const int sameCount, const bool isSplit, int* outSortArr);
 		/*
 		查找附属牌型  例如3带1，1即为附属牌型
 		sortNoMainArray:排除主牌型的扑克权重排序数组
@@ -118,5 +122,6 @@ namespace DouDiZhu
 		bool FindSameIndexCards(const int *sortArray, const int sortArrLen, const int cardIndex, const int cardCount, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards);
 		bool IsSmae(const vector<vector<int>> const hashVec, const vector<int> const subsidiaryCards);
 
+		bool GetCompareCardNumber(const int *cards, const int len, const CardType cardType, CardNumber &cardNum);
 	};
 }

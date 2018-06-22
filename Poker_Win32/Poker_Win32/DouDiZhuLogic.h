@@ -72,7 +72,19 @@ namespace DouDiZhu
 		__declspec(dllexport) int CompareStraightSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 		__declspec(dllexport) int CompareStraightPair(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len);
 
+		static const int CardSortCount = PokerLogic::SuitsCount + 1;
+		/*斗地主计算牌时排序样式 依次：3，4，5，6，7，8，9，10，J，Q，K，A，2，王*/
+		int SortStyle[CardSortCount] = { 11, 12, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13 };
+		bool SortStyleValueToCardNumber(const int value, CardNumber & cardNum);
+		int CardNumberToSortArrayValue(const CardNumber cardNum);
+		bool CardsToSortArray(const int *cards, const int cardsLen, int *sortArray, const int sortArrLen);
+
+		bool GetCompareCardNumber(const int *cards, const int len, const CardType cardType, CardNumber &cardNum);
 	private:
+
+		bool IsTrueCardType(const int *cards, const int len, const int adjacentCount, const int sameCount, const int subsidiaryCount, const int subsidiarySameCount);
+		bool CloneArray(const int *cards, const int len, int *outCards);
+		bool IsAdjacentCard(const int *sortArray, const int sortArrLen, const int index, const int adjacentCount, const int sameCount);
 		/*
 		判断是否全部相同
 		cards: 牌数组

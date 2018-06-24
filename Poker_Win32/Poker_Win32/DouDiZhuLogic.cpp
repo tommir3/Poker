@@ -141,6 +141,142 @@ CardType DouDiZhu::DouDiZhuLogic::GetCardType(const int *cards, const int len)
 	return result;
 }
 
+bool DouDiZhu::DouDiZhuLogic::IsCardType(const CardType cardType, const int *cards, const int len)
+{
+	bool result = false;
+	try
+	{
+		if (cardType != CardType::Normal && NULL != cards && len > 0)
+		{
+			int adjacentCount = 1;
+			int sameCount = 0;
+			int subsidiaryCount = 0;
+			int subsidiarySameCount = 0;
+			switch (cardType)
+			{
+			case CardType::Normal:
+				return result;
+			case CardType::Single:
+				break;
+			case CardType::Pair:
+				sameCount = 2;
+				break;
+			case CardType::Three:
+				sameCount = 3;
+				break;
+			case CardType::ThreeSingle:
+				sameCount = 3;
+				subsidiaryCount = 1;
+				subsidiarySameCount = 1;
+				break;
+			case CardType::ThreePair:
+				sameCount = 3;
+				subsidiaryCount = 1;
+				subsidiarySameCount = 2;
+				break;
+			case CardType::Four:
+				sameCount = 4;
+				break;
+			case CardType::FourSingle:
+				sameCount = 4;
+				subsidiaryCount = 2;
+				subsidiarySameCount = 1;
+				break;
+			case CardType::FourPair:
+				sameCount = 4;
+				subsidiaryCount = 2;
+				subsidiarySameCount = 2;
+				break;
+			case CardType::Plane:
+				adjacentCount = 2;
+				sameCount = 3;
+				break;
+			case CardType::PlaneSingle:
+				adjacentCount = 2;
+				sameCount = 3;
+				subsidiaryCount = 2;
+				subsidiarySameCount = 1;
+				break;
+			case CardType::PlanePair:
+				adjacentCount = 2;
+				sameCount = 3;
+				subsidiaryCount = 2;
+				subsidiarySameCount = 2;
+				break;
+			case CardType::ThreePlane:
+				adjacentCount = 3;
+				sameCount = 3;
+				break;
+			case CardType::ThreePlaneSingle:
+				adjacentCount = 3;
+				sameCount = 3;
+				subsidiaryCount = 3;
+				subsidiarySameCount = 1;
+				break;
+			case CardType::ThreePlanePair:
+				adjacentCount = 3;
+				sameCount = 3;
+				subsidiaryCount = 3;
+				subsidiarySameCount = 2;
+				break;
+			case CardType::FourPlane:
+				adjacentCount = 4;
+				sameCount = 3;
+				break;
+			case CardType::FourPlaneSingle:
+				adjacentCount = 4;
+				sameCount = 3;
+				subsidiaryCount = 4;
+				subsidiarySameCount = 1;
+				break;
+			case CardType::FourPlanePair:
+				adjacentCount = 4;
+				sameCount = 3;
+				subsidiaryCount = 4;
+				subsidiarySameCount = 2;
+				break;
+			case CardType::FivePlane:
+				adjacentCount = 5;
+				sameCount = 3;
+				break;
+			case CardType::FivePlaneSingle:
+				adjacentCount = 5;
+				sameCount = 3;
+				subsidiaryCount = 5;
+				subsidiarySameCount = 1;
+				break;
+			case CardType::SixPlane:
+				adjacentCount = 6;
+				sameCount = 3;
+				break;
+			case CardType::StraightSingle:
+				adjacentCount = len;
+				sameCount = 1;
+				break;
+			case CardType::StraightPair:
+				if (len % 2 != 0)
+				{
+					return result;
+				}
+				adjacentCount = len / 2;
+				sameCount = 2;
+				break;
+			case CardType::KingBomb:
+				result = IsKingBomb(cards, len);
+				return result;
+			default:
+				return result;
+			}
+			result = IsTrueCardType(cards, len, adjacentCount, sameCount, subsidiaryCount, subsidiarySameCount);
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
 int DouDiZhu::DouDiZhuLogic::CompareCards(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
 {
 	int result = -1;
@@ -185,82 +321,15 @@ int DouDiZhu::DouDiZhuLogic::CompareCards(const int *cards1, const int cards1Len
 			}
 			else
 			{
-				switch (card1Type)
+				CardNumber cardNum1, cardNum2;
+				bool isOK = GetCompareCardNumber(cards1, cards1Len, card1Type, cardNum1);
+				if (isOK)
 				{
-				case CardType::Normal:
-					break;
-				case CardType::Single:
-					result = CompareSingle(cards1[0], cards2[0]);
-					break;
-				case CardType::Pair:
-					result = ComparePair(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::Three:
-					result = CompareThree(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::ThreeSingle:
-					result = CompareThreeSingle(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::ThreePair:
-					result = CompareThreePair(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::Four:
-					result = CompareFour(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::FourSingle:
-					result = CompareFourSingle(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::FourPair:
-					result = CompareFourPair(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::Plane:
-					result = ComparePlane(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::PlaneSingle:
-					result = ComparePlaneSingle(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::PlanePair:
-					result = ComparePlanePair(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::ThreePlane:
-					result = CompareThreePlane(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::ThreePlaneSingle:
-					result = CompareThreePlaneSingle(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::ThreePlanePair:
-					result = CompareThreePlanePair(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::FourPlane:
-					result = CompareFourPlane(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::FourPlaneSingle:
-					result = CompareFourPlaneSingle(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::FourPlanePair:
-					result = CompareFourPlanePair(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::FivePlane:
-					result = CompareFivePlane(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::FivePlaneSingle:
-					result = CompareFivePlaneSingle(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::SixPlane:
-					result = CompareSixPlane(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::StraightSingle:
-					result = CompareStraightSingle(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::StraightPair:
-					result = CompareStraightPair(cards1, cards1Len, cards2, cards2Len);
-					break;
-				case CardType::KingBomb:
-					result = -1;
-					break;
-				default:
-					result = -1;
-					break;
+					bool isOK = GetCompareCardNumber(cards2, cards2Len, card1Type, cardNum2);
+					if (isOK)
+					{
+						result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+					}
 				}
 			}
 		}
@@ -1169,55 +1238,55 @@ int DouDiZhu::DouDiZhuLogic::ComparePair(const int *cards1, const int cards1Len,
 	return result;
 }
 
-int DouDiZhu::DouDiZhuLogic::CompareThree(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
-{
-	int result = -1;
-	try
-	{
-		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 3)
-		{
-			bool isOK = IsAllSame(cards1, 3);
-			if (isOK)
-			{
-				isOK = IsAllSame(cards2, 3);
-				if (isOK)
-				{
-					result = PokerLogic::CompareValue(cards1[0], cards2[0]);
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
+//int DouDiZhu::DouDiZhuLogic::CompareThree(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+//{
+//	int result = -1;
+//	try
+//	{
+//		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 3)
+//		{
+//			bool isOK = IsAllSame(cards1, 3);
+//			if (isOK)
+//			{
+//				isOK = IsAllSame(cards2, 3);
+//				if (isOK)
+//				{
+//					result = PokerLogic::CompareValue(cards1[0], cards2[0]);
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
 
-int DouDiZhu::DouDiZhuLogic::CompareFour(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
-{
-	int result = -1;
-	try
-	{
-		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 4)
-		{
-			bool isOK = IsAllSame(cards1, 4);
-			if (isOK)
-			{
-				isOK = IsAllSame(cards2, 4);
-				if (isOK)
-				{
-					result = PokerLogic::CompareValue(cards1[0], cards2[0]);
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
+//int DouDiZhu::DouDiZhuLogic::CompareFour(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
+//{
+//	int result = -1;
+//	try
+//	{
+//		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 4)
+//		{
+//			bool isOK = IsAllSame(cards1, 4);
+//			if (isOK)
+//			{
+//				isOK = IsAllSame(cards2, 4);
+//				if (isOK)
+//				{
+//					result = PokerLogic::CompareValue(cards1[0], cards2[0]);
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
 
 int DouDiZhu::DouDiZhuLogic::CompareThreeSingle(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len)
 {
@@ -1226,7 +1295,17 @@ int DouDiZhu::DouDiZhuLogic::CompareThreeSingle(const int *cards1, const int car
 	{
 		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 4)
 		{
-			result = CompareSameArray(cards1, cards1Len, cards2, cards2Len, 2, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::ThreeSingle, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::ThreeSingle, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareSameArray(cards1, cards1Len, cards2, cards2Len, 2, 3);
 		}
 	}
 	catch (exception err)
@@ -1245,7 +1324,17 @@ int DouDiZhu::DouDiZhuLogic::CompareThreePair(const int *cards1, const int cards
 	{
 		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 5)
 		{
-			result = CompareSameArray(cards1, cards1Len, cards2, cards2Len, 2, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::ThreePair, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::ThreePair, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareSameArray(cards1, cards1Len, cards2, cards2Len, 2, 3);
 		}
 	}
 	catch (exception err)
@@ -1262,7 +1351,17 @@ int DouDiZhu::DouDiZhuLogic::CompareFourSingle(const int *cards1, const int card
 	{
 		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 6)
 		{
-			result = CompareSameArray(cards1, cards1Len, cards2, cards2Len, 3, 4);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::FourSingle, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::FourSingle, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareSameArray(cards1, cards1Len, cards2, cards2Len, 3, 4);
 		}
 	}
 	catch (exception err)
@@ -1279,7 +1378,17 @@ int DouDiZhu::DouDiZhuLogic::CompareFourPair(const int *cards1, const int cards1
 	{
 		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len == 8)
 		{
-			result = CompareSameArray(cards1, cards1Len, cards2, cards2Len, 3, 4);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::FourPair, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::FourPair, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareSameArray(cards1, cards1Len, cards2, cards2Len, 3, 4);
 		}
 	}
 	catch (exception err)
@@ -1296,7 +1405,17 @@ int DouDiZhu::DouDiZhuLogic::ComparePlane(const int *cards1, const int cards1Len
 	{
 		if (cards1Len == 6 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 2, 2, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::Plane, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::Plane, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 2, 2, 3);
 		}
 		else
 		{
@@ -1317,7 +1436,17 @@ int DouDiZhu::DouDiZhuLogic::ComparePlaneSingle(const int *cards1, const int car
 	{
 		if (cards1Len == 8 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 2, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::PlaneSingle, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::PlaneSingle, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 2, 3);
 		}
 		else
 		{
@@ -1338,7 +1467,17 @@ int DouDiZhu::DouDiZhuLogic::ComparePlanePair(const int *cards1, const int cards
 	{
 		if (cards1Len == 10 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 2, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::PlanePair, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::PlanePair, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 2, 3);
 		}
 		else
 		{
@@ -1359,7 +1498,17 @@ int DouDiZhu::DouDiZhuLogic::CompareThreePlane(const int *cards1, const int card
 	{
 		if (cards1Len == 9 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 3, 3, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::ThreePlane, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::ThreePlane, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 3, 3, 3);
 		}
 		else
 		{
@@ -1380,7 +1529,17 @@ int DouDiZhu::DouDiZhuLogic::CompareThreePlaneSingle(const int *cards1, const in
 	{
 		if (cards1Len == 12 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 3, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::ThreePlaneSingle, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::ThreePlaneSingle, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 3, 3);
 		}
 		else
 		{
@@ -1401,7 +1560,17 @@ int DouDiZhu::DouDiZhuLogic::CompareThreePlanePair(const int *cards1, const int 
 	{
 		if (cards1Len == 15 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 3, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::ThreePlanePair, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::ThreePlanePair, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 3, 3);
 		}
 		else
 		{
@@ -1422,7 +1591,17 @@ int DouDiZhu::DouDiZhuLogic::CompareFourPlane(const int *cards1, const int cards
 	{
 		if (cards1Len == 12 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 4, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::FourPlane, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::FourPlane, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 4, 4, 3);
 		}
 		else
 		{
@@ -1443,7 +1622,17 @@ int DouDiZhu::DouDiZhuLogic::CompareFourPlaneSingle(const int *cards1, const int
 	{
 		if (cards1Len == 16 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 8, 4, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::FourPlaneSingle, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::FourPlaneSingle, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 8, 4, 3);
 		}
 		else
 		{
@@ -1464,7 +1653,17 @@ int DouDiZhu::DouDiZhuLogic::CompareFourPlanePair(const int *cards1, const int c
 	{
 		if (cards1Len == 20 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 8, 4, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::FourPlanePair, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::FourPlanePair, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 8, 4, 3);
 		}
 		else
 		{
@@ -1485,7 +1684,17 @@ int DouDiZhu::DouDiZhuLogic::CompareFivePlane(const int *cards1, const int cards
 	{
 		if (cards1Len == 15 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 5, 5, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::FivePlane, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::FivePlane, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 5, 5, 3);
 		}
 		else
 		{
@@ -1506,7 +1715,17 @@ int DouDiZhu::DouDiZhuLogic::CompareFivePlaneSingle(const int *cards1, const int
 	{
 		if (cards1Len == 20 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 10, 5, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::FivePlaneSingle, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::FivePlaneSingle, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 10, 5, 3);
 		}
 		else
 		{
@@ -1527,7 +1746,17 @@ int DouDiZhu::DouDiZhuLogic::CompareSixPlane(const int *cards1, const int cards1
 	{
 		if (cards1Len == 18 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 6, 3);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::SixPlane, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::SixPlane, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, 6, 6, 3);
 		}
 		else
 		{
@@ -1548,7 +1777,17 @@ int DouDiZhu::DouDiZhuLogic::CompareStraightSingle(const int *cards1, const int 
 	{
 		if (cards1Len >= 5 && cards1Len == cards2Len)
 		{
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, cards1Len, cards1Len, 1);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::StraightSingle, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::StraightSingle, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, cards1Len, cards1Len, 1);
 		}
 		else
 		{
@@ -1569,8 +1808,18 @@ int DouDiZhu::DouDiZhuLogic::CompareStraightPair(const int *cards1, const int ca
 	{
 		if (cards1Len >= 6 && cards1Len == cards2Len)
 		{
-			int adjacentCount = cards1Len / 2;
-			result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, adjacentCount, adjacentCount, 2);
+			CardNumber cardNum1, cardNum2;
+			bool isOK = GetCompareCardNumber(cards1, cards1Len, CardType::StraightPair, cardNum1);
+			if (isOK)
+			{
+				bool isOK = GetCompareCardNumber(cards2, cards2Len, CardType::StraightPair, cardNum2);
+				if (isOK)
+				{
+					result = PokerLogic::CompareCardNumber(cardNum1, cardNum2);
+				}
+			}
+			//int adjacentCount = cards1Len / 2;
+			//result = CompareAdjacentPoker(cards1, cards1Len, cards2, cards2Len, adjacentCount, adjacentCount, 2);
 		}
 		else
 		{
@@ -1850,7 +2099,7 @@ bool DouDiZhu::DouDiZhuLogic::GetCompareCardNumber(const int *cards, const int l
 						bool isAdjacent = true;
 						for (int j = i; j < i + AdjacentCount; ++j)
 						{
-							if (sortArr[j] != MainCardSum)
+							if (sortArr[j] - MainCardSum < 0)
 							{
 								isAdjacent = false;
 								break;
@@ -2005,480 +2254,480 @@ bool DouDiZhu::DouDiZhuLogic::IsAdjacentCard(const int *sortArray, const int sor
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuLogic::IsAllSame(const int *cards, const int len)
-{
-	bool result = false;
-	try
-	{
-		if (NULL != cards && len > 1)
-		{
-			for (int i = 0; i < len - 1; ++i)
-			{
-				int cpVal = PokerLogic::CompareValue(cards[i], cards[i + 1]);
-				if (cpVal != 0)
-				{
-					return false;
-				}
-			}
-			result = true;
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::FindCardNumberCount(const int *cards, const int cardsLen, CardNumberSum *cnsArr, const int arrLen)
-{
-	bool result = false;
-	CardNumber *cardNums = NULL;
-	try
-	{
-		if (NULL != cards && cardsLen > 0 && cardsLen >= arrLen)
-		{
-			cardNums = new CardNumber[cardsLen];
-			bool isOK = PokerLogic::ValueToCardNumber(cards, cardsLen, cardNums, cardsLen);
-			if (isOK)
-			{
-				int idx = 0;
-				result = true;
-				for (int i = 0; i < cardsLen; ++i)
-				{
-					bool isFind = IsExistCardNumber(cnsArr, idx, cardNums[i]);
-					if (!isFind)
-					{
-						if (idx >= arrLen)
-						{
-							result = false;
-							break;
-						}
-						cnsArr[idx].num = cardNums[i];
-						cnsArr[idx].count = PokerLogic::FindCount(cardNums, cardsLen, cardNums[i]);
-						idx++;
-					}
-				}
-			}
-			if (NULL != cardNums)
-			{
-				delete[] cardNums;
-			}
-		}
-	}
-	catch (exception err)
-	{
-		if (NULL != cardNums)
-		{
-			delete[] cardNums;
-		}
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::IsExistCardNumber(const CardNumberSum *cnsArr, const int cnsArrLen, const CardNumber cardNum)
-{
-	bool result = false;
-	try
-	{
-		if (NULL != cnsArr && cnsArrLen > 0)
-		{
-			for (int i = 0; i < cnsArrLen; ++i)
-			{
-				//如果双王，找的也是王，找到任何一个王则返回表示存在
-				if (
-					((cnsArr[i].num == CardNumber::C_BJ || cnsArr[i].num == CardNumber::C_RJ)
-					&& 
-					(cardNum == CardNumber::C_BJ || cardNum == CardNumber::C_RJ) 
-					&& cnsArr[i].count == 2)
-					||
-					(cnsArr[i].num == cardNum))
-				{
-					result = true;
-					break;
-				}
-				//if (cnsArr[i].num == cardNum)
-				//{
-				//	result = true;
-				//	break;
-				//}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::IsXPlane(const CardNumberSum *cardNums, const int cardNumsLen, const int index, const int planeCount)
-{
-	bool result = false;
-	try
-	{
-		//cardNums必须从小到大排序，否则无法准确查找
-		if (NULL != cardNums && cardNumsLen >= 2)
-		{
-			if (index + 1 < cardNumsLen && cardNums[index].count >= 3)
-			{
-				int count = planeCount - 1;
-				int cmpCard = PokerLogic::CardNumberToWeightValue(cardNums[index].num);
-				for (int i = index + 1; i < cardNumsLen; ++i)
-				{
-					int curWeight = PokerLogic::CardNumberToWeightValue(cardNums[i].num);
-					if (cmpCard + 1 == curWeight && cardNums[i].count >= 3 && cardNums[i].num != CardNumber::C_2)
-					{
-						cmpCard = curWeight;
-						count--;
-						if (count == 0)
-						{
-							result = true;
-							break;
-						}
-					}
-					else
-					{
-						break;
-					}
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-void DouDiZhu::DouDiZhuLogic::SortCardNumberSum(CardNumberSum *cnsArr, const int cnsArrLen)
-{
-	try
-	{
-		if (NULL != cnsArr && cnsArrLen > 0)
-		{
-			for (int i = 0; i < cnsArrLen; ++i)
-			{
-				for (int j = 0; j < cnsArrLen - 1; ++j)
-				{
-					int cmp1 = PokerLogic::CardNumberToWeightValue(cnsArr[j].num);
-					int cmp2 = PokerLogic::CardNumberToWeightValue(cnsArr[j + 1].num);
-					if (cmp1 > cmp2)
-					{
-						CardNumberSum tmp = cnsArr[j];
-						cnsArr[j] = cnsArr[j + 1];
-						cnsArr[j + 1] = tmp;
-					}
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-}
-
-bool DouDiZhu::DouDiZhuLogic::SetArrayTrue(bool *arr, const int arrLen, const int count)
-{
-	bool result = false;
-	try
-	{
-		if (NULL != arr && arrLen > 0)
-		{
-			int setCount = count;
-			for (int i = 0; i < count; ++i)
-			{
-				for (int j = 0; j < arrLen; ++j)
-				{
-					if (!arr[j])
-					{
-						arr[j] = true;
-						setCount--;
-						break;
-					}
-				}
-			}
-			if (setCount == 0)
-			{
-				result = true;
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::IsArrayTrue(const bool *arr, const int arrLen)
-{
-	bool result = false;
-	try
-	{
-		if (NULL != arr && arrLen > 0)
-		{
-			bool isOK = true;
-			for (int i = 0; i < arrLen; ++i)
-			{
-				if (!arr[i])
-				{
-					isOK = false;
-					break;
-				}
-			}
-			result = isOK;
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-/*比较的私有方法*/
-
-int DouDiZhu::DouDiZhuLogic::CompareSameArray(const int *cards1, const int cards1Len, 
-											const int *cards2, const int cards2Len,
-											const int cnsLen, const int sameCount)
-{
-	int result = -1;
-	CardNumberSum *cnsArr1 = NULL;
-	CardNumberSum *cnsArr2 = NULL;
-
-	try
-	{
-		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len >= sameCount)
-		{
-			cnsArr1 = new CardNumberSum[cnsLen];
-			bool isOK = FindCardNumberCount(cards1, cards1Len, cnsArr1, cnsLen);
-			if (isOK)
-			{
-				CardNumber num1, num2;
-				bool isFindNum = GetCardNumberByCardNumberSum(cnsArr1, cnsLen, sameCount, &num1);
-				cnsArr2 = new CardNumberSum[cnsLen];
-				isOK = FindCardNumberCount(cards2, cards1Len, cnsArr2, cnsLen);
-				if (isOK && isFindNum)
-				{
-					isFindNum = GetCardNumberByCardNumberSum(cnsArr2, cnsLen, sameCount, &num2);
-					if (isFindNum)
-					{
-						result = PokerLogic::CompareCardNumber(num1, num2);
-					}
-				}
-			}
-			if (NULL != cnsArr1)
-			{
-				delete[] cnsArr1;
-			}
-			if (NULL != cnsArr2)
-			{
-				delete[] cnsArr2;
-			}
-		}
-	}
-	catch (exception err)
-	{
-		if (NULL != cnsArr1)
-		{
-			delete[] cnsArr1;
-		}
-		if (NULL != cnsArr2)
-		{
-			delete[] cnsArr2;
-		}
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::GetCardNumberByCardNumberSum(const CardNumberSum *cnsArr, const int cnsArrLen, const int findCount, CardNumber *outCardNum)
-{
-	bool result = false;
-	try
-	{
-		if (NULL != cnsArr && cnsArrLen > 0)
-		{
-			int maxNum = -1;
-			for (int i = 0; i < cnsArrLen; ++i)
-			{
-				if (cnsArr[i].count >= findCount)
-				{
-					if (maxNum != -1)
-					{
-						int cmp = PokerLogic::CompareCardNumber(cnsArr[i].num, (CardNumber)maxNum);
-						if (cmp == 1)
-						{
-							maxNum = cnsArr[i].num;
-						}
-					}
-					else
-					{
-						maxNum = cnsArr[i].num;
-						result = true;
-					}
-				}
-			}
-			if (result)
-			{
-				*outCardNum = (CardNumber)maxNum;
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-/*
-比较相邻的扑克牌大小
-cards1:第一组扑克牌
-cards1Len:第一组扑克牌长度
-cards2:第二组扑克牌
-cards2Len:第二组扑克牌长度
-cnsLen:不同牌数组长度
-adjacentCount:相邻扑克的数量
-sameCount:相同牌的数量
-return:第一组 > 第二组，返回1；第一组 < 第二组，返回-1；第一组 = 第二组，返回0
-*/
-int DouDiZhu::DouDiZhuLogic::CompareAdjacentPoker(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len, const int cnsLen, const int adjacentCount, const int sameCount)
-{
-	int result = -1;
-	CardNumberSum *cnsArr1 = NULL;
-	CardNumberSum *cnsArr2 = NULL;
-	try
-	{
-		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len >= adjacentCount * sameCount)
-		{
-			CardNumber cmp1, cmp2;
-			cnsArr1 = new CardNumberSum[cnsLen];
-			bool isOK = FindCardNumberCount(cards1, cards1Len, cnsArr1, cnsLen);
-			if (isOK)
-			{
-				SortCardNumberSum(cnsArr1, cnsLen);
-				bool isFind = GetMaxCompareNumberByAdjacent(cnsArr1, cnsLen, adjacentCount, sameCount, &cmp1);
-				cnsArr2 = new CardNumberSum[cnsLen];
-				isOK = FindCardNumberCount(cards2, cards2Len, cnsArr2, cnsLen);
-				if (isOK && isFind)
-				{
-					SortCardNumberSum(cnsArr2, cnsLen);
-					isFind = GetMaxCompareNumberByAdjacent(cnsArr2, cnsLen, adjacentCount, sameCount, &cmp2);
-					if (isFind)
-					{
-						result = PokerLogic::CompareCardNumber(cmp1, cmp2);
-					}
-				}
-			}
-			if (NULL != cnsArr1)
-			{
-				delete[] cnsArr1;
-			}
-			if (NULL != cnsArr2)
-			{
-				delete[] cnsArr2;
-			}
-		}
-	}
-	catch (exception err)
-	{
-		if (NULL != cnsArr1)
-		{
-			delete[] cnsArr1;
-		}
-		if (NULL != cnsArr2)
-		{
-			delete[] cnsArr2;
-		}
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::GetMaxCompareNumberByAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int adjacentCount, const int sameCount, CardNumber *outCardNum)
-{
-	bool result = false;
-	try
-	{
-		if (NULL != cnsArr && cnsArrLen > 0 && cnsArrLen >= adjacentCount)
-		{
-			int maxNum = -1;
-			for (int i = 0; i < cnsArrLen; ++i)
-			{
-				if (IsAdjacent(cnsArr, cnsArrLen, i, adjacentCount, sameCount))
-				{
-					if (maxNum != -1)
-					{
-						int cmp = PokerLogic::CompareCardNumber(cnsArr[i].num, (CardNumber)maxNum);
-						if (cmp == 1)
-						{
-							maxNum = cnsArr[i].num;
-						}
-					}
-					else
-					{
-						maxNum = cnsArr[i].num;
-						result = true;
-					}
-				}
-			}
-			if (result)
-			{
-				*outCardNum = (CardNumber)maxNum;
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuLogic::IsAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int index, const int adjacentCount, const int sameCount)
-{
-	bool result = false;
-	try
-	{
-		//cardNums必须从小到大排序，否则无法准确查找
-		if (NULL != cnsArr && cnsArrLen > 0 && cnsArrLen >= adjacentCount)
-		{
-			if (index + 1 < cnsArrLen && cnsArr[index].count >= sameCount)
-			{
-				int count = adjacentCount - 1;
-				int cmpCard = PokerLogic::CardNumberToWeightValue(cnsArr[index].num);
-				for (int i = index + 1; i < cnsArrLen; ++i)
-				{
-					int curWeight = PokerLogic::CardNumberToWeightValue(cnsArr[i].num);
-					if (cmpCard + 1 == curWeight && cnsArr[i].count >= sameCount 
-						&& cnsArr[i].num != CardNumber::C_2 
-						&& cnsArr[i].num != CardNumber::C_BJ
-						&& cnsArr[i].num != CardNumber::C_RJ)
-					{
-						cmpCard = curWeight;
-						count--;
-						if (count == 0)
-						{
-							result = true;
-							break;
-						}
-					}
-					else
-					{
-						break;
-					}
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
+//bool DouDiZhu::DouDiZhuLogic::IsAllSame(const int *cards, const int len)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (NULL != cards && len > 1)
+//		{
+//			for (int i = 0; i < len - 1; ++i)
+//			{
+//				int cpVal = PokerLogic::CompareValue(cards[i], cards[i + 1]);
+//				if (cpVal != 0)
+//				{
+//					return false;
+//				}
+//			}
+//			result = true;
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuLogic::FindCardNumberCount(const int *cards, const int cardsLen, CardNumberSum *cnsArr, const int arrLen)
+//{
+//	bool result = false;
+//	CardNumber *cardNums = NULL;
+//	try
+//	{
+//		if (NULL != cards && cardsLen > 0 && cardsLen >= arrLen)
+//		{
+//			cardNums = new CardNumber[cardsLen];
+//			bool isOK = PokerLogic::ValueToCardNumber(cards, cardsLen, cardNums, cardsLen);
+//			if (isOK)
+//			{
+//				int idx = 0;
+//				result = true;
+//				for (int i = 0; i < cardsLen; ++i)
+//				{
+//					bool isFind = IsExistCardNumber(cnsArr, idx, cardNums[i]);
+//					if (!isFind)
+//					{
+//						if (idx >= arrLen)
+//						{
+//							result = false;
+//							break;
+//						}
+//						cnsArr[idx].num = cardNums[i];
+//						cnsArr[idx].count = PokerLogic::FindCount(cardNums, cardsLen, cardNums[i]);
+//						idx++;
+//					}
+//				}
+//			}
+//			if (NULL != cardNums)
+//			{
+//				delete[] cardNums;
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		if (NULL != cardNums)
+//		{
+//			delete[] cardNums;
+//		}
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuLogic::IsExistCardNumber(const CardNumberSum *cnsArr, const int cnsArrLen, const CardNumber cardNum)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (NULL != cnsArr && cnsArrLen > 0)
+//		{
+//			for (int i = 0; i < cnsArrLen; ++i)
+//			{
+//				//如果双王，找的也是王，找到任何一个王则返回表示存在
+//				if (
+//					((cnsArr[i].num == CardNumber::C_BJ || cnsArr[i].num == CardNumber::C_RJ)
+//					&& 
+//					(cardNum == CardNumber::C_BJ || cardNum == CardNumber::C_RJ) 
+//					&& cnsArr[i].count == 2)
+//					||
+//					(cnsArr[i].num == cardNum))
+//				{
+//					result = true;
+//					break;
+//				}
+//				//if (cnsArr[i].num == cardNum)
+//				//{
+//				//	result = true;
+//				//	break;
+//				//}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuLogic::IsXPlane(const CardNumberSum *cardNums, const int cardNumsLen, const int index, const int planeCount)
+//{
+//	bool result = false;
+//	try
+//	{
+//		//cardNums必须从小到大排序，否则无法准确查找
+//		if (NULL != cardNums && cardNumsLen >= 2)
+//		{
+//			if (index + 1 < cardNumsLen && cardNums[index].count >= 3)
+//			{
+//				int count = planeCount - 1;
+//				int cmpCard = PokerLogic::CardNumberToWeightValue(cardNums[index].num);
+//				for (int i = index + 1; i < cardNumsLen; ++i)
+//				{
+//					int curWeight = PokerLogic::CardNumberToWeightValue(cardNums[i].num);
+//					if (cmpCard + 1 == curWeight && cardNums[i].count >= 3 && cardNums[i].num != CardNumber::C_2)
+//					{
+//						cmpCard = curWeight;
+//						count--;
+//						if (count == 0)
+//						{
+//							result = true;
+//							break;
+//						}
+//					}
+//					else
+//					{
+//						break;
+//					}
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//void DouDiZhu::DouDiZhuLogic::SortCardNumberSum(CardNumberSum *cnsArr, const int cnsArrLen)
+//{
+//	try
+//	{
+//		if (NULL != cnsArr && cnsArrLen > 0)
+//		{
+//			for (int i = 0; i < cnsArrLen; ++i)
+//			{
+//				for (int j = 0; j < cnsArrLen - 1; ++j)
+//				{
+//					int cmp1 = PokerLogic::CardNumberToWeightValue(cnsArr[j].num);
+//					int cmp2 = PokerLogic::CardNumberToWeightValue(cnsArr[j + 1].num);
+//					if (cmp1 > cmp2)
+//					{
+//						CardNumberSum tmp = cnsArr[j];
+//						cnsArr[j] = cnsArr[j + 1];
+//						cnsArr[j + 1] = tmp;
+//					}
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//}
+//
+//bool DouDiZhu::DouDiZhuLogic::SetArrayTrue(bool *arr, const int arrLen, const int count)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (NULL != arr && arrLen > 0)
+//		{
+//			int setCount = count;
+//			for (int i = 0; i < count; ++i)
+//			{
+//				for (int j = 0; j < arrLen; ++j)
+//				{
+//					if (!arr[j])
+//					{
+//						arr[j] = true;
+//						setCount--;
+//						break;
+//					}
+//				}
+//			}
+//			if (setCount == 0)
+//			{
+//				result = true;
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuLogic::IsArrayTrue(const bool *arr, const int arrLen)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (NULL != arr && arrLen > 0)
+//		{
+//			bool isOK = true;
+//			for (int i = 0; i < arrLen; ++i)
+//			{
+//				if (!arr[i])
+//				{
+//					isOK = false;
+//					break;
+//				}
+//			}
+//			result = isOK;
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+///*比较的私有方法*/
+//
+//int DouDiZhu::DouDiZhuLogic::CompareSameArray(const int *cards1, const int cards1Len, 
+//											const int *cards2, const int cards2Len,
+//											const int cnsLen, const int sameCount)
+//{
+//	int result = -1;
+//	CardNumberSum *cnsArr1 = NULL;
+//	CardNumberSum *cnsArr2 = NULL;
+//
+//	try
+//	{
+//		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len >= sameCount)
+//		{
+//			cnsArr1 = new CardNumberSum[cnsLen];
+//			bool isOK = FindCardNumberCount(cards1, cards1Len, cnsArr1, cnsLen);
+//			if (isOK)
+//			{
+//				CardNumber num1, num2;
+//				bool isFindNum = GetCardNumberByCardNumberSum(cnsArr1, cnsLen, sameCount, &num1);
+//				cnsArr2 = new CardNumberSum[cnsLen];
+//				isOK = FindCardNumberCount(cards2, cards1Len, cnsArr2, cnsLen);
+//				if (isOK && isFindNum)
+//				{
+//					isFindNum = GetCardNumberByCardNumberSum(cnsArr2, cnsLen, sameCount, &num2);
+//					if (isFindNum)
+//					{
+//						result = PokerLogic::CompareCardNumber(num1, num2);
+//					}
+//				}
+//			}
+//			if (NULL != cnsArr1)
+//			{
+//				delete[] cnsArr1;
+//			}
+//			if (NULL != cnsArr2)
+//			{
+//				delete[] cnsArr2;
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		if (NULL != cnsArr1)
+//		{
+//			delete[] cnsArr1;
+//		}
+//		if (NULL != cnsArr2)
+//		{
+//			delete[] cnsArr2;
+//		}
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuLogic::GetCardNumberByCardNumberSum(const CardNumberSum *cnsArr, const int cnsArrLen, const int findCount, CardNumber *outCardNum)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (NULL != cnsArr && cnsArrLen > 0)
+//		{
+//			int maxNum = -1;
+//			for (int i = 0; i < cnsArrLen; ++i)
+//			{
+//				if (cnsArr[i].count >= findCount)
+//				{
+//					if (maxNum != -1)
+//					{
+//						int cmp = PokerLogic::CompareCardNumber(cnsArr[i].num, (CardNumber)maxNum);
+//						if (cmp == 1)
+//						{
+//							maxNum = cnsArr[i].num;
+//						}
+//					}
+//					else
+//					{
+//						maxNum = cnsArr[i].num;
+//						result = true;
+//					}
+//				}
+//			}
+//			if (result)
+//			{
+//				*outCardNum = (CardNumber)maxNum;
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+///*
+//比较相邻的扑克牌大小
+//cards1:第一组扑克牌
+//cards1Len:第一组扑克牌长度
+//cards2:第二组扑克牌
+//cards2Len:第二组扑克牌长度
+//cnsLen:不同牌数组长度
+//adjacentCount:相邻扑克的数量
+//sameCount:相同牌的数量
+//return:第一组 > 第二组，返回1；第一组 < 第二组，返回-1；第一组 = 第二组，返回0
+//*/
+//int DouDiZhu::DouDiZhuLogic::CompareAdjacentPoker(const int *cards1, const int cards1Len, const int *cards2, const int cards2Len, const int cnsLen, const int adjacentCount, const int sameCount)
+//{
+//	int result = -1;
+//	CardNumberSum *cnsArr1 = NULL;
+//	CardNumberSum *cnsArr2 = NULL;
+//	try
+//	{
+//		if (NULL != cards1 && NULL != cards2 && cards1Len == cards2Len && cards1Len >= adjacentCount * sameCount)
+//		{
+//			CardNumber cmp1, cmp2;
+//			cnsArr1 = new CardNumberSum[cnsLen];
+//			bool isOK = FindCardNumberCount(cards1, cards1Len, cnsArr1, cnsLen);
+//			if (isOK)
+//			{
+//				SortCardNumberSum(cnsArr1, cnsLen);
+//				bool isFind = GetMaxCompareNumberByAdjacent(cnsArr1, cnsLen, adjacentCount, sameCount, &cmp1);
+//				cnsArr2 = new CardNumberSum[cnsLen];
+//				isOK = FindCardNumberCount(cards2, cards2Len, cnsArr2, cnsLen);
+//				if (isOK && isFind)
+//				{
+//					SortCardNumberSum(cnsArr2, cnsLen);
+//					isFind = GetMaxCompareNumberByAdjacent(cnsArr2, cnsLen, adjacentCount, sameCount, &cmp2);
+//					if (isFind)
+//					{
+//						result = PokerLogic::CompareCardNumber(cmp1, cmp2);
+//					}
+//				}
+//			}
+//			if (NULL != cnsArr1)
+//			{
+//				delete[] cnsArr1;
+//			}
+//			if (NULL != cnsArr2)
+//			{
+//				delete[] cnsArr2;
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		if (NULL != cnsArr1)
+//		{
+//			delete[] cnsArr1;
+//		}
+//		if (NULL != cnsArr2)
+//		{
+//			delete[] cnsArr2;
+//		}
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuLogic::GetMaxCompareNumberByAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int adjacentCount, const int sameCount, CardNumber *outCardNum)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (NULL != cnsArr && cnsArrLen > 0 && cnsArrLen >= adjacentCount)
+//		{
+//			int maxNum = -1;
+//			for (int i = 0; i < cnsArrLen; ++i)
+//			{
+//				if (IsAdjacent(cnsArr, cnsArrLen, i, adjacentCount, sameCount))
+//				{
+//					if (maxNum != -1)
+//					{
+//						int cmp = PokerLogic::CompareCardNumber(cnsArr[i].num, (CardNumber)maxNum);
+//						if (cmp == 1)
+//						{
+//							maxNum = cnsArr[i].num;
+//						}
+//					}
+//					else
+//					{
+//						maxNum = cnsArr[i].num;
+//						result = true;
+//					}
+//				}
+//			}
+//			if (result)
+//			{
+//				*outCardNum = (CardNumber)maxNum;
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuLogic::IsAdjacent(const CardNumberSum *cnsArr, const int cnsArrLen, const int index, const int adjacentCount, const int sameCount)
+//{
+//	bool result = false;
+//	try
+//	{
+//		//cardNums必须从小到大排序，否则无法准确查找
+//		if (NULL != cnsArr && cnsArrLen > 0 && cnsArrLen >= adjacentCount)
+//		{
+//			if (index + 1 < cnsArrLen && cnsArr[index].count >= sameCount)
+//			{
+//				int count = adjacentCount - 1;
+//				int cmpCard = PokerLogic::CardNumberToWeightValue(cnsArr[index].num);
+//				for (int i = index + 1; i < cnsArrLen; ++i)
+//				{
+//					int curWeight = PokerLogic::CardNumberToWeightValue(cnsArr[i].num);
+//					if (cmpCard + 1 == curWeight && cnsArr[i].count >= sameCount 
+//						&& cnsArr[i].num != CardNumber::C_2 
+//						&& cnsArr[i].num != CardNumber::C_BJ
+//						&& cnsArr[i].num != CardNumber::C_RJ)
+//					{
+//						cmpCard = curWeight;
+//						count--;
+//						if (count == 0)
+//						{
+//							result = true;
+//							break;
+//						}
+//					}
+//					else
+//					{
+//						break;
+//					}
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}

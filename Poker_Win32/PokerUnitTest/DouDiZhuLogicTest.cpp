@@ -39,7 +39,7 @@ namespace PokerUnitTest1
 			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
 			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
 			cards = new int[len]{ card1, card2 };
-			isOK = _ddz->IsPair(cards, len);
+			isOK = _ddz->IsCardType(CardType::Pair,cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::Pair);
@@ -74,7 +74,7 @@ namespace PokerUnitTest1
 			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
 			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
 			cards = new int[len] { card1, card2, card3 };
-			isOK = _ddz->IsThree(cards, len);
+			isOK = _ddz->IsCardType(CardType::Three, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::Three);
@@ -93,7 +93,7 @@ namespace PokerUnitTest1
 			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
 			cards = new int[len] { card1, card2, card3, card4 };
-			isOK = _ddz->IsFour(cards, len);
+			isOK = _ddz->IsCardType(CardType::Four, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::Four);
@@ -112,7 +112,7 @@ namespace PokerUnitTest1
 			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
 			cards = new int[len] { card1, card2, card3, card4 };
-			isOK = _ddz->IsThreeSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreeSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::ThreeSingle);
@@ -122,7 +122,7 @@ namespace PokerUnitTest1
 			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4 };
-			isOK = _ddz->IsThreeSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreeSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::Four);
@@ -133,7 +133,7 @@ namespace PokerUnitTest1
 			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_8);
 			cards = new int[len] { card1, card2, card3, card4 };
-			isOK = _ddz->IsThreeSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreeSingle, cards, len);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::ThreeSingle);
@@ -143,7 +143,7 @@ namespace PokerUnitTest1
 			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
 			cards = new int[len] { card1, card2, card3, card4 };
-			isOK = _ddz->IsThreeSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreeSingle, cards, len);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::ThreeSingle);
@@ -163,7 +163,7 @@ namespace PokerUnitTest1
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
 			cards = new int[len] { card1, card2, card3, card4, card5 };
-			isOK = _ddz->IsThreePair(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreePair, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::ThreePair);
@@ -174,7 +174,7 @@ namespace PokerUnitTest1
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_Q);
 			cards = new int[len] { card1, card2, card3, card4, card5 };
-			isOK = _ddz->IsThreePair(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreePair, cards, len);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::ThreePair);
@@ -195,7 +195,7 @@ namespace PokerUnitTest1
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
-			isOK = _ddz->IsFourSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::FourSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::FourSingle);
@@ -207,7 +207,7 @@ namespace PokerUnitTest1
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
-			isOK = _ddz->IsFourSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::FourSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::FourSingle);
@@ -219,7 +219,7 @@ namespace PokerUnitTest1
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
-			isOK = _ddz->IsFourSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::FourSingle, cards, len);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::FourSingle);
@@ -233,7 +233,7 @@ namespace PokerUnitTest1
 			card7 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_8);
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
 			cards = new int[8] { card1, card2, card3, card4, card5, card6, card7, card8 };
-			isOK = _ddz->IsFourSingle(cards, 8);
+			isOK = _ddz->IsCardType(CardType::FourSingle, cards, 8);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::FourSingle);
@@ -256,7 +256,7 @@ namespace PokerUnitTest1
 			card7 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
 			cards = new int[len]{ card1, card2, card3, card4, card5, card6, card7, card8 };
-			isOK = _ddz->IsFourPair(cards, len);
+			isOK = _ddz->IsCardType(CardType::FourPair, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::FourPair);
@@ -277,7 +277,7 @@ namespace PokerUnitTest1
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
-			isOK = _ddz->IsPlane(cards, len);
+			isOK = _ddz->IsCardType(CardType::Plane, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::Plane);
@@ -289,7 +289,7 @@ namespace PokerUnitTest1
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6 };
-			isOK = _ddz->IsPlane(cards, len);
+			isOK = _ddz->IsCardType(CardType::Plane, cards, len);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::Plane);
@@ -312,7 +312,7 @@ namespace PokerUnitTest1
 			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8 };
-			isOK = _ddz->IsPlaneSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::PlaneSingle, cards, len);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::PlaneSingle);
@@ -326,7 +326,7 @@ namespace PokerUnitTest1
 			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8 };
-			isOK = _ddz->IsPlaneSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::PlaneSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::PlaneSingle);
@@ -351,7 +351,7 @@ namespace PokerUnitTest1
 			card9 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_9);
 			card10 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_9);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10 };
-			isOK = _ddz->IsPlanePair(cards, len);
+			isOK = _ddz->IsCardType(CardType::PlanePair, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::PlanePair);
@@ -375,7 +375,7 @@ namespace PokerUnitTest1
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
 			card9 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9 };
-			isOK = _ddz->IsThreePlane(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreePlane, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::ThreePlane);
@@ -402,7 +402,7 @@ namespace PokerUnitTest1
 			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12 };
-			isOK = _ddz->IsThreePlaneSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreePlaneSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::ThreePlaneSingle);
@@ -420,7 +420,7 @@ namespace PokerUnitTest1
 			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12 };
-			isOK = _ddz->IsThreePlaneSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreePlaneSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::ThreePlaneSingle);
@@ -438,7 +438,7 @@ namespace PokerUnitTest1
 			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12 };
-			isOK = _ddz->IsThreePlaneSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreePlaneSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::ThreePlaneSingle);
@@ -468,7 +468,7 @@ namespace PokerUnitTest1
 			card14 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_8);
 			card15 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_8);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15 };
-			isOK = _ddz->IsThreePlanePair(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreePlanePair, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::ThreePlanePair);
@@ -489,7 +489,7 @@ namespace PokerUnitTest1
 			card14 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_8);
 			card15 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_8);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15 };
-			isOK = _ddz->IsThreePlanePair(cards, len);
+			isOK = _ddz->IsCardType(CardType::ThreePlanePair, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::ThreePlanePair);
@@ -516,7 +516,7 @@ namespace PokerUnitTest1
 			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12 };
-			isOK = _ddz->IsFourPlane(cards, len);
+			isOK = _ddz->IsCardType(CardType::FourPlane, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::FourPlane);
@@ -549,7 +549,7 @@ namespace PokerUnitTest1
 			card16 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
 				card11, card12, card13, card14, card15, card16 };
-			isOK = _ddz->IsFourPlaneSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::FourPlaneSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::FourPlaneSingle);
@@ -586,7 +586,7 @@ namespace PokerUnitTest1
 			card20 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
 				card11, card12, card13, card14, card15, card16, card17, card18, card19, card20 };
-			isOK = _ddz->IsFourPlanePair(cards, len);
+			isOK = _ddz->IsCardType(CardType::FourPlanePair, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::FivePlaneSingle);
@@ -617,7 +617,7 @@ namespace PokerUnitTest1
 			card14 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
 			card15 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15 };
-			isOK = _ddz->IsFivePlane(cards, len);
+			isOK = _ddz->IsCardType(CardType::FivePlane, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::FivePlane);
@@ -654,7 +654,7 @@ namespace PokerUnitTest1
 			card20 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
 				card11, card12, card13, card14, card15, card16, card17, card18, card19, card20 };
-			isOK = _ddz->IsFivePlaneSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::FivePlaneSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::FivePlaneSingle);
@@ -687,7 +687,7 @@ namespace PokerUnitTest1
 			card17 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_8);
 			card18 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_8);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18 };
-			isOK = _ddz->IsSixPlane(cards, len);
+			isOK = _ddz->IsCardType(CardType::SixPlane, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::SixPlane);
@@ -707,7 +707,7 @@ namespace PokerUnitTest1
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_8);
 			cards = new int[len] { card1, card2, card3, card4, card5 };
-			isOK = _ddz->IsStraightSingle(cards, len);
+			isOK = _ddz->IsCardType(CardType::StraightSingle, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::StraightSingle);
@@ -730,7 +730,7 @@ namespace PokerUnitTest1
 			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8 };
-			isOK = _ddz->IsStraightPair(cards, len);
+			isOK = _ddz->IsCardType(CardType::StraightPair, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::StraightPair);
@@ -747,7 +747,7 @@ namespace PokerUnitTest1
 			card1 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_BJ);
 			card2 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_RJ);
 			cards = new int[len] { card1, card2 };
-			isOK = _ddz->IsKingBomb(cards, len);
+			isOK = _ddz->IsCardType(CardType::KingBomb, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::KingBomb);
@@ -755,7 +755,7 @@ namespace PokerUnitTest1
 			card1 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_RJ);
 			card2 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_BJ);
 			cards = new int[len] { card1, card2 };
-			isOK = _ddz->IsKingBomb(cards, len);
+			isOK = _ddz->IsCardType(CardType::KingBomb, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::KingBomb);
@@ -763,7 +763,7 @@ namespace PokerUnitTest1
 			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_2);
 			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_2);
 			cards = new int[len] { card1, card2 };
-			isOK = _ddz->IsKingBomb(cards, len);
+			isOK = _ddz->IsCardType(CardType::KingBomb, cards, len);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::KingBomb);
@@ -774,7 +774,7 @@ namespace PokerUnitTest1
 			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_2);
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_2);
 			cards = new int[len1] { card1, card2 };
-			isOK = _ddz->IsKingBomb(cards, len1);
+			isOK = _ddz->IsCardType(CardType::KingBomb, cards, len);
 			Assert::IsFalse(isOK);
 			Assert::IsFalse(cardType == CardType::KingBomb);
 			delete[] cards;
@@ -792,7 +792,7 @@ namespace PokerUnitTest1
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
 			cards1 = new int[len]{ card1, card2 };
 			cards2 = new int[len] { card3, card4 };
-			cmp = _ddz->ComparePair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::Pair, cards2, len, CardType::Pair);
 			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -804,7 +804,7 @@ namespace PokerUnitTest1
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
 			cards1 = new int[len] { card1, card2 };
 			cards2 = new int[len] { card3, card4 };
-			cmp = _ddz->ComparePair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::Pair, cards2, len, CardType::Pair);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -816,7 +816,7 @@ namespace PokerUnitTest1
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
 			cards1 = new int[len] { card1, card2 };
 			cards2 = new int[len] { card3, card4 };
-			cmp = _ddz->ComparePair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::Pair, cards2, len, CardType::Pair);
 			Assert::AreEqual<int>(0, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(0, cmp);
@@ -838,7 +838,7 @@ namespace PokerUnitTest1
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
 			cards1 = new int[len] { card1, card2, card3 };
 			cards2 = new int[len] { card4, card5, card6 };
-			cmp = _ddz->CompareThree(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::Three, cards2, len, CardType::Three);
 			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -862,7 +862,7 @@ namespace PokerUnitTest1
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
 			cards1 = new int[len] { card1, card2, card3, card4 };
 			cards2 = new int[len] { card5, card6, card7, card8 };
-			cmp = _ddz->CompareFour(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::Four, cards2, len, CardType::Four);
 			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -886,7 +886,7 @@ namespace PokerUnitTest1
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
 			cards1 = new int[len] { card1, card2, card3, card4 };
 			cards2 = new int[len] { card5, card6, card7, card8 };
-			cmp = _ddz->CompareThreeSingle(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::ThreeSingle, cards2, len, CardType::ThreeSingle);
 			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -912,7 +912,7 @@ namespace PokerUnitTest1
 			card10 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
 			cards1 = new int[len] { card1, card2, card3, card4, card5 };
 			cards2 = new int[len] { card6, card7, card8, card9, card10 };
-			cmp = _ddz->CompareThreePair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::ThreePair, cards2, len, CardType::ThreePair);
 			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -940,7 +940,7 @@ namespace PokerUnitTest1
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6 };
 			cards2 = new int[len] { card7, card8, card9, card10, card11, card12};
-			cmp = _ddz->CompareFourSingle(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::FourSingle, cards2, len, CardType::FourSingle);
 			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -973,7 +973,7 @@ namespace PokerUnitTest1
 			card16 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_8);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8 };
 			cards2 = new int[len] { card9, card10, card11, card12, card13, card14, card15, card16};
-			cmp = _ddz->CompareFourPair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::FourPair, cards2, len, CardType::FourPair);
 			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -1001,7 +1001,7 @@ namespace PokerUnitTest1
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6 };
 			cards2 = new int[len] { card7, card8, card9, card10, card11, card12};
-			cmp = _ddz->ComparePlane(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::Plane, cards2, len, CardType::Plane);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1034,7 +1034,7 @@ namespace PokerUnitTest1
 			card16 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8 };
 			cards2 = new int[len] { card9, card10, card11, card12, card13, card14, card15, card16};
-			cmp = _ddz->ComparePlaneSingle(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::PlaneSingle, cards2, len, CardType::PlaneSingle);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -1074,7 +1074,7 @@ namespace PokerUnitTest1
 			card20 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10 };
 			cards2 = new int[len] { card11, card12, card13, card14, card15, card16, card17,card18,card19,card20};
-			cmp = _ddz->ComparePlanePair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::PlanePair, cards2, len, CardType::PlanePair);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1109,7 +1109,7 @@ namespace PokerUnitTest1
 			card18 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9 };
 			cards2 = new int[len] { card10, card11, card12, card13, card14, card15, card16, card17, card18};
-			cmp = _ddz->CompareThreePlane(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::ThreePlane, cards2, len, CardType::ThreePlane);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1151,7 +1151,7 @@ namespace PokerUnitTest1
 			card24 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_2);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12 };
 			cards2 = new int[len] { card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24 };
-			cmp = _ddz->CompareThreePlaneSingle(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::ThreePlaneSingle, cards2, len, CardType::ThreePlaneSingle);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1199,7 +1199,7 @@ namespace PokerUnitTest1
 			card30 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15 };
 			cards2 = new int[len] { card16, card17, card18, card19, card20, card21, card22, card23, card24, card25, card26, card27, card28, card29, card30 };
-			cmp = _ddz->CompareThreePlanePair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::ThreePlanePair, cards2, len, CardType::ThreePlanePair);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1241,7 +1241,7 @@ namespace PokerUnitTest1
 			card24 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12 };
 			cards2 = new int[len] { card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24 };
-			cmp = _ddz->CompareFourPlane(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::FourPlane, cards2, len, CardType::FourPlane);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1264,7 +1264,7 @@ namespace PokerUnitTest1
 			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_K);
 			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_Q);
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
-			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			card8 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_9);
 			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
 			card10 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
@@ -1281,8 +1281,8 @@ namespace PokerUnitTest1
 			card21 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
 			card22 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_7);
 			card23 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
-			card24 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
-			card25 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card24 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_7);
+			card25 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_6);
 			card26 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
 			card27 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_4);
 			card28 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
@@ -1292,7 +1292,7 @@ namespace PokerUnitTest1
 			card32 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16 };
 			cards2 = new int[len] { card17, card18, card19, card20, card21, card22, card23, card24, card25, card26, card27, card28, card29, card30, card31, card32 };
-			cmp = _ddz->CompareFourPlaneSingle(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::FourPlaneSingle, cards2, len, CardType::FourPlaneSingle);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1320,15 +1320,15 @@ namespace PokerUnitTest1
 			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
 			card10 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
 			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
-			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
 			card13 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_10);
 			card14 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_A);
 			card15 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
 			card16 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_A);
 			card17 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
-			card18 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
-			card19 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
-			card20 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card18 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			card19 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card20 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
 			card21 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
 			card22 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_6);
 			card23 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
@@ -1351,7 +1351,7 @@ namespace PokerUnitTest1
 			card40 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_8);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20 };
 			cards2 = new int[len] { card21, card22, card23, card24, card25, card26, card27, card28, card29, card30, card31, card32, card33, card34, card35, card36, card37, card38, card39, card40 };
-			cmp = _ddz->CompareFourPlanePair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::FourPlanePair, cards2, len, CardType::FourPlanePair);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(-1, cmp);
@@ -1402,7 +1402,7 @@ namespace PokerUnitTest1
 			card30 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15 };
 			cards2 = new int[len] { card16, card17, card18, card19, card20, card21, card22, card23, card24, card25, card26, card27, card28, card29, card30 };
-			cmp = _ddz->CompareFivePlane(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::FivePlane, cards2, len, CardType::FivePlane);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1461,7 +1461,7 @@ namespace PokerUnitTest1
 			card40 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_2);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20 };
 			cards2 = new int[len] { card21, card22, card23, card24, card25, card26, card27, card28, card29, card30, card31, card32, card33, card34, card35, card36, card37, card38, card39, card40 };
-			cmp = _ddz->CompareFivePlaneSingle(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::FivePlaneSingle, cards2, len, CardType::FivePlaneSingle);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1516,7 +1516,7 @@ namespace PokerUnitTest1
 			card36 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_8);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18 };
 			cards2 = new int[len] { card19, card20, card21, card22, card23, card24, card25, card26, card27, card28, card29, card30, card31, card32, card33, card34, card35, card36 };
-			cmp = _ddz->CompareSixPlane(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::SixPlane, cards2, len, CardType::SixPlane);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1544,7 +1544,7 @@ namespace PokerUnitTest1
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6 };
 			cards2 = new int[len] { card7, card8, card9, card10, card11, card12};
-			cmp = _ddz->CompareStraightSingle(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::StraightSingle, cards2, len, CardType::StraightSingle);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1572,7 +1572,7 @@ namespace PokerUnitTest1
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6 };
 			cards2 = new int[len] { card7, card8, card9, card10, card11, card12};
-			cmp = _ddz->CompareStraightPair(cards1, len, cards2, len);
+			cmp = _ddz->CompareCards(cards1, len, CardType::StraightPair, cards2, len, CardType::StraightPair);
 			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
@@ -1594,6 +1594,8 @@ namespace PokerUnitTest1
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_RJ);
 			cards1 = new int[len] { card1, card2, card3, card4 };
 			cards2 = new int[2] { card5, card6 };
+			cmp = _ddz->CompareCards(cards1, len, CardType::Four, cards2, len, CardType::KingBomb);
+			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, 2);
 			Assert::AreEqual<int>(-1, cmp);
 			delete[] cards1;
@@ -1606,6 +1608,8 @@ namespace PokerUnitTest1
 			card6 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_RJ);
 			cards1 = new int[2] { card5, card6 };
 			cards2 = new int[len] { card1, card2, card3, card4 };
+			cmp = _ddz->CompareCards(cards1, len, CardType::KingBomb, cards2, len, CardType::Four);
+			Assert::AreEqual<int>(1, cmp);
 			cmp = _ddz->CompareCards(cards1, 2, cards2, len);
 			Assert::AreEqual<int>(1, cmp);
 			delete[] cards1;
@@ -1644,6 +1648,8 @@ namespace PokerUnitTest1
 			card22 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_3);
 			cards1 = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18 };
 			cards2 = new int[4] { card19, card20, card21, card22};
+			cmp = _ddz->CompareCards(cards1, len, CardType::SixPlane, cards2, len, CardType::Four);
+			Assert::AreEqual<int>(-1, cmp);
 			cmp = _ddz->CompareCards(cards1, len, cards2, 4);
 			Assert::AreEqual<int>(-1, cmp);
 			delete[] cards1;

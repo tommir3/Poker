@@ -47,7 +47,7 @@ namespace PokerUnitTest1
 			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_5);
 			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
 			cards = new int[len] { card1, card2 };
-			isOK = _ddz->IsPair(cards, len);
+			isOK = _ddz->IsCardType(CardType::Pair, cards, len);
 			Assert::IsFalse(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsFalse(cardType == CardType::Pair);
@@ -55,7 +55,7 @@ namespace PokerUnitTest1
 			card1 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_BJ);
 			card2 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_RJ);
 			cards = new int[len] { card1, card2 };
-			isOK = _ddz->IsPair(cards, len);
+			isOK = _ddz->IsCardType(CardType::Pair, cards, len);
 			Assert::IsTrue(isOK);
 			cardType = _ddz->GetCardType(cards, len);
 			Assert::IsTrue(cardType == CardType::KingBomb);

@@ -872,3 +872,117 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::IsSmae(const vector<vector<int>> const has
 	return result;
 }
 
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outSubsidiaryVec)
+{
+	bool result = false;
+	try
+	{
+		if (CardSortCount == sortArrLen)
+		{
+			bool isAccord = false;//是否是符合的牌 用于拆牌
+			vector<int> subsidiaryVec;
+			for (int i = 0; i < sortArrLen; ++i)
+			{
+				isAccord = (isSplit) ? sortNoMainArray[i] >= subsidiarySameCount : sortNoMainArray[i] == subsidiarySameCount;
+				if (isAccord)
+				{
+					subsidiaryVec.push_back(i);
+				}
+				if(isSplit && sortNoMainArray[i] >= (subsidiaryCount * subsidiarySameCount))
+				{
+					int tmpCount = sortNoMainArray[i];
+					int tmpLoopNum = tmpCount / (subsidiaryCount * subsidiarySameCount);
+					if (tmpLoopNum > 0)
+					{
+						for (int j = 0; j < tmpLoopNum; ++j)
+						{
+							subsidiaryVec.push_back(i);
+						}
+					}
+				}
+			}
+			if (!subsidiaryVec.empty())
+			{
+				vector<int> arr;
+				if (subsidiaryCount == 1)
+				{
+					for (int i = 0; i < subsidiaryVec.size(); ++i)
+					{
+						arr.clear();
+						arr.push_back(subsidiaryVec[i]);
+						outSubsidiaryVec.push_back(arr);
+					}
+				}
+				else if(subsidiaryCount > 1)
+				{
+					if (subsidiaryVec.size() > subsidiaryCount)
+					{
+						for (int i = 0; i < subsidiaryVec.size() - subsidiaryCount; ++i)
+						{
+							arr.push_back(i);
+							for (int j = i + 1; j < subsidiaryVec.size(); ++j)
+							{
+								if (arr.size() == subsidiaryCount)
+								{
+									outSubsidiaryVec.push_back(arr);
+									arr.clear();
+									arr.push_back(i);
+								}
+								arr.push_back(j);
+							}
+						}
+					}
+					else if (subsidiaryVec.size() == subsidiaryCount)
+					{
+						outSubsidiaryVec.push_back(subsidiaryVec);
+					}
+				}
+			}
+
+		}
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+/*
+调用例子
+const int len = 5;
+int arr[len] = { 1,2,3,4,5 };
+const int sub = 3;
+vector<int> vec(sub);
+vector<vector<int>> outVec;
+Cij(len, sub, vec, sub, outVec);
+*/
+void Cij(int i, int j, vector<int> &r, int num, vector<vector<int> > & result)
+{
+	//排列组合公式Cij  
+	if (j == 1)
+	{
+		for (int k = 0; k < i; k++)
+		{
+			vector<int> temp(num);
+			r[num - 1] = k;
+			for (int i = 0; i < num; i++)
+			{
+				temp[i] = r[i];
+			}
+			result.push_back(temp);
+		}
+	}
+	else if (j == 0)
+	{
+		//do nothing!  
+	}
+	else
+	{
+		for (int k = i; k >= j; k--)
+		{
+			r[j - 2] = k - 1;
+			Cij(k - 1, j - 1, r, num, result);
+		}
+	}
+}

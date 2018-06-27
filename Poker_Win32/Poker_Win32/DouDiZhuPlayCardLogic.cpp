@@ -948,41 +948,40 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindSubsidiaryCards(const int *sortNoMainA
 	return result;
 }
 
-/*
-调用例子
-const int len = 5;
-int arr[len] = { 1,2,3,4,5 };
-const int sub = 3;
-vector<int> vec(sub);
-vector<vector<int>> outVec;
-Cij(len, sub, vec, sub, outVec);
-*/
-void Cij(int i, int j, vector<int> &r, int num, vector<vector<int> > & result)
+void My_Cij(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &result)
 {
-	//排列组合公式Cij  
-	if (j == 1)
+	if (wei + 1 == sub)
 	{
-		for (int k = 0; k < i; k++)
+		for (int k = preWei + 1; k < len; ++k)
 		{
-			vector<int> temp(num);
-			r[num - 1] = k;
-			for (int i = 0; i < num; i++)
+			vector<int> temp(sub);
+			r[sub - 1] = k;
+			for (int i = 0; i < sub; i++)
 			{
 				temp[i] = r[i];
 			}
 			result.push_back(temp);
 		}
 	}
-	else if (j == 0)
+	else if (wei < sub)
 	{
-		//do nothing!  
-	}
-	else
-	{
-		for (int k = i; k >= j; k--)
+		for (int k = preWei + 1; k < len; ++k)
 		{
-			r[j - 2] = k - 1;
-			Cij(k - 1, j - 1, r, num, result);
+			r[wei] = k;
+			My_Cij(k, wei + 1, r, len, sub, result);
 		}
 	}
+}
+/*
+调用例子
+const int len = 5;
+int arr[len] = { 1,2,3,4,5 };
+const int sub = 3;
+vector<vector<int>> outVec;
+MyCmn(len, sub, outVec);
+*/
+void MyCmn(int len, int sub, vector<vector<int>> &result)
+{
+	vector<int> vec(sub);
+	My_Cij(-1, 0, vec, len, sub, result);
 }

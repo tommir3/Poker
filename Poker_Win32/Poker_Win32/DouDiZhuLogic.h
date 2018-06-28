@@ -86,6 +86,24 @@ namespace DouDiZhu
 		return: 成功返回true, 失败返回false, 异常抛出
 		*/
 		bool GetCompareCardNumber(const int *cards, const int len, const CardType cardType, CardNumber &cardNum);
+		/*
+		复制数组
+		cards: 牌数组
+		len: 数组长度
+		outCards: 复制的数组（带出单数）
+		return: 成功返回true, 失败返回false, 异常抛出
+		*/
+		bool CloneArray(const int *cards, const int len, int *outCards);
+		/*
+		是否是连续的牌
+		sortArray: 扑克牌的排序数组
+		sortArrLen: 排序数组长度
+		index: 排序数组中查找的索引位置
+		adjacentCount: 连续牌的个数
+		sameCount: 连续牌相同的数量
+		return: 成功返回true, 失败返回false, 异常抛出
+		*/
+		bool IsAdjacentCard(const int *sortArray, const int sortArrLen, const int index, const int adjacentCount, const int sameCount);
 	private:
 		/*
 		判断是否王炸
@@ -105,23 +123,7 @@ namespace DouDiZhu
 		return: 成功返回true, 失败返回false, 异常抛出
 		*/
 		bool IsTrueCardType(const int *cards, const int len, const int adjacentCount, const int sameCount, const int subsidiaryCount, const int subsidiarySameCount);
-		/*
-		复制数组
-		cards: 牌数组
-		len: 数组长度
-		outCards: 复制的数组（带出单数）
-		return: 成功返回true, 失败返回false, 异常抛出
-		*/
-		bool CloneArray(const int *cards, const int len, int *outCards);
-		/*
-		是否是连续的牌
-		sortArray: 扑克牌的排序数组
-		sortArrLen: 排序数组长度
-		index: 排序数组中查找的索引位置
-		adjacentCount: 连续牌的个数
-		sameCount: 连续牌相同的数量
-		return: 成功返回true, 失败返回false, 异常抛出
-		*/
-		bool IsAdjacentCard(const int *sortArray, const int sortArrLen, const int index, const int adjacentCount, const int sameCount);
+
+
 	};
 }

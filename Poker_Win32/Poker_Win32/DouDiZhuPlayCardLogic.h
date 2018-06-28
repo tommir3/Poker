@@ -102,8 +102,29 @@ namespace DouDiZhu
 		bool FindAdjacentIndexCards(const int *sortArray, const int sortArrLen, const vector<int> mainCards, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards);
 		bool FindSameIndexCards(const int *sortArray, const int sortArrLen, const int cardIndex, const int cardCount, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards);
 		bool IsSmae(const vector<vector<int>> const hashVec, const vector<int> const subsidiaryCards);
-		bool FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outSubsidiaryVec);
-
 		
+		/*
+		排列组合找出不重样的组合数组
+		preWei:前一位数值
+		wei:当前位数
+		r: 排列组合的临时存放数组
+		len:总数据长度
+		sub:位数长度
+		result:保存结果的集合
+		*/
+		void Cmn(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &result);
+		/*
+		计算C(M,N)排列组合  C(len, sub)
+		len: 集合总长度 M
+		sub: 要找组合的长度 N
+		result: C(M,N)的结果
+		*/
+		bool Cmn(vector<int> cardVec, int len, int sub, vector<vector<int>> &result);
+
+		//=====================================================
+		bool NewFindCards(const int *cards, const int len, const bool isCompareMinCard, const CardNumber minCard, const bool isMainSplit, const int adjacentCount, const int mainCardSum, const int subsidiaryCount, const int subsidiarySum, vector<vector<int>> &outCards);
+		bool NewFindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec);
+		bool FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outSubsidiaryVec);
+		bool JoinCards(const int *cards, const int len, const vector<int> const mainCards, const int mainSum, const vector<vector<int>> const subsidiaryCards, const int subsidiarySum, vector<vector<int>> outCards);
 	};
 }

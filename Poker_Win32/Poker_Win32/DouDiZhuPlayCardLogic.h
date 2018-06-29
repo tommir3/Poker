@@ -60,7 +60,6 @@ namespace DouDiZhu
 		sortArrLen:扑克权重排序数组长度（固定为14）
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		bool SortArrayCardsToCards(const vector<vector<int>> const sortCardsList, const int *cards, const int len, vector<vector<int>> &outCardsList);
 		bool SortArrayCardsToCards(vector<int> sortCards, const int *cards, const int len, vector<int> &outCards);
 		/*
 		查找连续牌的主牌型  例如飞机带2单，飞机即为主牌型
@@ -75,34 +74,16 @@ namespace DouDiZhu
 		return:成功返回true，失败返回false。异常抛出
 		*/
 		bool FindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec);
+
+		bool FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outSubsidiaryVec);
+		bool JoinCards(const int *cards, const int len, const vector<int> const mainCards, const int mainSum, const vector<vector<int>> const subsidiaryCards, const int subsidiarySum, vector<vector<int>> &outCards);
 		/*
-		查找相同牌的主牌型  例如3带1，3即为主牌型
-		sortArray:扑克权重排序数组
-		sortArrLen:扑克权重排序数组长度（固定为14）
-		isCompareMinCard:是否查找比较大的牌
-		minCard:比较牌的牌值（如果isCompareMinCard，此值无效）
-		sameCount:相同牌的个数
-		isSplit:是否对牌进行拆牌查找 true:拆牌查找 false:不拆牌查找
-		outSortArr:符合要求的主牌型 扑克权重排序数组（带出参数）
-		return:成功返回true，失败返回false。异常抛出
+		计算C(M,N)排列组合  C(len, sub)
+		len: 集合总长度 M
+		sub: 要找组合的长度 N
+		result: C(M,N)的结果
 		*/
-		bool FindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int sameCount, const bool isSplit, int* outSortArr);
-		/*
-		查找附属牌型  例如3带1，1即为附属牌型
-		sortNoMainArray:排除主牌型的扑克权重排序数组
-		sortArrLen:扑克权重排序数组长度（固定为14）
-		sortArrIndex:扑克权重数组索引位置 即从此索引位置开始查找
-		subsidiaryCount:附属牌的个数
-		subsidiarySameCount:每个附属牌相同的数量
-		isSplit:是否对牌进行拆牌查找 true:拆牌查找 false:不拆牌查找
-		outSubsidiaryVec:符合要求的附属牌 值为扑克权重排序数组中的索引值（带出参数）
-		return:成功返回true，失败返回false。异常抛出
-		*/
-		bool FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int sortArrIndex, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<int> &outSubsidiaryVec);
-		bool FindAdjacentIndexCards(const int *sortArray, const int sortArrLen, const vector<int> mainCards, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards);
-		bool FindSameIndexCards(const int *sortArray, const int sortArrLen, const int cardIndex, const int cardCount, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards);
-		bool IsSmae(const vector<vector<int>> const hashVec, const vector<int> const subsidiaryCards);
-		
+		bool Cmn(vector<int> cardVec, int len, int sub, vector<vector<int>> &result);
 		/*
 		排列组合找出不重样的组合数组
 		preWei:前一位数值
@@ -112,19 +93,7 @@ namespace DouDiZhu
 		sub:位数长度
 		result:保存结果的集合
 		*/
-		void Cmn(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &result);
-		/*
-		计算C(M,N)排列组合  C(len, sub)
-		len: 集合总长度 M
-		sub: 要找组合的长度 N
-		result: C(M,N)的结果
-		*/
-		bool Cmn(vector<int> cardVec, int len, int sub, vector<vector<int>> &result);
+		void Cmn(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &result);		
 
-		//=====================================================
-		bool NewFindCards(const int *cards, const int len, const bool isCompareMinCard, const CardNumber minCard, const bool isMainSplit, const int adjacentCount, const int mainCardSum, const int subsidiaryCount, const int subsidiarySum, vector<vector<int>> &outCards);
-		bool NewFindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec);
-		bool FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outSubsidiaryVec);
-		bool JoinCards(const int *cards, const int len, const vector<int> const mainCards, const int mainSum, const vector<vector<int>> const subsidiaryCards, const int subsidiarySum, vector<vector<int>> outCards);
 	};
 }

@@ -413,80 +413,6 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindCards(const int *cards, const int len,
 	return result;
 }
 
-//bool DouDiZhu::DouDiZhuPlayCardLogic::FindCards(const int *cards, const int len, const bool isCompareMinCard, const CardNumber minCard, const bool isMainSplit, const int adjacentCount, const int mainCardSum, const int subsidiaryCount, const int subsidiarySum, vector<vector<int>> &outCards)
-//{
-//	bool result = false;
-//	try
-//	{
-//		bool isOK = false;
-//		int sortArr[CardSortCount] = { 0 };
-//		isOK = DouDiZhuLogic::CardsToSortArray(cards, len, sortArr, CardSortCount);
-//		if (isOK)
-//		{
-//			if (adjacentCount > 0)//主牌型为连续牌
-//			{
-//				vector<vector<int>> mainCardsList;
-//				isOK = FindMainCards(sortArr, CardSortCount, isCompareMinCard, minCard, adjacentCount, mainCardSum, isMainSplit, mainCardsList);
-//				if (isOK)
-//				{
-//					for (int i = 0; i < mainCardsList.size(); ++i)
-//					{
-//						vector<int> mainCards = mainCardsList[i];
-//						vector<vector<int>> cardsList;
-//						isOK = FindAdjacentIndexCards(sortArr, CardSortCount, mainCards, subsidiaryCount, subsidiarySum, false, cardsList);
-//						if (isOK)//不拆牌的找附属牌
-//						{
-//							result = SortArrayCardsToCards(cardsList, cards, len, outCards);
-//						}
-//						else//拆牌的找附属牌
-//						{
-//							isOK = FindAdjacentIndexCards(sortArr, CardSortCount, mainCards, subsidiaryCount, subsidiarySum, true, cardsList);
-//							if (isOK)
-//							{
-//								result = SortArrayCardsToCards(cardsList, cards, len, outCards);
-//							}
-//						}
-//					}
-//				}
-//			}
-//			else//主牌型为相同的牌
-//			{
-//				int mainCards[CardSortCount] = { 0 };
-//				isOK = FindMainCards(sortArr, CardSortCount, isCompareMinCard, minCard, mainCardSum, isMainSplit, mainCards);
-//				if (isOK)
-//				{
-//					vector<vector<int>> cardsList;
-//					for (int i = 0; i < CardSortCount; ++i)
-//					{
-//						if (mainCards[i] == mainCardSum)
-//						{
-//							cardsList.clear();
-//							isOK = FindSameIndexCards(sortArr, CardSortCount, i, mainCardSum, subsidiaryCount, subsidiarySum, false, cardsList);
-//							if (isOK)//不拆牌的找附属牌
-//							{
-//								result = SortArrayCardsToCards(cardsList, cards, len, outCards);
-//							}
-//							else//拆牌的找附属牌
-//							{
-//								isOK = FindSameIndexCards(sortArr, CardSortCount, i, mainCardSum, subsidiaryCount, subsidiarySum, true, cardsList);
-//								if (isOK)
-//								{
-//									result = SortArrayCardsToCards(cardsList, cards, len, outCards);
-//								}
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-//	catch (exception err)
-//	{
-//		throw(err);
-//	}
-//	return result;
-//}
-//new
 bool DouDiZhu::DouDiZhuPlayCardLogic::FindCards(const int *cards, const int len, const bool isCompareMinCard, const CardNumber minCard, const bool isMainSplit, const int adjacentCount, const int mainCardSum, const int subsidiaryCount, const int subsidiarySum, vector<vector<int>> &outCards)
 {
 	bool result = false;
@@ -498,7 +424,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindCards(const int *cards, const int len,
 		if (isOK)
 		{
 			vector<vector<int>> mainCardsList;
-			isOK = NewFindMainCards(sortArr, CardSortCount, isCompareMinCard, minCard, adjacentCount, mainCardSum, isMainSplit, mainCardsList);
+			isOK = FindMainCards(sortArr, CardSortCount, isCompareMinCard, minCard, adjacentCount, mainCardSum, isMainSplit, mainCardsList);
 			if (isOK)
 			{
 				for (int i = 0; i < mainCardsList.size(); ++i)
@@ -538,28 +464,28 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindCards(const int *cards, const int len,
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::SortArrayCardsToCards(const vector<vector<int>> const sortCardsList, const int *cards, const int len, vector<vector<int>> &outCardsList)
-{
-	bool result = false;
-	try
-	{
-		vector<int> findCards;
-		for (int i = 0; i < sortCardsList.size(); ++i)
-		{
-			findCards.clear();
-			result = SortArrayCardsToCards(sortCardsList[i], cards, len, findCards);
-			if (result)
-			{
-				outCardsList.push_back(findCards);
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
+//bool DouDiZhu::DouDiZhuPlayCardLogic::SortArrayCardsToCards(const vector<vector<int>> const sortCardsList, const int *cards, const int len, vector<vector<int>> &outCardsList)
+//{
+//	bool result = false;
+//	try
+//	{
+//		vector<int> findCards;
+//		for (int i = 0; i < sortCardsList.size(); ++i)
+//		{
+//			findCards.clear();
+//			result = SortArrayCardsToCards(sortCardsList[i], cards, len, findCards);
+//			if (result)
+//			{
+//				outCardsList.push_back(findCards);
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
 
 bool DouDiZhu::DouDiZhuPlayCardLogic::SortArrayCardsToCards(vector<int> sortCards, const int *cards, const int len, vector<int> &outCards)
 {
@@ -620,7 +546,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::SortArrayCardsToCards(vector<int> sortCard
 }
 
 //new
-bool DouDiZhu::DouDiZhuPlayCardLogic::NewFindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec)
+bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec)
 {
 	bool result = false;
 	try
@@ -640,9 +566,12 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::NewFindMainCards(const int *sortArray, con
 					{
 						isFindAdjacent = true;
 						isAccord = (isSplit) ? sortArray[j] >= sameCount : sortArray[j] == sameCount;
-						if (isAccord && (CardNumber)j != CardNumber::C_2)
+						if (isAccord && (CardNumber)j != CardNumber::C_2 && j != sortArrLen - 1)
 						{
 							cards.push_back(j);
+						}
+						else
+						{
 							isFindAdjacent = false;
 							break;
 						}
@@ -650,6 +579,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::NewFindMainCards(const int *sortArray, con
 					if (isFindAdjacent)
 					{
 						outSortArrVec.push_back(cards);
+						result = true;
 					}
 				}
 				else//相同的牌
@@ -672,311 +602,311 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::NewFindMainCards(const int *sortArray, con
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec)
-{
-	bool result = false;
-	try
-	{
-		outSortArrVec.clear();
-		bool isAccord = false, isFindAdjacent = false;//isAccord 是否是符合的牌 拆牌
-		int minIndex = isCompareMinCard ? DouDiZhuLogic::CardNumberToSortArrayValue(minCard) : 0;
-		if (minIndex >= 0 && minIndex + 1 < sortArrLen)
-		{
-			for (int i = minIndex + 1; i < sortArrLen; ++i)
-			{
-				vector<int> tmpSortArr(CardSortCount);
-				isAccord = (isSplit) ? sortArray[i] >= sameCount : sortArray[i] == sameCount;
-				if (isAccord && i + adjacentCount < sortArrLen)
-				{
-					tmpSortArr[i] = sameCount;
-					isFindAdjacent = true;
-					for (int j = i + 1; j < i + adjacentCount; ++j)
-					{
-						isAccord = (isSplit) ? sortArray[j] >= sameCount : sortArray[j] == sameCount;
-						if (isAccord && (CardNumber)j != CardNumber::C_2)
-						{
-							tmpSortArr[j] = sameCount;
-						}
-						else
-						{
-							isFindAdjacent = false;
-							break;
-						}
-					}
-					if (isFindAdjacent)
-					{
-						//找到
-						outSortArrVec.push_back(tmpSortArr);
-					}
-				}
-			}
-			result = !outSortArrVec.empty();
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int sameCount, const bool isSplit, int* outSortArr)
-{
-	bool result = false;
-	try
-	{
-		bool isAccord = false;//是否是符合的牌 用于拆牌
-		int minIndex = isCompareMinCard ? DouDiZhuLogic::CardNumberToSortArrayValue(minCard) : 0;
-		if (minIndex >= 0 && minIndex + 1 < sortArrLen)
-		{
-			for (int i = minIndex + 1; i < sortArrLen; ++i)
-			{
-				isAccord = (isSplit) ? sortArray[i] >= sameCount : sortArray[i] == sameCount;
-				if (isAccord)
-				{
-					outSortArr[i] = sameCount;
-					result = true;
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuPlayCardLogic::FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int sortArrIndex, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<int> &outSubsidiaryVec)
-{
-	bool result = false;
-	try
-	{
-		if (CardSortCount == sortArrLen)
-		{
-			bool isAccord = false;//是否是符合的牌 用于拆牌
-			int subsidiaryIdx = 0;
-			for (int i = sortArrIndex; i < sortArrLen; ++i)
-			{
-				isAccord = (isSplit) ? sortNoMainArray[i] >= subsidiarySameCount : sortNoMainArray[i] == subsidiarySameCount;
-				if (isAccord)
-				{
-					outSubsidiaryVec.push_back(i);
-					if (outSubsidiaryVec.size() == subsidiaryCount)
-					{
-						result = true;
-						break;
-					}
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuPlayCardLogic::FindAdjacentIndexCards(const int *sortArray, const int sortArrLen, const vector<int> mainCards, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards)
-{
-	bool result = false;
-	try
-	{
-		if (CardSortCount == sortArrLen)
-		{
-			int cloneSortArr[CardSortCount] = { 0 };
-			for (int i = 0; i < sortArrLen; ++i)
-			{
-				cloneSortArr[i] = sortArray[i];
-				if (mainCards[i] > 0 && cloneSortArr[i] > mainCards[i])
-				{
-					cloneSortArr[i] -= mainCards[i];
-				}
-			}
-			vector<int> okCards;
-			if (subsidiaryCount > 0)
-			{
-				bool isFindSubsidiary = false;
-				bool isAccord = false;//是否是符合的牌 用于拆牌
-				vector<vector<int>> subsidiaryCardsVec;
-				vector<int> subsidiaryCards;
-				vector<vector<int>> hashVec;
-				isFindSubsidiary = FindSubsidiaryCards(cloneSortArr, CardSortCount, subsidiaryCount, subsidiarySameCount, isSplit, subsidiaryCardsVec);
-				//for (int i = 0; i < CardSortCount; ++i)
-				//{
-				//	okCards.clear();
-				//	subsidiaryCards.clear();
-				//	isFindSubsidiary = FindSubsidiaryCards(cloneSortArr, CardSortCount, i, subsidiaryCount, subsidiarySameCount, isSplit, subsidiaryCards);
-				//	if (isFindSubsidiary)
-				//	{
-				//		//判断附属牌是否已经存在，不存在保存
-				//		bool isSame = IsSmae(hashVec, subsidiaryCards);
-				//		if (!isSame)
-				//		{
-				//			hashVec.push_back(subsidiaryCards);
-				//			for (int x = 0; x < mainCards.size(); ++x)
-				//			{
-				//				if (mainCards[x] > 0)
-				//				{
-				//					for (int y = 0; y < mainCards[x]; ++y)
-				//					{
-				//						okCards.push_back(x);
-				//					}
-				//				}
-				//			}
-				//			for (int x = 0; x < subsidiaryCount; ++x)
-				//			{
-				//				for (int y = 0; y < subsidiarySameCount; ++y)
-				//				{
-				//					okCards.push_back(subsidiaryCards[x]);
-				//				}
-				//			}
-				//			outCards.push_back(okCards);
-				//			result = true;
-				//		}
-				//	}
-				//}
-			}
-			else
-			{
-				for (int x = 0; x < mainCards.size(); ++x)
-				{
-					if (mainCards[x] > 0)
-					{
-						for (int y = 0; y < mainCards[x]; ++y)
-						{
-							okCards.push_back(x);
-						}
-					}
-				}
-				if (!okCards.empty())
-				{
-					outCards.push_back(okCards);
-					result = true;
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuPlayCardLogic::FindSameIndexCards(const int *sortArray, const int sortArrLen, const int cardIndex, const int cardCount, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards)
-{
-	bool result = false;
-	try
-	{
-		if (CardSortCount == sortArrLen)
-		{
-			int cloneSortArr[CardSortCount] = { 0 };
-			for (int i = 0; i < sortArrLen; ++i)
-			{
-				cloneSortArr[i] = sortArray[i];
-			}
-			if (cloneSortArr[cardIndex] >= cardCount)
-			{
-				cloneSortArr[cardIndex] -= cardCount;
-				vector<int> okCards;
-				if (subsidiaryCount > 0)
-				{
-					bool isAccord = false;//是否是符合的牌 用于拆牌
-					bool isFindSubsidiary = false;
-					int subsidiaryIdx;
-					vector<int> subsidiaryCards;
-					vector<vector<int>> hashVec;
-					for (int i = 0; i < CardSortCount; ++i)
-					{
-						okCards.clear();
-						subsidiaryCards.clear();
-						isFindSubsidiary = FindSubsidiaryCards(cloneSortArr, CardSortCount, i, subsidiaryCount, subsidiarySameCount, isSplit, subsidiaryCards);
-						if (isFindSubsidiary)
-						{
-							//判断附属牌是否已经存在，不存在保存
-							bool isSame = IsSmae(hashVec, subsidiaryCards);
-							if (!isSame)
-							{
-								hashVec.push_back(subsidiaryCards);
-								for (int x = 0; x < cardCount; ++x)
-								{
-									okCards.push_back(cardIndex);
-								}
-								for (int x = 0; x < subsidiaryCount; ++x)
-								{
-									for (int y = 0; y < subsidiarySameCount; ++y)
-									{
-										okCards.push_back(subsidiaryCards[x]);
-									}
-								}
-								outCards.push_back(okCards);
-								result = true;
-							}
-						}
-					}
-				}
-				else
-				{
-					for (int x = 0; x < cardCount; ++x)
-					{
-						okCards.push_back(cardIndex);
-					}
-					if (!okCards.empty())
-					{
-						outCards.push_back(okCards);
-						result = true;
-					}
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
-
-bool DouDiZhu::DouDiZhuPlayCardLogic::IsSmae(const vector<vector<int>> const hashVec, const vector<int> const subsidiaryCards)
-{
-	bool result = false;
-	try
-	{
-		if (!subsidiaryCards.empty())
-		{
-			for (int i = 0; i < hashVec.size(); ++i)
-			{
-				result = false;
-				if (hashVec[i].size() == subsidiaryCards.size())
-				{
-					for (int j = 0; j < subsidiaryCards.size(); ++j)
-					{
-						if (hashVec[i][j] == subsidiaryCards[j])
-						{
-							result = true;
-						}
-						else
-						{
-							result = false;
-							break;
-						}
-					}
-				}
-				if (result)
-				{
-					break;
-				}
-			}
-		}
-	}
-	catch (exception err)
-	{
-		throw(err);
-	}
-	return result;
-}
+//bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec)
+//{
+//	bool result = false;
+//	try
+//	{
+//		outSortArrVec.clear();
+//		bool isAccord = false, isFindAdjacent = false;//isAccord 是否是符合的牌 拆牌
+//		int minIndex = isCompareMinCard ? DouDiZhuLogic::CardNumberToSortArrayValue(minCard) : 0;
+//		if (minIndex >= 0 && minIndex + 1 < sortArrLen)
+//		{
+//			for (int i = minIndex + 1; i < sortArrLen; ++i)
+//			{
+//				vector<int> tmpSortArr(CardSortCount);
+//				isAccord = (isSplit) ? sortArray[i] >= sameCount : sortArray[i] == sameCount;
+//				if (isAccord && i + adjacentCount < sortArrLen)
+//				{
+//					tmpSortArr[i] = sameCount;
+//					isFindAdjacent = true;
+//					for (int j = i + 1; j < i + adjacentCount; ++j)
+//					{
+//						isAccord = (isSplit) ? sortArray[j] >= sameCount : sortArray[j] == sameCount;
+//						if (isAccord && (CardNumber)j != CardNumber::C_2 && j != sortArrLen - 1)
+//						{
+//							tmpSortArr[j] = sameCount;
+//						}
+//						else
+//						{
+//							isFindAdjacent = false;
+//							break;
+//						}
+//					}
+//					if (isFindAdjacent)
+//					{
+//						//找到
+//						outSortArrVec.push_back(tmpSortArr);
+//					}
+//				}
+//			}
+//			result = !outSortArrVec.empty();
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuPlayCardLogic::FindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int sameCount, const bool isSplit, int* outSortArr)
+//{
+//	bool result = false;
+//	try
+//	{
+//		bool isAccord = false;//是否是符合的牌 用于拆牌
+//		int minIndex = isCompareMinCard ? DouDiZhuLogic::CardNumberToSortArrayValue(minCard) : 0;
+//		if (minIndex >= 0 && minIndex + 1 < sortArrLen)
+//		{
+//			for (int i = minIndex + 1; i < sortArrLen; ++i)
+//			{
+//				isAccord = (isSplit) ? sortArray[i] >= sameCount : sortArray[i] == sameCount;
+//				if (isAccord)
+//				{
+//					outSortArr[i] = sameCount;
+//					result = true;
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuPlayCardLogic::FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int sortArrIndex, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<int> &outSubsidiaryVec)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (CardSortCount == sortArrLen)
+//		{
+//			bool isAccord = false;//是否是符合的牌 用于拆牌
+//			int subsidiaryIdx = 0;
+//			for (int i = sortArrIndex; i < sortArrLen; ++i)
+//			{
+//				isAccord = (isSplit) ? sortNoMainArray[i] >= subsidiarySameCount : sortNoMainArray[i] == subsidiarySameCount;
+//				if (isAccord)
+//				{
+//					outSubsidiaryVec.push_back(i);
+//					if (outSubsidiaryVec.size() == subsidiaryCount)
+//					{
+//						result = true;
+//						break;
+//					}
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuPlayCardLogic::FindAdjacentIndexCards(const int *sortArray, const int sortArrLen, const vector<int> mainCards, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (CardSortCount == sortArrLen)
+//		{
+//			int cloneSortArr[CardSortCount] = { 0 };
+//			for (int i = 0; i < sortArrLen; ++i)
+//			{
+//				cloneSortArr[i] = sortArray[i];
+//				if (mainCards[i] > 0 && cloneSortArr[i] > mainCards[i])
+//				{
+//					cloneSortArr[i] -= mainCards[i];
+//				}
+//			}
+//			vector<int> okCards;
+//			if (subsidiaryCount > 0)
+//			{
+//				bool isFindSubsidiary = false;
+//				bool isAccord = false;//是否是符合的牌 用于拆牌
+//				vector<vector<int>> subsidiaryCardsVec;
+//				vector<int> subsidiaryCards;
+//				vector<vector<int>> hashVec;
+//				isFindSubsidiary = FindSubsidiaryCards(cloneSortArr, CardSortCount, subsidiaryCount, subsidiarySameCount, isSplit, subsidiaryCardsVec);
+//				//for (int i = 0; i < CardSortCount; ++i)
+//				//{
+//				//	okCards.clear();
+//				//	subsidiaryCards.clear();
+//				//	isFindSubsidiary = FindSubsidiaryCards(cloneSortArr, CardSortCount, i, subsidiaryCount, subsidiarySameCount, isSplit, subsidiaryCards);
+//				//	if (isFindSubsidiary)
+//				//	{
+//				//		//判断附属牌是否已经存在，不存在保存
+//				//		bool isSame = IsSmae(hashVec, subsidiaryCards);
+//				//		if (!isSame)
+//				//		{
+//				//			hashVec.push_back(subsidiaryCards);
+//				//			for (int x = 0; x < mainCards.size(); ++x)
+//				//			{
+//				//				if (mainCards[x] > 0)
+//				//				{
+//				//					for (int y = 0; y < mainCards[x]; ++y)
+//				//					{
+//				//						okCards.push_back(x);
+//				//					}
+//				//				}
+//				//			}
+//				//			for (int x = 0; x < subsidiaryCount; ++x)
+//				//			{
+//				//				for (int y = 0; y < subsidiarySameCount; ++y)
+//				//				{
+//				//					okCards.push_back(subsidiaryCards[x]);
+//				//				}
+//				//			}
+//				//			outCards.push_back(okCards);
+//				//			result = true;
+//				//		}
+//				//	}
+//				//}
+//			}
+//			else
+//			{
+//				for (int x = 0; x < mainCards.size(); ++x)
+//				{
+//					if (mainCards[x] > 0)
+//					{
+//						for (int y = 0; y < mainCards[x]; ++y)
+//						{
+//							okCards.push_back(x);
+//						}
+//					}
+//				}
+//				if (!okCards.empty())
+//				{
+//					outCards.push_back(okCards);
+//					result = true;
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuPlayCardLogic::FindSameIndexCards(const int *sortArray, const int sortArrLen, const int cardIndex, const int cardCount, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outCards)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (CardSortCount == sortArrLen)
+//		{
+//			int cloneSortArr[CardSortCount] = { 0 };
+//			for (int i = 0; i < sortArrLen; ++i)
+//			{
+//				cloneSortArr[i] = sortArray[i];
+//			}
+//			if (cloneSortArr[cardIndex] >= cardCount)
+//			{
+//				cloneSortArr[cardIndex] -= cardCount;
+//				vector<int> okCards;
+//				if (subsidiaryCount > 0)
+//				{
+//					bool isAccord = false;//是否是符合的牌 用于拆牌
+//					bool isFindSubsidiary = false;
+//					int subsidiaryIdx;
+//					vector<int> subsidiaryCards;
+//					vector<vector<int>> hashVec;
+//					for (int i = 0; i < CardSortCount; ++i)
+//					{
+//						okCards.clear();
+//						subsidiaryCards.clear();
+//						isFindSubsidiary = FindSubsidiaryCards(cloneSortArr, CardSortCount, i, subsidiaryCount, subsidiarySameCount, isSplit, subsidiaryCards);
+//						if (isFindSubsidiary)
+//						{
+//							//判断附属牌是否已经存在，不存在保存
+//							bool isSame = IsSmae(hashVec, subsidiaryCards);
+//							if (!isSame)
+//							{
+//								hashVec.push_back(subsidiaryCards);
+//								for (int x = 0; x < cardCount; ++x)
+//								{
+//									okCards.push_back(cardIndex);
+//								}
+//								for (int x = 0; x < subsidiaryCount; ++x)
+//								{
+//									for (int y = 0; y < subsidiarySameCount; ++y)
+//									{
+//										okCards.push_back(subsidiaryCards[x]);
+//									}
+//								}
+//								outCards.push_back(okCards);
+//								result = true;
+//							}
+//						}
+//					}
+//				}
+//				else
+//				{
+//					for (int x = 0; x < cardCount; ++x)
+//					{
+//						okCards.push_back(cardIndex);
+//					}
+//					if (!okCards.empty())
+//					{
+//						outCards.push_back(okCards);
+//						result = true;
+//					}
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
+//
+//bool DouDiZhu::DouDiZhuPlayCardLogic::IsSmae(const vector<vector<int>> const hashVec, const vector<int> const subsidiaryCards)
+//{
+//	bool result = false;
+//	try
+//	{
+//		if (!subsidiaryCards.empty())
+//		{
+//			for (int i = 0; i < hashVec.size(); ++i)
+//			{
+//				result = false;
+//				if (hashVec[i].size() == subsidiaryCards.size())
+//				{
+//					for (int j = 0; j < subsidiaryCards.size(); ++j)
+//					{
+//						if (hashVec[i][j] == subsidiaryCards[j])
+//						{
+//							result = true;
+//						}
+//						else
+//						{
+//							result = false;
+//							break;
+//						}
+//					}
+//				}
+//				if (result)
+//				{
+//					break;
+//				}
+//			}
+//		}
+//	}
+//	catch (exception err)
+//	{
+//		throw(err);
+//	}
+//	return result;
+//}
 
 bool DouDiZhu::DouDiZhuPlayCardLogic::FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outSubsidiaryVec)
 {
@@ -1031,7 +961,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindSubsidiaryCards(const int *sortNoMainA
 	return result;
 }
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::JoinCards(const int *cards, const int len, const vector<int> const mainCards, const int mainSum, const vector<vector<int>> const subsidiaryCards, const int subsidiarySum, vector<vector<int>> outCards)
+bool DouDiZhu::DouDiZhuPlayCardLogic::JoinCards(const int *cards, const int len, const vector<int> const mainCards, const int mainSum, const vector<vector<int>> const subsidiaryCards, const int subsidiarySum, vector<vector<int>> &outCards)
 {
 	bool result = false;
 	try
@@ -1040,7 +970,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::JoinCards(const int *cards, const int len,
 		vector<int> joinIdxVec, joinCards;
 		if (len > 0 && mainCards.size() > 0)
 		{
-			if (subsidiaryCards.size() > 0)
+			if (subsidiaryCards.size() > 0)//有附属牌
 			{
 				for (int i = 0; i < subsidiaryCards.size(); ++i)
 				{
@@ -1066,10 +996,11 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::JoinCards(const int *cards, const int len,
 					if (isOK)
 					{
 						outCards.push_back(joinCards);//保存outCards
+						result = true;
 					}
 				}
 			}
-			else
+			else//没有附属牌
 			{
 				for (int j = 0; j < mainCards.size(); ++j)
 				{
@@ -1079,8 +1010,8 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::JoinCards(const int *cards, const int len,
 					}
 				}
 				//转扑克牌值
-				isOK = SortArrayCardsToCards(joinIdxVec, cards, len, joinCards);
-				if (isOK)
+				result = SortArrayCardsToCards(joinIdxVec, cards, len, joinCards);
+				if (result)
 				{
 					outCards.push_back(joinCards);//保存outCards
 				}

@@ -17,16 +17,19 @@ namespace DouDiZhu
 		__declspec(dllexport) ~DouDiZhuPlayCardLogic();
 
 		/*
-		找到相同类型的牌
+		找到相同类型的牌（相同类型的牌）
 		cards:牌数组
 		len:牌数组长度
 		cardType:牌类型
 		outCards:找出符合的所有牌数组集合
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		__declspec(dllexport) bool FindTargetCards(const int *cards, const int len, const CardType cardType, vector<vector<int>> &outCards);
+		__declspec(dllexport) bool FindTargetCards(const int *cards, 
+													const int len, 
+													const CardType cardType, 
+													vector<vector<int>> &outCards);
 		/*
-		找到大于指定牌的牌
+		找到大于指定牌的牌（相同类型的牌）
 		cards:牌数组
 		len:牌数组长度
 		cmpCards:指定的牌数组
@@ -35,8 +38,30 @@ namespace DouDiZhu
 		outCards:找出符合的所有牌数组集合
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		__declspec(dllexport) bool FindTargetCards(const int *cards, const int len, const int *cmpCards, const int cmpLen, const CardType cardType, vector<vector<int>> &outCards);
+		__declspec(dllexport) bool FindTargetCards(const int *cards, 
+													const int len, 
+													const int *cmpCards, 
+													const int cmpLen, 
+													const CardType cardType, 
+													vector<vector<int>> &outCards);
+		/*
+		找到大于指定牌的牌（如果不是王炸不是炸，则找出炸和王炸）
+		cards:牌数组
+		len:牌数组长度
+		cmpCards:指定的牌数组
+		cmpLen:指定的牌数组长度
+		cardType:指定牌的类型
+		outCards:找出符合的所有牌数组集合
+		return:成功返回true，失败返回false。异常抛出
+		*/
+		__declspec(dllexport) bool FindGreaterThanCards(const int *cards,
+														const int len,
+														const int *cmpCards,
+														const int cmpLen,
+														const CardType cardType,
+														vector<vector<int>> &outCards);
 
+	private:
 		/*
 		找出牌数组中所有的连牌（龙）
 		cards:牌数组
@@ -44,14 +69,42 @@ namespace DouDiZhu
 		outCards:找出符合的所有牌数组集合
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		__declspec(dllexport) bool FindStraightSingle(const int *cards, const int len, vector<vector<int>> &outCards);
-		__declspec(dllexport) bool FindStraightPair(const int *cards, const int len, vector<vector<int>> &outCards);
-		__declspec(dllexport) bool FindKingBomb(const int *cards, const int len, vector<vector<int>> &outCards);
-
-	private:
-
-		bool FindCards(const int *cards, const int len, const bool isMainSplit,const int adjacentCount, const int mainCardSum, const int subsidiaryCount,const int subsidiarySum, vector<vector<int>> &outCards);
-		bool FindCards(const int *cards, const int len, const bool isCompareMinCard, const CardNumber minCard, const bool isMainSplit, const int adjacentCount, const int mainCardSum, const int subsidiaryCount, const int subsidiarySum, vector<vector<int>> &outCards);
+		bool FindStraightSingle(const int *cards, const int len, vector<vector<int>> &outCards);
+		/*
+		找出牌数组中所有的连牌（双龙）
+		cards:牌数组
+		len:牌数组的长度
+		outCards:找出符合的所有牌数组集合
+		return:成功返回true，失败返回false。异常抛出
+		*/
+		bool FindStraightPair(const int *cards, const int len, vector<vector<int>> &outCards);
+		/*
+		找出牌数组中的王炸（双王）
+		cards:牌数组
+		len:牌数组的长度
+		outCards:找出符合的所有牌数组集合
+		return:成功返回true，失败返回false。异常抛出
+		*/
+		bool FindKingBomb(const int *cards, const int len, vector<vector<int>> &outCards);
+		/*
+		找牌
+		cards: 牌数组
+		len: 牌数组的长度
+		isCompareMinCard: 是否有比较牌 即找出比此牌大的牌
+		minCard: 比较牌牌值
+		isMainSplit: 主牌型是否需要拆牌查找 true:拆牌 false:不拆牌
+		adjacentCount: 连续牌的个数（大于1为连续牌）
+		mainCardSum: 每个连续牌的数量
+		subsidiaryCount: 附属牌的个数
+		subsidiarySum: 每个附属牌的数量
+		outCards: 找到的牌的数组（带出参数）
+		return: 成功返回true，失败返回false。异常抛出
+		*/
+		bool FindCards(const int *cards, const int len, const bool isCompareMinCard,
+						const CardNumber minCard, const bool isMainSplit, 
+						const int adjacentCount, const int mainCardSum, 
+						const int subsidiaryCount, const int subsidiarySum, 
+						vector<vector<int>> &outCards);
 		/*
 		扑克牌值转扑克权重排序数组
 		cards:扑克牌值数组
@@ -60,7 +113,8 @@ namespace DouDiZhu
 		sortArrLen:扑克权重排序数组长度（固定为14）
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		bool SortArrayCardsToCards(vector<int> sortCards, const int *cards, const int len, vector<int> &outCards);
+		bool SortArrayCardsToCards(vector<int> sortCards, const int *cards, 
+									const int len, vector<int> &outCards);
 		/*
 		查找连续牌的主牌型  例如飞机带2单，飞机即为主牌型
 		sortArray:扑克权重排序数组
@@ -73,10 +127,37 @@ namespace DouDiZhu
 		outSortArrVec:符合要求的主牌型的扑克权重排序数组集合（带出参数）
 		return:成功返回true，失败返回false。异常抛出
 		*/
-		bool FindMainCards(const int *sortArray, const int sortArrLen, const bool isCompareMinCard, const CardNumber minCard, const int adjacentCount, const int sameCount, const bool isSplit, vector<vector<int>> &outSortArrVec);
-
-		bool FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, const int subsidiaryCount, const int subsidiarySameCount, const bool isSplit, vector<vector<int>> &outSubsidiaryVec);
-		bool JoinCards(const int *cards, const int len, const vector<int> const mainCards, const int mainSum, const vector<vector<int>> const subsidiaryCards, const int subsidiarySum, vector<vector<int>> &outCards);
+		bool FindMainCards(const int *sortArray, const int sortArrLen, 
+							const bool isCompareMinCard, const CardNumber minCard, 
+							const int adjacentCount, const int sameCount, 
+							const bool isSplit, vector<vector<int>> &outSortArrVec);
+		/*
+		查找附属牌
+		sortNoMainArray: 扑克权重排序数组(去掉主牌型牌的排序数组)
+		sortArrLen: 扑克权重排序数组长度（固定为14）
+		subsidiaryCount: 附属牌的个数
+		subsidiarySameCount: 每个附属牌的数量
+		isSplit: 是否对牌进行拆牌查找 true:拆牌查找 false:不拆牌查找
+		outSubsidiaryVec: 符合要求的附属牌的扑克权重排序数组集合（带出参数）
+		return: 成功返回true，失败返回false。异常抛出
+		*/
+		bool FindSubsidiaryCards(const int *sortNoMainArray, const int sortArrLen, 
+								const int subsidiaryCount, const int subsidiarySameCount, 
+								const bool isSplit, vector<vector<int>> &outSubsidiaryVec);
+		/*
+		结合主牌型和附属牌型
+		cards: 牌数组
+		len: 牌数组长度
+		mainCards: 主牌型集合（值为排序数组中的索引值）
+		mainSum: 主牌型每个牌的数量
+		subsidiaryCards: 附属牌数组集合（值为排序数组中的索引值）
+		subsidiarySum: 附属牌型每个牌的数量
+		outCards: 结合后的牌数组集合（带出参数）
+		return: 成功返回true，失败返回false。异常抛出
+		*/
+		bool JoinCards(const int *cards, const int len, const vector<int> const mainCards, 
+						const int mainSum, const vector<vector<int>> const subsidiaryCards, 
+						const int subsidiarySum, vector<vector<int>> &outCards);
 		/*
 		计算C(M,N)排列组合  C(len, sub)
 		len: 集合总长度 M

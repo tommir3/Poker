@@ -1727,6 +1727,70 @@ namespace PokerUnitTest
 			delete[] minCards;
 		}
 
+		TEST_METHOD(TestFindGreaterThanCards)
+		{
+			bool isOK = false, isFind;
+			const int len = 17, findLen = 5;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17,
+				card100, card101, card102, card103, card104, card105, card106, card107,
+				card108, card109, card110, card111, card112, card113, card114, card115;
+			int *cards, *findCards, *minCards;
+			vector<vector<int>> outCards;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_4);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_6);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_8);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_9);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_Q);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_K);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_A);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_RJ);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Joker, CardNumber::C_BJ);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_3);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_3);
+			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17 };
+			card100 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card101 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_6);
+			card102 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_7);
+			card103 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_9);
+			card104 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_8);
+			minCards = new int[findLen] { card100, card101, card102, card103, card104 };
+			isOK = _ddzCardLogic->FindGreaterThanCards(cards, len, minCards, findLen, CardType::StraightSingle, outCards);
+			Assert::IsTrue(isOK);
+			delete[] cards;
+			findCards = new int[findLen] { card4, card5, card6, card7, card8 };
+			isFind = IsSameArray(findCards, findLen, outCards);
+			Assert::IsTrue(isFind);
+			delete[] findCards;
+			findCards = new int[findLen] { card5, card6, card7, card8, card9 };
+			isFind = IsSameArray(findCards, findLen, outCards);
+			Assert::IsTrue(isFind);
+			delete[] findCards;
+			findCards = new int[findLen] { card6, card7, card8, card9, card10 };
+			isFind = IsSameArray(findCards, findLen, outCards);
+			Assert::IsTrue(isFind);
+			delete[] findCards;
+			findCards = new int[findLen] { card3, card4, card5, card6, card7 };
+			isFind = IsSameArray(findCards, findLen, outCards);
+			Assert::IsFalse(isFind);
+			delete[] findCards;
+			findCards = new int[4] { card1, card15, card16, card17 };
+			isFind = IsSameArray(findCards, 4, outCards);
+			Assert::IsTrue(isFind);
+			delete[] findCards;
+			findCards = new int[2]{ card13, card14 };
+			isFind = IsSameArray(findCards, 2, outCards);
+			Assert::IsTrue(isFind);
+			delete[] findCards;
+			delete[] minCards;
+		}
+
 
 
 		/*-------------------------------找能管上的牌 end-----------------------------------*/

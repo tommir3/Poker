@@ -79,11 +79,3 @@ enum CardType
 	StraightPair = 22,			//双顺子
 	KingBomb = 23				//王炸
 };
-
-/*扑克信息类*/
-class CardNumberSum
-{
-public:
-	CardNumber num;		//扑克牌值
-	int count;			//扑克牌数量
-};

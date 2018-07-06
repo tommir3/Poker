@@ -142,12 +142,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CardIntelligentLogic.h" />
     <ClInclude Include="DouDiZhuLogic.h" />
     <ClInclude Include="DouDiZhuPlayCardLogic.h" />
     <ClInclude Include="PokerDefine.h" />
     <ClInclude Include="PokerLogic.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CardIntelligentLogic.cpp" />
     <ClCompile Include="DouDiZhuLogic.cpp" />
     <ClCompile Include="DouDiZhuPlayCardLogic.cpp" />
     <ClCompile Include="PokerLogic.cpp" />

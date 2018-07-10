@@ -61,7 +61,7 @@ namespace DouDiZhu
 														const CardType cardType,
 														vector<vector<int>> &outCards);
 
-	private:
+	protected:
 		/*
 		找出牌数组中所有的连牌（龙）
 		cards:牌数组
@@ -106,11 +106,11 @@ namespace DouDiZhu
 						const int subsidiaryCount, const int subsidiarySum, 
 						vector<vector<int>> &outCards);
 		/*
-		扑克牌值转扑克权重排序数组
+		扑克权重排序数组转扑克牌值
+		sortCards:扑克权重排序值的集合
 		cards:扑克牌值数组
-		cardsLen:扑克牌值数组长度
-		sortArray:扑克权重排序数组（已排序,从小到大）3，4，5，6，7，8，9，10，J，Q，K，王
-		sortArrLen:扑克权重排序数组长度（固定为14）
+		len:扑克牌值数组长度
+		outCards: 找到的牌的数组（带出参数）
 		return:成功返回true，失败返回false。异常抛出
 		*/
 		bool SortArrayCardsToCards(vector<int> sortCards, const int *cards, 
@@ -164,7 +164,7 @@ namespace DouDiZhu
 		sub: 要找组合的长度 N
 		result: C(M,N)的结果
 		*/
-		bool Cmn(vector<int> cardVec, int len, int sub, vector<vector<int>> &result);
+		bool Cmn(vector<int> cardVec, int len, int sub, vector<vector<int>> &outVec);
 		/*
 		排列组合找出不重样的组合数组
 		preWei:前一位数值
@@ -174,7 +174,7 @@ namespace DouDiZhu
 		sub:位数长度
 		result:保存结果的集合
 		*/
-		void Cmn(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &result);		
+		void Cmn(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &outVec);
 
 	};
 }

@@ -722,9 +722,9 @@ wei:当前位数
 r: 排列组合的临时存放数组
 len:总数据长度
 sub:位数长度
-result:保存结果的集合
+outVec:保存结果的集合
 */
-void DouDiZhu::DouDiZhuPlayCardLogic::Cmn(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &result)
+void DouDiZhu::DouDiZhuPlayCardLogic::Cmn(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &outVec)
 {
 	if (wei + 1 == sub)
 	{
@@ -736,7 +736,7 @@ void DouDiZhu::DouDiZhuPlayCardLogic::Cmn(int preWei, int wei, vector<int> &r, i
 			{
 				temp[i] = r[i];
 			}
-			result.push_back(temp);
+			outVec.push_back(temp);
 		}
 	}
 	else if (wei < sub)
@@ -744,7 +744,7 @@ void DouDiZhu::DouDiZhuPlayCardLogic::Cmn(int preWei, int wei, vector<int> &r, i
 		for (int k = preWei + 1; k < len - wei + 1; ++k)
 		{
 			r[wei] = k;
-			Cmn(k, wei + 1, r, len, sub, result);
+			Cmn(k, wei + 1, r, len, sub, outVec);
 		}
 	}
 }
@@ -760,7 +760,7 @@ MyCmn(len, sub, outVec);
 计算C(M,N)排列组合  C(len, sub)
 len: 集合总长度 M
 sub: 要找组合的长度 N
-result: C(M,N)的结果
+outVec: C(M,N)的结果
 */
 bool DouDiZhu::DouDiZhuPlayCardLogic::Cmn(vector<int> sourceVec,int len, int sub, vector<vector<int>> &outVec)
 {

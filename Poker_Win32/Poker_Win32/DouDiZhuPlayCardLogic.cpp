@@ -2,9 +2,7 @@
 
 using namespace std;
 
-DouDiZhu::DouDiZhuPlayCardLogic::DouDiZhuPlayCardLogic() : PokerLogic(Poker_Weight[0], Poker_Weight[1], Poker_Weight[2], Poker_Weight[3], Poker_Weight[4],
-																		Poker_Weight[5], Poker_Weight[6], Poker_Weight[7], Poker_Weight[8], Poker_Weight[9],
-																		Poker_Weight[10], Poker_Weight[11], Poker_Weight[12], Poker_Weight[13], Poker_Weight[14])
+DouDiZhu::DouDiZhuPlayCardLogic::DouDiZhuPlayCardLogic() : DouDiZhuLogic()
 {
 }
 
@@ -320,9 +318,12 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindTargetCards(const int *cards, const in
 	return result;
 }
 
-
-
 /*============================ 找牌 end ================================*/
+
+/*---------------------------- 智能拆牌 begin --------------------------------*/
+
+
+/*---------------------------- 智能拆牌 end ----------------------------------*/
 
 
 /*============================ 私有方法 ================================*/
@@ -406,7 +407,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindKingBomb(const int *cards, const int l
 			vector<int> kingVec;
 			for (int i = 0; i < len; ++i)
 			{
-				isOK = PokerLogic::ValueToMark(cards[i], mark);
+				isOK = DouDiZhuLogic::ValueToMark(cards[i], mark);
 				if (isOK && mark == CardMark::Joker)
 				{
 					kingVec.push_back(cards[i]);
@@ -495,7 +496,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::SortArrayCardsToCards(vector<int> sortCard
 				{
 					for (int j = 0; j < len; ++j)
 					{
-						isOK = PokerLogic::ValueToCardNumber(cards[j], curCard);
+						isOK = DouDiZhuLogic::ValueToCardNumber(cards[j], curCard);
 						if (isOK)
 						{
 							if (curCard == cmpCard)
@@ -789,3 +790,49 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::Cmn(vector<int> sourceVec,int len, int sub
 	}
 	return result;
 }
+
+/*-------------------------------- 智能拆牌 begin ------------------------------------*/
+
+bool DouDiZhu::DouDiZhuPlayCardLogic::SplitCardArray(const int *cards, const int len, vector<vector<int>> &outCards)
+{
+	bool result = false;
+	try
+	{
+		bool isOK = false;
+		int sortArr[CardSortCount] = { 0 };
+		isOK = DouDiZhuLogic::CardsToSortArray(cards, len, sortArr, CardSortCount);
+		if (isOK)
+		{
+
+		}
+
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
+
+void DouDiZhu::DouDiZhuPlayCardLogic::LoopSplit(int *sortArray, vector<vector<int>> &outCards)
+{
+	try
+	{
+/*
+（1)双龙
+（2）单龙
+（3）4个
+（4）3个
+（5）双王
+（5）2个
+（6）1个
+*/
+
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+}
+
+/*--------------------------------- 智能拆牌 end -------------------------------------*/

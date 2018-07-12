@@ -51,6 +51,7 @@ namespace DouDiZhu
 		*/
 		__declspec(dllexport) int CompareCards(const int *cards1, const int cards1Len, const CardType card1Type, const int *cards2, const int cards2Len, const CardType card2Type);
 
+	protected:
 		/*排序数组长度 3 到 K + 王*/
 		static const int CardSortCount = PokerLogic::SuitsCount + 1;
 		/*斗地主计算牌时排序样式 依次：3，4，5，6，7，8，9，10，J，Q，K，A，2，王*/
@@ -104,6 +105,7 @@ namespace DouDiZhu
 		return: 成功返回true, 失败返回false, 异常抛出
 		*/
 		bool IsAdjacentCard(const int *sortArray, const int sortArrLen, const int index, const int adjacentCount, const int sameCount);
+
 	private:
 		/*
 		判断是否王炸
@@ -123,7 +125,6 @@ namespace DouDiZhu
 		return: 成功返回true, 失败返回false, 异常抛出
 		*/
 		bool IsTrueCardType(const int *cards, const int len, const int adjacentCount, const int sameCount, const int subsidiaryCount, const int subsidiarySameCount);
-
 
 	};
 }

@@ -9,7 +9,7 @@ namespace DouDiZhu
 {
 	using namespace std;
 	using namespace Poker;
-	class DouDiZhuPlayCardLogic : PokerLogic, DouDiZhuLogic
+	class DouDiZhuPlayCardLogic : DouDiZhuLogic
 	{
 	public:
 
@@ -60,6 +60,34 @@ namespace DouDiZhu
 														const int cmpLen,
 														const CardType cardType,
 														vector<vector<int>> &outCards);
+		/*----------------------- 智能拆牌 start ----------------------*/
+
+		bool GetSendCards(const int *cards, const int len,
+			const int *cmpCards,
+			const int cmpLen,
+			const CardType cardType,
+			const int *deskCards,
+			const int deskCardLen,
+			const bool pos1_isFriend,
+			const int pos1_CardCount,
+			const bool pos2_isFriend,
+			const int pos2_CardCount,
+			vector<vector<int>> &outCards);
+		/*
+		一、自己牌最大，找优先出的牌
+		1、循环拆分，取切分数量最少的
+		（1)双龙
+		（2）单龙
+		（3）4个
+		（4）3个
+		（5）双王
+		（5）2个
+		（6）1个
+		二、别人出的牌，找自己能管上的牌
+
+		*/
+
+		/*----------------------- 智能拆牌 end ------------------------*/
 
 	protected:
 		/*
@@ -112,7 +140,7 @@ namespace DouDiZhu
 		len:扑克牌值数组长度
 		outCards: 找到的牌的数组（带出参数）
 		return:成功返回true，失败返回false。异常抛出
-		*/
+		*/ 
 		bool SortArrayCardsToCards(vector<int> sortCards, const int *cards, 
 									const int len, vector<int> &outCards);
 		/*
@@ -176,5 +204,23 @@ namespace DouDiZhu
 		*/
 		void Cmn(int preWei, int wei, vector<int> &r, int len, int sub, vector<vector<int>> &outVec);
 
+
+		/*----------------------- 智能拆牌 start ----------------------*/
+
+		struct Info
+		{
+			CardType _cardType;///类类型
+			int _adjacentCount;///连续牌个数
+			int _mainCardSum;///主牌型数量
+			vector<CardNumber> _mainCardNums;///主牌型牌面值集合
+			int _subsidiaryCount;///附属牌数量
+			int _subsidiarySum;///附属牌个数
+			vector<CardNumber> _subsidiaryCardNums;///附属牌牌面值集合
+		};
+
+		bool SplitCardArray(const int *cards, const int len, vector<vector<int>> &outCards);
+		void LoopSplit(int *sortArray, vector<vector<int>> &outCards);
+
+		/*----------------------- 智能拆牌 end ------------------------*/
 	};
 }

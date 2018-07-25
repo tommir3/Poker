@@ -827,7 +827,55 @@ void DouDiZhu::DouDiZhuPlayCardLogic::LoopSplit(int *sortArray, vector<vector<in
 £¨5£©2¸ö
 £¨6£©1¸ö
 */
+		if (NULL != sortArray)
+		{
+			//Ë«Áú
+			for (int i = 0; i < CardSortCount; )
+			{
+				int j = i;
+				for (; j < CardSortCount - 1; ++j)
+				{
+					if (sortArray[j] >= 2 && (CardNumber)j != CardNumber::C_2)
+					{
+						break;
+					}
+				}
+				if (j - i > 2)
+				{
+					vector<int> newInfo;
+					//É¾³ýË«ÁúµÄÅÆ
+					for (int k = i; k < j - i; ++k)
+					{
+						sortArray[k] -= 2;
+						newInfo.push_back(k);//todo: ±£´æË«Áú
+					}
+					i = j;
+				}
+				else
+				{
+					++i;
+				}
+			}
 
+			//ÅÐ¶ÏÊÇ·ñÍË³ö
+			bool isExit = true;
+			for (int i = 0; i < CardSortCount; ++i)
+			{
+				if (sortArray[i] > 2)
+				{
+					isExit = false;
+					break;
+				}
+			}
+			if (isExit)
+			{
+				return;
+			}
+			else
+			{
+				LoopSplit(sortArray, outCards);
+			}
+		}
 	}
 	catch (exception err)
 	{

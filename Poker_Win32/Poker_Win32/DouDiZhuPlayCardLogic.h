@@ -207,7 +207,7 @@ namespace DouDiZhu
 
 		/*----------------------- 智能拆牌 start ----------------------*/
 
-		struct Info
+		struct SplitInfo
 		{
 			CardType _cardType;///类类型
 			int _adjacentCount;///连续牌个数
@@ -219,7 +219,7 @@ namespace DouDiZhu
 		};
 
 		bool SplitCardArray(const int *cards, const int len, vector<vector<int>> &outCards);
-		void LoopSplit(int *sortArray, vector<vector<int>> &outCards);
+		void LoopSplit(int *sortArray, vector<SplitInfo> &outCards);
 
 		/*----------------------- 智能拆牌 end ------------------------*/
 	};

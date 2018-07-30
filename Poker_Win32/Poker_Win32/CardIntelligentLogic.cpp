@@ -21,7 +21,7 @@ bool DouDiZhu::CardIntelligentLogic::GetSendCards(const int *cards, const int le
 													const int pos1_CardCount,
 													const bool pos2_isFriend,
 													const int pos2_CardCount,
-													vector<vector<int>> &outCards)
+													vector<int> &outCards)
 {
 	bool result = false;
 	try

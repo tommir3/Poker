@@ -322,6 +322,30 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::FindTargetCards(const int *cards, const in
 
 /*---------------------------- ÖÇÄÜ²ðÅÆ begin --------------------------------*/
 
+bool DouDiZhu::DouDiZhuPlayCardLogic::GetSendCards(const int *cards, const int len,
+													const int *cmpCards,
+													const int cmpLen,
+													const CardType cardType,
+													const int *deskCards,
+													const int deskCardLen,
+													const bool pos1_isFriend,
+													const int pos1_CardCount,
+													const bool pos2_isFriend,
+													const int pos2_CardCount,
+													vector<int> &outCards)
+
+{
+	bool result = false;
+	try
+	{
+		result = SplitCardArray(cards, len, outCards);
+	}
+	catch (exception err)
+	{
+		throw(err);
+	}
+	return result;
+}
 
 /*---------------------------- ÖÇÄÜ²ðÅÆ end ----------------------------------*/
 
@@ -793,7 +817,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::Cmn(vector<int> sourceVec,int len, int sub
 
 /*-------------------------------- ÖÇÄÜ²ðÅÆ begin ------------------------------------*/
 
-bool DouDiZhu::DouDiZhuPlayCardLogic::SplitCardArray(const int *cards, const int len, vector<vector<int>> &outCards)
+bool DouDiZhu::DouDiZhuPlayCardLogic::SplitCardArray(const int *cards, const int len, vector<int> &outCards)
 {
 	bool result = false;
 	try
@@ -803,7 +827,8 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::SplitCardArray(const int *cards, const int
 		isOK = DouDiZhuLogic::CardsToSortArray(cards, len, sortArr, CardSortCount);
 		if (isOK)
 		{
-
+			vector<SplitInfo> splitInfoVec;
+			LoopSplit(sortArr, splitInfoVec);
 		}
 
 	}
@@ -814,7 +839,7 @@ bool DouDiZhu::DouDiZhuPlayCardLogic::SplitCardArray(const int *cards, const int
 	return result;
 }
 
-void DouDiZhu::DouDiZhuPlayCardLogic::LoopSplit(int *sortArray, vector<vector<int>> &outCards)
+void DouDiZhu::DouDiZhuPlayCardLogic::LoopSplit(int *sortArray, vector<SplitInfo> &outCards)
 {
 	try
 	{
@@ -829,26 +854,38 @@ void DouDiZhu::DouDiZhuPlayCardLogic::LoopSplit(int *sortArray, vector<vector<in
 */
 		if (NULL != sortArray)
 		{
-			//Ë«Áú
-			for (int i = 0; i < CardSortCount; )
+			CardNumber curCard;
+			//----------- Ë«Áú begin ----------------
+			for (int i = 0; i < CardSortCount - 1; )
 			{
 				int j = i;
 				for (; j < CardSortCount - 1; ++j)
 				{
-					if (sortArray[j] >= 2 && (CardNumber)j != CardNumber::C_2)
+					bool isOK = SortStyleValueToCardNumber(j, curCard);
+					if (sortArray[j] < 2 || (isOK && curCard == CardNumber::C_2))
 					{
 						break;
 					}
 				}
-				if (j - i > 2)
+				if (j - i >= 3)
 				{
-					vector<int> newInfo;
+					vector<CardNumber> newInfo;
 					//É¾³ýË«ÁúµÄÅÆ
-					for (int k = i; k < j - i; ++k)
+					for (int k = i; k < i + (j - i); ++k)
 					{
 						sortArray[k] -= 2;
-						newInfo.push_back(k);//todo: ±£´æË«Áú
+						bool isOK = SortStyleValueToCardNumber(k, curCard);
+						if (isOK)
+						{
+							newInfo.push_back(curCard);
+						}
 					}
+					SplitInfo info;
+					info._cardType = CardType::StraightPair;
+					info._adjacentCount = j - i;
+					info._mainCardSum = 2;
+					info._mainCardNums = newInfo;
+					outCards.push_back(info);
 					i = j;
 				}
 				else
@@ -856,7 +893,47 @@ void DouDiZhu::DouDiZhuPlayCardLogic::LoopSplit(int *sortArray, vector<vector<in
 					++i;
 				}
 			}
-
+			//----------- Ë«Áú end ----------------
+			//----------- µ¥Áú begin ----------------
+			for (int i = 0; i < CardSortCount - 1; )
+			{
+				int j = i;
+				for (; j < CardSortCount - 1; ++j)
+				{
+					bool isOK = SortStyleValueToCardNumber(j, curCard);
+					if (sortArray[j] < 1 || (isOK && curCard == CardNumber::C_2))
+					{
+						break;
+					}
+				}
+				if (j - i >= 5)
+				{
+					vector<CardNumber> newInfo;
+					//É¾³ýË«ÁúµÄÅÆ
+					for (int k = i; k < i + (j - i); ++k)
+					{
+						sortArray[k] -= 1;
+						bool isOK = SortStyleValueToCardNumber(k, curCard);
+						if (isOK)
+						{
+							newInfo.push_back(curCard);
+						}
+					}
+					SplitInfo info;
+					info._cardType = CardType::StraightSingle;
+					info._adjacentCount = j - i;
+					info._mainCardSum = 1;
+					info._mainCardNums = newInfo;
+					outCards.push_back(info);
+					i = j;
+				}
+				else
+				{
+					++i;
+				}
+			}
+			//----------- µ¥Áú end ----------------
+			return;
 			//ÅÐ¶ÏÊÇ·ñÍË³ö
 			bool isExit = true;
 			for (int i = 0; i < CardSortCount; ++i)

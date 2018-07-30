@@ -1795,9 +1795,60 @@ namespace PokerUnitTest
 
 		/*-------------------------------找能管上的牌 end-----------------------------------*/
 
+		/*------------------------------ 智能找牌 begin ---------------------------------------*/
+
+		TEST_METHOD(TestGetSendCards)
+		{
+			bool isOK = false;
+			const int len = 17, cmpLen = 2;
+			int card1, card2, card3, card4, card5, card6, card7, card8, card9, card10,
+				card11, card12, card13, card14, card15, card16, card17,
+				card100, card101, card102, card103, card104, card105, card106, card107,
+				card108, card109, card110, card111, card112, card113, card114, card115;
+			int *cards, *cmpCards;
+			CardType cmpType = CardType::Pair;
+			vector<int> outCards;
+			card1 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_3);
+			card2 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_3);
+			card3 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_4);
+			card4 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_4);
+			card5 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card6 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_5);
+			card7 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_6);
+			card8 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_6);
+			card9 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_7);
+			card10 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_8);
+			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_9);
+			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_9);
+			card13 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_10);
+			card15 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
+			card16 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17 };
+			card100 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
+			card101 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);
+			cmpCards = new int[cmpLen] { card100, card101 };
+			isOK = _ddzCardLogic->GetSendCards(cards, len,
+										cmpCards,
+										cmpLen,
+										cmpType,
+										NULL,
+										0,
+										false,
+										17,
+										false,
+										17,
+										outCards);
+			Assert::IsTrue(isOK);
+
+			delete[] cards;
+			delete[] cmpCards;
+		}
 
 
 
+		/*------------------------------ 智能找牌 end ------------------------------------*/
 
 		/*===================================判断牌是否存在========================================*/
 

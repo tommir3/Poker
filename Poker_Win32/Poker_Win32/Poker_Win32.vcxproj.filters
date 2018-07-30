@@ -27,9 +27,6 @@
     <ClInclude Include="DouDiZhuPlayCardLogic.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CardIntelligentLogic.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PokerLogic.cpp">
@@ -39,9 +36,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DouDiZhuPlayCardLogic.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CardIntelligentLogic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

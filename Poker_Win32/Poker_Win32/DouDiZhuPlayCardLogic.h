@@ -62,7 +62,7 @@ namespace DouDiZhu
 														vector<vector<int>> &outCards);
 		/*----------------------- 智能拆牌 start ----------------------*/
 
-		bool GetSendCards(const int *cards, const int len,
+		__declspec(dllexport) bool GetSendCards(const int *cards, const int len,
 			const int *cmpCards,
 			const int cmpLen,
 			const CardType cardType,
@@ -72,7 +72,7 @@ namespace DouDiZhu
 			const int pos1_CardCount,
 			const bool pos2_isFriend,
 			const int pos2_CardCount,
-			vector<vector<int>> &outCards);
+			vector<int> &outCards);
 		/*
 		一、自己牌最大，找优先出的牌
 		1、循环拆分，取切分数量最少的
@@ -218,7 +218,7 @@ namespace DouDiZhu
 			vector<CardNumber> _subsidiaryCardNums;///附属牌牌面值集合
 		};
 
-		bool SplitCardArray(const int *cards, const int len, vector<vector<int>> &outCards);
+		bool SplitCardArray(const int *cards, const int len, vector<int> &outCards);
 		void LoopSplit(int *sortArray, vector<SplitInfo> &outCards);
 
 		/*----------------------- 智能拆牌 end ------------------------*/

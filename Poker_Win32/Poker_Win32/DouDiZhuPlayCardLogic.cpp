@@ -933,12 +933,89 @@ void DouDiZhu::DouDiZhuPlayCardLogic::LoopSplit(int *sortArray, vector<SplitInfo
 				}
 			}
 			//----------- 单龙 end ----------------
+			//----------- 4个 begin ---------------
+			for (int i = 0; i < CardSortCount - 1; ++i)
+			{
+				if (sortArray[i] == 4)
+				{
+					SplitInfo info;
+					info._cardType = CardType::Four;
+					info._adjacentCount = 1;
+					info._mainCardSum = 4;
+					bool isOK = SortStyleValueToCardNumber(i, curCard);
+					if (isOK)
+					{
+						vector<CardNumber> newInfo;
+						newInfo.push_back(curCard);
+						info._mainCardNums = newInfo;
+					}					
+					outCards.push_back(info);
+				}
+			}
+			//----------- 4个 end ---------------
+			//----------- 3个 begin ---------------
+			for (int i = 0; i < CardSortCount - 1; ++i)
+			{
+				if (sortArray[i] == 3)
+				{
+					SplitInfo info;
+					info._cardType = CardType::Three;
+					info._adjacentCount = 1;
+					info._mainCardSum = 3;
+					bool isOK = SortStyleValueToCardNumber(i, curCard);
+					if (isOK)
+					{
+						vector<CardNumber> newInfo;
+						newInfo.push_back(curCard);
+						info._mainCardNums = newInfo;
+					}
+					outCards.push_back(info);
+				}
+			}
+			//----------- 3个 end -------------
+			//------------- 王炸 begin -----------------
+			if (sortArray[CardSortCount - 1] == 2)
+			{
+				SplitInfo info;
+				info._cardType = CardType::KingBomb;
+				info._adjacentCount = 1;
+				info._mainCardSum = 2;
+				bool isOK = SortStyleValueToCardNumber(CardSortCount - 1, curCard);
+				if (isOK)
+				{
+					vector<CardNumber> newInfo;
+					newInfo.push_back(curCard);
+					info._mainCardNums = newInfo;
+				}
+				outCards.push_back(info);
+			}
+			//------------- 王炸 end  ------------------
+			//-------------- 2个 begin ------------------
+			for (int i = 0; i < CardSortCount; ++i)
+			{
+				if (sortArray[i] == 2)
+				{
+					SplitInfo info;
+					info._cardType = CardType::Pair;
+					info._adjacentCount = 1;
+					info._mainCardSum = 2;
+					bool isOK = SortStyleValueToCardNumber(i, curCard);
+					if (isOK)
+					{
+						vector<CardNumber> newInfo;
+						newInfo.push_back(curCard);
+						info._mainCardNums = newInfo;
+					}
+					outCards.push_back(info);
+				}
+			}
+			//-------------- 2个 end -----------------
 			return;
 			//判断是否退出
 			bool isExit = true;
 			for (int i = 0; i < CardSortCount; ++i)
 			{
-				if (sortArray[i] > 2)
+				if (sortArray[i] > 0)
 				{
 					isExit = false;
 					break;

@@ -1821,10 +1821,10 @@ namespace PokerUnitTest
 			card11 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_9);
 			card12 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_9);
 			card13 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_10);
-			card14 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_10);
+			card14 = _ddz->PokerLogic::CardToValue(CardMark::Spade, CardNumber::C_J);
 			card15 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_J);
 			card16 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_J);
-			card17 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_Q);
+			card17 = _ddz->PokerLogic::CardToValue(CardMark::Diamond, CardNumber::C_J);
 			cards = new int[len] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17 };
 			card100 = _ddz->PokerLogic::CardToValue(CardMark::Heart, CardNumber::C_5);
 			card101 = _ddz->PokerLogic::CardToValue(CardMark::Club, CardNumber::C_5);

@@ -1010,6 +1010,26 @@ void DouDiZhu::DouDiZhuPlayCardLogic::LoopSplit(int *sortArray, vector<SplitInfo
 				}
 			}
 			//-------------- 2个 end -----------------
+			//-------------- 1个 begin -----------------
+			for (int i = 0; i < CardSortCount; ++i)
+			{
+				if (sortArray[i] == 1)
+				{
+					SplitInfo info;
+					info._cardType = CardType::Single;
+					info._adjacentCount = 1;
+					info._mainCardSum = 1;
+					bool isOK = SortStyleValueToCardNumber(i, curCard);
+					if (isOK)
+					{
+						vector<CardNumber> newInfo;
+						newInfo.push_back(curCard);
+						info._mainCardNums = newInfo;
+					}
+					outCards.push_back(info);
+				}
+			}
+			//-------------- 1个 end ---------------
 			return;
 			//判断是否退出
 			bool isExit = true;
